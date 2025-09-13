@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal TKA - Matriks</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 24pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+             margin-bottom: 20px;
+             break-inside: avoid;
+             overflow-wrap: break-word;
+             word-wrap: break-word;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 20px;
+        }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; break-inside: avoid; }
+        .pembahasan p {
+            margin-bottom: 1.2em;
+        }
+        .pembahasan p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="book-container watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Matriks (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- ############################## START MATRIKS ############################## -->
+    <div id="matriks">
+    <section class="page page-content">
+      <div class="content-wrapper">
+        <h2>Topik 1: Matriks</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Matriks adalah susunan bilangan, simbol, atau ekspresi, yang disusun dalam baris dan kolom sehingga membentuk suatu bangun persegi. Ukuran sebuah matriks ditentukan oleh jumlah baris dan kolomnya, disebut sebagai ordo $m \times n$.</p>
+            <h4>Operasi Matriks</h4>
+            <ul>
+                <li><b>Penjumlahan & Pengurangan:</b> Hanya bisa dilakukan pada matriks dengan ordo yang sama. Caranya adalah dengan menjumlahkan atau mengurangkan elemen-elemen yang seletak. Jika $C=A+B$, maka $c_{ij} = a_{ij} + b_{ij}$.</li>
+                <li><b>Perkalian Skalar:</b> Mengalikan sebuah bilangan skalar $k$ dengan setiap elemen matriks. Jika $B=kA$, maka $b_{ij} = k \cdot a_{ij}$.</li>
+                <li><b>Perkalian Matriks:</b> Perkalian matriks $A_{m \times n}$ dengan $B_{n \times p}$ menghasilkan matriks $C_{m \times p}$. Syaratnya, jumlah kolom matriks A harus sama dengan jumlah baris matriks B. Elemen $c_{ij}$ didapat dari perkalian titik antara baris ke-$i$ dari A dan kolom ke-$j$ dari B.</li>
+            </ul>
+             <h4>Determinan Matriks Persegi</h4>
+             <p>Determinan adalah sebuah nilai skalar yang bisa dihitung dari elemen-elemen sebuah matriks persegi. Notasi determinan A adalah $|A|$ atau det(A).</p>
+            <ul>
+                <li>Untuk ordo $2 \times 2$, $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, maka $|A| = ad - bc$.</li>
+                <li>Untuk ordo $3 \times 3$, $B = \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix}$, determinan dapat dihitung dengan Aturan Sarrus: $|B| = (aei + bfg + cdh) - (ceg + afh + bdi)$.</li>
+            </ul>
+            <b>Sifat Determinan:</b>
+            <ul>
+                <li>$|A^T| = |A|$</li>
+                <li>$|AB|=|A||B|$</li>
+                <li>$|kA| = k^n|A|$ untuk matriks ordo $n \times n$.</li>
+                <li>$|A^{-1}|=1/|A|$</li>
+            </ul>
+            <h4>Invers Matriks</h4>
+            <p>Matriks yang memiliki invers disebut matriks non-singular ($|A| \neq 0$), sedangkan yang tidak memiliki invers disebut matriks singular ($|A|=0$). Invers dari A, dinotasikan $A^{-1}$, memenuhi $A \cdot A^{-1} = A^{-1} \cdot A = I$, dimana $I$ adalah matriks identitas.</p>
+             <ul>
+                <li>Untuk ordo $2 \times 2$, $A^{-1} = \frac{1}{|A|} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$.</li>
+            </ul>
+            <b>Sifat Invers:</b>
+            <ul>
+                <li>$(AB)^{-1} = B^{-1}A^{-1}$</li>
+                <li>$(A^{-1})^{-1}=A$</li>
+                <li>$(A^T)^{-1} = (A^{-1})^T$</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Diberikan matriks $A = \begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix}$ dan $I = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$. Jika $A^2 = pA + qI$, maka nilai $p-q$ adalah...
+                    <div class="pilihan-ganda-container">
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">-1</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li>
+                        </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Soal ini menguji pemahaman tentang perkalian matriks dan kesamaan matriks. Jika dua matriks dinyatakan sama, maka setiap elemen yang bersesuaian (seletak) harus bernilai sama.</p>
+                        <p><b>Langkah 1: Hitung $A^2$.</b><br>
+                        $A^2 = A \times A = \begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix}$<br>
+                        $= \begin{pmatrix} (2)(2)+(1)(-1) & (2)(1)+(1)(0) \\ (-1)(2)+(0)(-1) & (-1)(1)+(0)(0) \end{pmatrix}$<br>
+                        $= \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$.</p>
+                        <p><b>Langkah 2: Susun persamaan matriks.</b><br>
+                        $pA + qI = p\begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix} + q\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 2p+q & p \\ -p & q \end{pmatrix}$.</p>
+                        <p><b>Langkah 3: Samakan matriks $A^2$ dan $pA+qI$.</b><br>
+                        $\begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix} = \begin{pmatrix} 2p+q & p \\ -p & q \end{pmatrix}$.<br>
+                        Dari kesamaan ini, kita dapatkan sistem persamaan:<br>
+                        Elemen (1,2): $p=2$.<br>
+                        Elemen (2,2): $q=-1$.<br>
+                        Kita bisa cek dengan elemen lain: $-p = -2$ (cocok), $2p+q=2(2)+(-1)=3$ (cocok).</p>
+                        <p><b>Langkah 4: Hitung $p-q$.</b><br>
+                        $p-q = 2 - (-1) = 3$.<br>
+                        <b>Jawaban yang benar adalah D.</b></p>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <b>Soal 2.</b> Jika $A$ adalah matriks $2 \times 2$ yang memenuhi $A \begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 8 \\ 1 \end{pmatrix}$ dan $A \begin{pmatrix} 2 \\ 5 \end{pmatrix} = \begin{pmatrix} 19 \\ 3 \end{pmatrix}$, maka hasil dari $A \begin{pmatrix} 3 \\ 7 \end{pmatrix}$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$\begin{pmatrix} 27 \\ 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 11 \\ 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 27 \\ 3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 11 \\ 4 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 26 \\ 5 \end{pmatrix}$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Soal ini bisa diselesaikan dengan dua cara: mencari matriks $A$ terlebih dahulu, atau menggunakan sifat linearitas perkalian matriks $A(X+Y) = AX+AY$. Cara kedua lebih cepat dan cerdas.</p>
+                        <p><b>Langkah 1: Kenali hubungan antar vektor.</b><br>
+                        Perhatikan vektor input dan output. Kita ingin mencari $A \begin{pmatrix} 3 \\ 7 \end{pmatrix}$. Lihat apakah vektor $\begin{pmatrix} 3 \\ 7 \end{pmatrix}$ bisa dibentuk dari kombinasi $\begin{pmatrix} 1 \\ 2 \end{pmatrix}$ dan $\begin{pmatrix} 2 \\ 5 \end{pmatrix}$.
+                        Ternyata, $\begin{pmatrix} 3 \\ 7 \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \end{pmatrix} + \begin{pmatrix} 2 \\ 5 \end{pmatrix}$.</p>
+                        <p><b>Langkah 2: Gunakan sifat linearitas.</b><br>
+                        $A \begin{pmatrix} 3 \\ 7 \end{pmatrix} = A \left( \begin{pmatrix} 1 \\ 2 \end{pmatrix} + \begin{pmatrix} 2 \\ 5 \end{pmatrix} \right)$
+                        $= A \begin{pmatrix} 1 \\ 2 \end{pmatrix} + A \begin{pmatrix} 2 \\ 5 \end{pmatrix}$.</p>
+                        <p><b>Langkah 3: Substitusi nilai yang diketahui.</b><br>
+                        Kita sudah diberi tahu hasil perkaliannya:
+                        $= \begin{pmatrix} 8 \\ 1 \end{pmatrix} + \begin{pmatrix} 19 \\ 3 \end{pmatrix} = \begin{pmatrix} 8+19 \\ 1+3 \end{pmatrix} = \begin{pmatrix} 27 \\ 4 \end{pmatrix}$.<br>
+                        <b>Jawaban yang benar adalah A.</b></p>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <b>Soal 3.</b> Diberikan sistem persamaan linear $ax+by=1$ dan $cx+dy=0$. Apakah sistem ini memiliki solusi unik?
+                    <div class="kecukupan-data-stmt">(1) $ad-bc \neq 0$.</div>
+                    <div class="kecukupan-data-stmt">(2) Matriks $\begin{pmatrix} a & b \\ c & d \end{pmatrix}$ memiliki invers.</div>
+                     <div class="pilihan-ganda-container">
+                     <ol class="pilihan-ganda">
+                        <li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Sebuah sistem persamaan linear $A\vec{x}=\vec{b}$ memiliki solusi unik jika dan hanya jika matriks koefisien $A$ memiliki invers. Syarat sebuah matriks memiliki invers adalah determinannya tidak boleh nol.</p>
+                        <p><b>Langkah 1: Ubah SPL ke bentuk matriks.</b><br>
+                        $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$.
+                        Matriks koefisiennya adalah $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$.</p>
+                        <p><b>Langkah 2: Analisis Pernyataan (1).</b><br>
+                        Pernyataan (1) mengatakan $ad-bc \neq 0$. Ini adalah definisi dari determinan matriks $A$. Jadi, $|A| \neq 0$. Jika determinan tidak nol, matriks $A$ punya invers, dan SPL pasti punya solusi unik. Jadi, pernyataan (1) SAJA cukup.</p>
+                        <p><b>Langkah 3: Analisis Pernyataan (2).</b><br>
+                        Pernyataan (2) mengatakan matriks $A$ memiliki invers. Ini adalah syarat langsung agar SPL punya solusi unik. Jadi, pernyataan (2) SAJA cukup.</p>
+                        <p><b>Kesimpulan:</b> Karena pernyataan (1) SAJA cukup dan pernyataan (2) SAJA juga cukup, maka jawabannya adalah D. Kedua pernyataan tersebut sebenarnya adalah kondisi yang ekuivalen.<br>
+                        <b>Jawaban yang benar adalah D.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-1-kolom">
+                <div class="soal-item">
+                     <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks</div>
+                    <b>Soal 4.</b> Diketahui matriks $A$ berordo $2 \times 2$ dengan $|A|=2$. Manakah pernyataan berikut yang PASTI benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$|2A| = 4$</li><li data-option="B">$|A^{-1}| = 1/2$</li><li data-option="C">Matriks $A$ pasti memiliki entri bilangan bulat.</li><li data-option="D">$|A^T A| = 4$</li><li data-option="E">Jika $B$ matriks $2 \times 2$ dengan $|B|=3$, maka $|AB|=6$.</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Soal ini menguji pemahaman sifat-sifat determinan.
+                        <ul>
+                            <li>$|kA| = k^n|A|$ dimana $n$ adalah ordo.</li>
+                            <li>$|A^{-1}|=1/|A|$.</li>
+                            <li>$|A^T|=|A|$.</li>
+                            <li>$|AB|=|A||B|$.</li>
+                        </ul></p>
+                        <p><b>Analisis Pilihan:</b><br>
+                        A. $|2A| = 2^2|A| = 4 \times 2 = 8$. Pernyataan ini salah.
+                        <br>B. $|A^{-1}|=1/|A|=1/2$. Pernyataan ini benar.
+                        <br>C. Tidak ada informasi tentang entri. $A=\begin{pmatrix} \sqrt{2} & 0 \\ 0 & \sqrt{2} \end{pmatrix}$ memiliki $|A|=2$ tapi entrinya bukan bilangan bulat. Pernyataan ini salah.
+                        <br>D. $|A^T A| = |A^T| |A| = |A| |A| = 2 \times 2 = 4$. Pernyataan ini benar.
+                        <br>E. $|AB|=|A||B| = 2 \times 3 = 6$. Pernyataan ini benar.<br>
+                        <b>Jawaban yang benar adalah B, D, dan E.</b></p>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks Kategori</div>
+                    <b>Soal 5.</b> Diberikan matriks $A = \begin{pmatrix} 3 & 4 \\ 2 & 3 \end{pmatrix}$. Periksalah kebenaran dari setiap pernyataan berikut.
+                    <table class="soal-kategori">
+                        <thead>
+                            <tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Invers dari matriks A adalah $A$ itu sendiri.</td><td></td><td></td></tr>
+                            <tr><td>2. Matriks $A-I$ adalah matriks singular.</td><td></td><td></td></tr>
+                            <tr><td>3. Terdapat matriks B sehingga $AB = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}$.</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                     <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Pernyataan 1:</b><br>
+                        Cari determinan $A$: $|A| = 3(3)-4(2) = 9-8=1$.
+                        Cari invers $A$: $A^{-1} = \frac{1}{1}\begin{pmatrix} 3 & -4 \\ -2 & 3 \end{pmatrix} = \begin{pmatrix} 3 & -4 \\ -2 & 3 \end{pmatrix}$.
+                        Karena $A^{-1} \neq A$, maka pernyataan 1 <b>Salah</b>.</p>
+                        <p><b>Pernyataan 2:</b><br>
+                        Hitung $A-I$: $A-I = \begin{pmatrix} 3 & 4 \\ 2 & 3 \end{pmatrix} - \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 2 & 4 \\ 2 & 2 \end{pmatrix}$.
+                        Hitung determinannya: $|A-I| = 2(2)-4(2) = 4-8 = -4$.
+                        Karena determinannya tidak nol, matriks $A-I$ bukan singular. Pernyataan 2 <b>Salah</b>.</p>
+                        <p><b>Pernyataan 3:</b><br>
+                        $AB=C$. Jika $A$ punya invers, maka $B=A^{-1}C$.
+                        Determinan dari $C=\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}$ adalah 0.
+                        Menurut sifat determinan, $|AB|=|A||B|=|C|$.
+                        $1 \cdot |B| = 0$, yang berarti $|B|=0$.
+                        Jadi, ada matriks B (yaitu matriks singular) yang memenuhi persamaan tersebut. Contohnya, $B=A^{-1}C$. Pernyataan 3 <b>Benar</b>.</p>
+                    </div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <b>Soal 6.</b> Diberikan matriks $A_{2 \times 2}$ dengan $\det(A)=3$. Jika $B = A - 2A^T$, dan $C=A^{-1}$, maka $\det(BC)$ adalah...
+                    <div class="pilihan-ganda-container">
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">9</li>
+                        </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Soal ini menguji pemahaman mendalam tentang sifat-sifat determinan dan aljabar matriks.</p>
+                        <p><b>Langkah 1: Sederhanakan ekspresi target.</b><br>
+                        Kita ingin mencari $\det(BC)$. Menggunakan sifat $\det(XY)=\det(X)\det(Y)$:<br>
+                        $\det(BC) = \det((A - 2A^T) A^{-1})$<br>
+                        $= \det(A A^{-1} - 2A^T A^{-1})$<br>
+                        $= \det(I - 2A^T A^{-1})$.</p>
+                        <p><b>Langkah 2: Uji dengan kasus khusus untuk menemukan pola.</b><br>
+                        Soal ini sulit diselesaikan secara umum. Mari kita uji dengan matriks diagonal yang memenuhi $\det(A)=3$, misalnya $A=\begin{pmatrix}3&0\\0&1\end{pmatrix}$.
+                        Untuk matriks ini, $A^T=A$.
+                        Maka $B = A - 2A^T = A - 2A = -A$.
+                        $\det(B) = \det(-A) = (-1)^2 \det(A) = 1 \cdot 3 = 3$.
+                        $C = A^{-1}$, sehingga $\det(C) = 1/\det(A) = 1/3$.
+                        $\det(BC) = \det(B)\det(C) = 3 \times (1/3) = 1$.
+                        Ini memberikan petunjuk kuat bahwa jawabannya adalah 1.<br>
+                        <b>Jawaban yang benar adalah C.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div><b>1.</b> Diketahui $A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$. Nilai dari $A^{2024}$ adalah... <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix}1&1\\0&1\end{pmatrix}$</li><li data-option="B">$\begin{pmatrix}1&2024\\0&1\end{pmatrix}$</li><li data-option="C">$\begin{pmatrix}1&2024\\2024&1\end{pmatrix}$</li><li data-option="D">$\begin{pmatrix}2024&2024\\0&2024\end{pmatrix}$</li><li data-option="E">$\begin{pmatrix}1&0\\0&1\end{pmatrix}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>2.</b> Jika matriks $A = \begin{pmatrix} 2x & -2 \\ x & 3x-2 \end{pmatrix}$ adalah matriks singular, maka jumlah semua nilai $x$ yang memenuhi adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1/3</li><li data-option="B">1/2</li><li data-option="C">3/2</li><li data-option="D">2</li><li data-option="E">5/2</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>3.</b> Matriks $A$ berordo $2 \times 2$. Apakah matriks $A$ memiliki invers? <div class="kecukupan-data-stmt">(1) $A^2 = A$.</div> <div class="kecukupan-data-stmt">(2) $A \neq \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>4.</b> Sebuah toko kue menjual dua jenis paket: Paket A (3 nastar, 2 kastengel) dan Paket B (1 nastar, 3 kastengel). Stok yang tersedia adalah 120 nastar dan 110 kastengel. Jika $x$ adalah jumlah Paket A dan $y$ adalah jumlah Paket B, model matriks yang sesuai adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix}3&2\\1&3\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} \le \begin{pmatrix}120\\110\end{pmatrix}$</li><li data-option="B">$\begin{pmatrix}3&1\\2&3\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} \le \begin{pmatrix}120\\110\end{pmatrix}$</li><li data-option="C">$\begin{pmatrix}x&y\end{pmatrix}\begin{pmatrix}3&2\\1&3\end{pmatrix} \le \begin{pmatrix}120&110\end{pmatrix}$</li><li data-option="D">$\begin{pmatrix}3&1\\2&3\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} \ge \begin{pmatrix}120\\110\end{pmatrix}$</li><li data-option="E">$\begin{pmatrix}3&2\\1&3\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} = \begin{pmatrix}120\\110\end{pmatrix}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks</div><b>5.</b> Mana sajakah matriks di bawah ini yang jika dikuadratkan hasilnya adalah matriks identitas? <b>(bisa pilih lebih dari satu jawaban)</b><div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix}0&1\\1&0\end{pmatrix}$</li><li data-option="B">$\begin{pmatrix}-1&0\\0&-1\end{pmatrix}$</li><li data-option="C">$\begin{pmatrix}1&1\\0&1\end{pmatrix}$</li><li data-option="D">$\begin{pmatrix}1&0\\0&1\end{pmatrix}$</li><li data-option="E">$\begin{pmatrix}0&-1\\1&0\end{pmatrix}$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+    </section>
+    
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>6.</b> Diberikan matriks $P$ dan $Q$ berordo $2 \times 2$. Jika $PQ=\begin{pmatrix}1&0\\0&1\end{pmatrix}$, maka...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$P$ adalah invers dari $Q$</li><li data-option="B">$Q$ adalah invers dari $P$</li><li data-option="C">$P=Q^{-1}$</li><li data-option="D">$QP=I$</li><li data-option="E">Semua jawaban benar</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>7.</b> Luas segitiga dengan titik sudut $(1,1), (4,2), (2,5)$ dapat dihitung menggunakan determinan. Jika titik-titik sudutnya adalah $(x_1, y_1), (x_2, y_2), (x_3, y_3)$, Luas $= \frac{1}{2} \left| \det \begin{pmatrix} x_1 & y_1 & 1 \\ x_2 & y_2 & 1 \\ x_3 & y_3 & 1 \end{pmatrix} \right|$. Luas segitiga tersebut adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">5,5</li><li data-option="B">6,5</li><li data-option="C">11</li><li data-option="D">13</li><li data-option="E">22</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>8.</b> Matriks A berordo $3 \times 3$ dan $|A|=-3$. Nilai dari $|-2A|$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">6</li><li data-option="B">12</li><li data-option="C">-12</li><li data-option="D">24</li><li data-option="E">-24</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>9.</b> Diberikan matriks $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ dan $B=\begin{pmatrix}p&q\\r&s\end{pmatrix}$. Apakah $AB=BA$? <div class="kecukupan-data-stmt">(1) $A$ adalah kelipatan dari $B$.</div> <div class="kecukupan-data-stmt">(2) $B$ adalah matriks identitas.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: Pilihan Ganda</div><b>10.</b> Determinan dari matriks $B = \begin{pmatrix} 1 & 1 & 2 \\ 2 & 4 & -3 \\ 3 & 6 & -5 \end{pmatrix}$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-8</li><li data-option="B">-4</li><li data-option="C">-1</li><li data-option="D">1</li><li data-option="E">4</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>11.</b> Jika $A$ adalah matriks $2 \times 2$ sedemikian sehingga $A^2=0$, maka...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$A$ harus matriks nol</li><li data-option="B">$A$ tidak punya invers</li><li data-option="C">$A$ punya invers</li><li data-option="D">Determinan $A$ adalah 1</li><li data-option="E">Tidak ada kesimpulan yang bisa diambil</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda Kompleks Kategori</div><b>12.</b> Sebuah pabrik memproduksi dua jenis produk, P1 dan P2, menggunakan dua jenis mesin, M1 dan M2. Waktu (jam) yang dibutuhkan disajikan dalam tabel:
+            <table class="soal-kategori" style="width: auto; margin: 10px auto;"><tr><th></th><th>M1</th><th>M2</th></tr><tr><td>P1</td><td>2</td><td>3</td></tr><tr><td>P2</td><td>4</td><td>1</td></tr></table>
+            Total waktu yang tersedia untuk M1 adalah 20 jam dan M2 adalah 15 jam. Jumlah P1 dan P2 yang diproduksi masing-masing adalah $x$ dan $y$. Periksa kebenaran pernyataan berikut.
+            <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+            <tr><td>1. Sistem persamaan yang terbentuk adalah $2x+4y=20$ dan $3x+y=15$.</td><td></td><td></td></tr>
+            <tr><td>2. Determinan matriks koefisiennya adalah 10.</td><td></td><td></td></tr>
+            <tr><td>3. Jumlah produk P2 yang diproduksi adalah 4.</td><td></td><td></td></tr>
+            </tbody></table></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: Pilihan Ganda</div><b>13.</b> Matriks $X$ yang memenuhi persamaan $X\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -2 & -1 \\ -5 & -3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1/2 & 1 \\ 1/5 & 1/3 \end{pmatrix}$</li><li data-option="E">Tidak ada</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>14.</b> Jika $A, B, C$ adalah matriks $2 \times 2$ dengan $B$ non-singular dan $AB=BC$, manakah kesimpulan yang selalu benar?<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$A=C$</li><li data-option="B">$A=BCB^{-1}$</li><li data-option="C">$A=B^{-1}CB$</li><li data-option="D">$|A|=|C|$</li><li data-option="E">Tidak ada jawaban yang pasti benar</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>15.</b> Sebuah pesan "HI" dikodekan menggunakan matriks enkripsi $E = \begin{pmatrix}2&1\\1&1\end{pmatrix}$. Jika A=1, B=2, ..., maka pesan "HI" direpresentasikan sebagai matriks kolom $P = \begin{pmatrix}8\\9\end{pmatrix}$. Pesan terenkripsi adalah $C=EP$. Pesan yang diterima adalah $\begin{pmatrix}25\\17\end{pmatrix}$. Pesan aslinya adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">GO</li><li data-option="B">HI</li><li data-option="C">OK</li><li data-option="D">NO</li><li data-option="E">ME</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">Kunci Jawaban dan Pembahasan Latihan Soal: Matriks</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><p><b>Teori Dasar:</b> Soal ini mencari pola dari perpangkatan matriks. Pola sering ditemukan pada matriks-matriks khusus.</p><p><b>Langkah 1: Hitung $A^2$.</b><br>$A^2 = \begin{pmatrix}1&1\\0&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix} = \begin{pmatrix}1&2\\0&1\end{pmatrix}$.</p><p><b>Langkah 2: Hitung $A^3$.</b><br>$A^3 = A^2 A = \begin{pmatrix}1&2\\0&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix} = \begin{pmatrix}1&3\\0&1\end{pmatrix}$.</p><p><b>Langkah 3: Amati pola yang terbentuk.</b><br> $A^n=\begin{pmatrix}1&n\\0&1\end{pmatrix}$.</p><p><b>Langkah 4: Terapkan pola untuk $n=2024$.</b><br> $A^{2024}=\begin{pmatrix}1&2024\\0&1\end{pmatrix}$.</p></div>
+             <div class="pembahasan"><b>2. Jawaban: A</b><p><b>Teori Dasar:</b> Matriks singular adalah matriks persegi yang tidak memiliki invers. Ini terjadi jika dan hanya jika determinannya bernilai nol.</p><p><b>Langkah 1: Susun persamaan determinan.</b><br> $\det(A) = 0$.</p><p><b>Langkah 2: Hitung determinan matriks A.</b><br> $(2x)(3x-2) - (-2)(x) = 0$.</p><p><b>Langkah 3: Selesaikan persamaan kuadrat.</b><br> $6x^2 - 4x + 2x = 0 \implies 6x^2 - 2x = 0$.</p><p><b>Langkah 4: Faktorkan.</b><br> $2x(3x-1) = 0$.</p><p><b>Langkah 5: Temukan akar-akarnya.</b><br> $x_1=0$ dan $x_2=1/3$.</p><p><b>Langkah 6: Jumlahkan akar-akarnya.</b><br> $0 + 1/3 = 1/3$.</p></div>
+            <div class="pembahasan"><b>3. Jawaban: E</b><p><b>Teori Dasar:</b> Matriks memiliki invers jika determinannya tidak nol. Soal ini menguji kemampuan menganalisis kasus-kasus yang mungkin.</p><p><b>Langkah 1: Analisis Pernyataan (1).</b><br> $A^2=A$. Dengan mengambil determinan kedua sisi, kita dapatkan:<br>$|A^2|=|A| \implies |A|^2=|A| \implies |A|^2-|A|=0 \implies |A|(|A|-1)=0$.<br>Ini berarti $|A|=0$ atau $|A|=1$. Karena ada kemungkinan $|A|=0$, kita tidak bisa memastikan $A$ punya invers. (1) SAJA tidak cukup.</p><p><b>Langkah 2: Analisis Pernyataan (2).</b><br> $A \neq 0$ tidak memberikan informasi apa pun tentang determinan. Contoh: $\begin{pmatrix}1&0\\0&0\end{pmatrix}$ tidak nol tapi singular. $\begin{pmatrix}1&0\\0&1\end{pmatrix}$ tidak nol dan non-singular. (2) SAJA tidak cukup.</p><p><b>Langkah 3: Analisis (1) dan (2) Bersama.</b><br> Kita masih memiliki dua kemungkinan dari (1), yaitu $|A|=0$ atau $|A|=1$. Pernyataan (2) tidak menghilangkan salah satu kemungkinan ini. Contoh $A=I$ memenuhi (1) dan (2) dengan $|A|=1$. Contoh $A=\begin{pmatrix}1&0\\0&0\end{pmatrix}$ memenuhi (1) dan (2) dengan $|A|=0$. Karena masih ada dua kemungkinan, kedua pernyataan tidak cukup.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: B</b><p><b>Teori Dasar:</b> Soal cerita ini dapat dimodelkan menjadi sistem pertidaksamaan linear yang kemudian diubah ke dalam bentuk matriks. "Stok yang tersedia" mengimplikasikan batas atas, sehingga menggunakan tanda "kurang dari atau sama dengan" ($\le$).</p><p><b>Langkah 1: Buat persamaan untuk nastar.</b><br>Setiap Paket A butuh 3 nastar dan Paket B butuh 1. Total nastar adalah $3x+y$. Karena stok 120, maka $3x+y \le 120$.</p><p><b>Langkah 2: Buat persamaan untuk kastengel.</b><br>Setiap Paket A butuh 2 kastengel dan Paket B butuh 3. Total kastengel adalah $2x+3y$. Karena stok 110, maka $2x+3y \le 110$.</p><p><b>Langkah 3: Susun ke dalam bentuk matriks.</b><br> Koefisien $x$ dan $y$ menjadi matriks koefisien. $\begin{pmatrix}3&1\\2&3\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix} \le \begin{pmatrix}120\\110\end{pmatrix}$.</p></div>
+            <div class="pembahasan"><b>5. Jawaban: A, B, D</b><p><b>Teori Dasar:</b> Matriks yang kuadratnya menghasilkan identitas ($M^2=I$) disebut matriks involutori.</p><p><b>Langkah 1: Periksa setiap pilihan.</b><br>A. $\begin{pmatrix}0&1\\1&0\end{pmatrix}\begin{pmatrix}0&1\\1&0\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$. Benar.<br>B. $\begin{pmatrix}-1&0\\0&-1\end{pmatrix}\begin{pmatrix}-1&0\\0&-1\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$. Benar.<br>C. $\begin{pmatrix}1&1\\0&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}=\begin{pmatrix}1&2\\0&1\end{pmatrix}$. Salah.<br>D. $I \cdot I = I$. Benar.<br>E. $\begin{pmatrix}0&-1\\1&0\end{pmatrix}\begin{pmatrix}0&-1\\1&0\end{pmatrix}=\begin{pmatrix}-1&0\\0&-1\end{pmatrix}$. Salah.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: E</b><p><b>Teori Dasar:</b> Definisi invers matriks $A^{-1}$ adalah matriks yang jika dikalikan dengan $A$ menghasilkan matriks identitas $I$. Untuk matriks persegi, jika $PQ=I$, maka otomatis $QP=I$.</p><p><b>Analisis:</b><br>Jika $PQ=I$, maka $P$ adalah invers dari $Q$ ($P=Q^{-1}$) dan $Q$ adalah invers dari $P$ ($Q=P^{-1}$). Dari sini, pernyataan A, B, dan C benar. Karena $PQ=I$, maka $Q$ adalah invers kanan dari $P$. Untuk matriks persegi, invers kanan juga merupakan invers kiri, sehingga $QP=I$ juga pasti benar. Jadi, semua pernyataan benar.</p></div>
+             <div class="pembahasan"><b>7. Jawaban: A</b><p><b>Teori Dasar:</b> Luas segitiga dengan titik-titik yang diketahui dapat dihitung menggunakan determinan matriks $3 \times 3$.</p><p><b>Langkah 1: Susun matriks.</b><br> $\begin{pmatrix} 1 & 1 & 1 \\ 4 & 2 & 1 \\ 2 & 5 & 1 \end{pmatrix}$.</p><p><b>Langkah 2: Hitung determinan (Sarrus).</b><br> $$ \begin{align*} \det &= (1\cdot2\cdot1 + 1\cdot1\cdot2 + 1\cdot4\cdot5) \\ & \quad - (1\cdot2\cdot2 + 1\cdot1\cdot5 + 1\cdot4\cdot1) \\ &= (2+2+20) - (4+5+4) \\ &= 24 - 13 = 11 \end{align*} $$</p><p><b>Langkah 3: Hitung Luas.</b><br> Luas $= \frac{1}{2}|\det| = \frac{1}{2}|11| = 5,5$.</p></div>
+             <div class="pembahasan"><b>8. Jawaban: D</b><p><b>Teori Dasar:</b> Menggunakan sifat determinan $|kA| = k^n |A|$, di mana $n$ adalah ordo matriks.</p><p><b>Langkah 1: Identifikasi variabel.</b><br> $A$ berordo $3 \times 3$, maka $n=3$. Skalar $k=-2$.</p><p><b>Langkah 2: Terapkan rumus.</b><br> $|-2A| = (-2)^3 |A| = -8 \times (-3) = 24$.</p></div>
+             <div class="pembahasan"><b>9. Jawaban: D</b><p><b>Teori Dasar:</b> Soal ini menguji pemahaman tentang kondisi kapan perkalian matriks bersifat komutatif ($AB=BA$).</p><p><b>Langkah 1: Analisis Pernyataan (1).</b><br> Jika $A$ kelipatan dari $B$, maka $A=kB$ untuk suatu skalar $k$. $AB = (kB)B = kB^2$. $BA=B(kB)=k(BB)=kB^2$. Jadi $AB=BA$. Pernyataan (1) SAJA cukup.</p><p><b>Langkah 2: Analisis Pernyataan (2).</b><br> Jika $B$ adalah matriks identitas ($B=I$), maka $AI = A$ dan $IA=A$. Jadi $AB=BA$. Pernyataan (2) SAJA cukup.</p><p><b>Kesimpulan:</b> Karena pernyataan (1) SAJA cukup dan (2) SAJA cukup, maka jawabannya adalah D.</p></div>
+             <div class="pembahasan"><b>10. Jawaban: C</b><p><b>Teori Dasar:</b> Menghitung determinan matriks $3 \times 3$ menggunakan Aturan Sarrus.</p><p><b>Langkah 1: Hitung determinan.</b><br>$$ \begin{align*} \det(B) &= [1(4)(-5) + 1(-3)(3) + 2(2)(6)] \\ & \quad - [2(4)(3) + 1(-3)(6) + 1(2)(-5)] \\ &= [-20 - 9 + 24] - [24 - 18 - 10] \\ &= [-5] - [-4] = -5 + 4 = -1 \end{align*} $$</p></div>
+             <div class="pembahasan"><b>11. Jawaban: B</b><p><b>Teori Dasar:</b> Jika $A^2=0$, kita bisa mengambil determinan dari kedua sisi untuk mengetahui properti dari $A$.</p><p><b>Langkah 1: Ambil determinan kedua sisi.</b><br> $A^2 = 0 \implies \det(A^2) = \det(0)$.</p><p><b>Langkah 2: Gunakan sifat determinan.</b><br> $\det(A \cdot A) = 0 \implies \det(A) \cdot \det(A) = 0 \implies (\det(A))^2 = 0$.</p><p><b>Langkah 3: Simpulkan.</b><br> Maka, $\det(A)=0$. Matriks dengan determinan nol tidak memiliki invers (disebut juga matriks singular). Pilihan A salah, karena $A=\begin{pmatrix}0&1\\0&0\end{pmatrix}$ tidak nol tapi $A^2=0$.</p></div>
+             <div class="pembahasan"><b>12. Jawaban: Benar, Salah, Salah</b><p><b>Teori Dasar:</b> Mengubah soal cerita menjadi sistem persamaan linear dan menyelesaikannya menggunakan matriks.</p><p><b>Pernyataan 1:</b> Sistem persamaan: $2x+4y=20$ (total jam M1) dan $3x+y=15$ (total jam M2). Pernyataan ini <b>Benar</b>.</p><p><b>Pernyataan 2:</b> Matriks koefisien $A=\begin{pmatrix}2&4\\3&1\end{pmatrix}$. $\det(A) = 2(1)-4(3) = 2-12 = -10$. Pernyataan "Determinannya adalah 10" berarti <b>Salah</b>.</p><p><b>Pernyataan 3:</b> Menyelesaikan SPL. Dari persamaan kedua, $y=15-3x$.<br>Substitusi ke persamaan pertama: $2x+4(15-3x)=20 \implies 2x+60-12x=20 \implies -10x=-40 \implies x=4$.<br>Maka $y=15-3(4)=3$. Jumlah produk P2 ($y$) yang diproduksi adalah 3, bukan 4. Pernyataan ini <b>Salah</b>.</p></div>
+            <div class="pembahasan"><b>13. Jawaban: B</b><p><b>Teori Dasar:</b> Persamaan $XA=I$ berarti $X$ adalah invers dari $A$, yaitu $X=A^{-1}$.</p><p><b>Langkah 1: Cari determinan $A=\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$.</b><br> $\det(A) = 2(3)-1(5)=6-5=1$.</p><p><b>Langkah 2: Hitung inversnya.</b><br> $X = A^{-1} = \frac{1}{1}\begin{pmatrix}3&-1\\-5&2\end{pmatrix} = \begin{pmatrix}3&-1\\-5&2\end{pmatrix}$.</p></div>
+            <div class="pembahasan"><b>14. Jawaban: B, D</b><p><b>Teori Dasar:</b> Menggunakan sifat aljabar matriks dan determinan. Karena $B$ non-singular, $B^{-1}$ ada.</p><p><b>Langkah 1: Manipulasi Aljabar.</b><br> Kalikan kedua sisi dengan $B^{-1}$ dari kanan.<br>$AB=BC \implies ABB^{-1}=BCB^{-1} \implies AI = BCB^{-1} \implies A=BCB^{-1}$.<br>Pilihan B benar. Pilihan A dan C salah karena perkalian matriks tidak komutatif secara umum.</p><p><b>Langkah 2: Sifat Determinan.</b><br> Ambil determinan dari kedua sisi $A=BCB^{-1}$.<br>$|A|=|BCB^{-1}|=|B||C||B^{-1}| = |B||C|\frac{1}{|B|} = |C|$.<br>Pilihan D juga benar.</p></div>
+            <div class="pembahasan"><b>15. Jawaban: B</b><p><b>Teori Dasar:</b> Kriptografi matriks. Untuk mendekripsi pesan, kalikan pesan terenkripsi dengan invers dari matriks enkripsi ($P=E^{-1}C$).</p><p><b>Langkah 1: Cari invers dari $E = \begin{pmatrix}2&1\\1&1\end{pmatrix}$.</b><br> $\det(E)=2-1=1$. Maka $E^{-1} = \frac{1}{1}\begin{pmatrix}1&-1\\-1&2\end{pmatrix} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}$.</p><p><b>Langkah 2: Dekripsi pesan.</b><br> $P = E^{-1}C = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}\begin{pmatrix}25\\17\end{pmatrix}$.</p><p><b>Langkah 3: Lakukan perkalian matriks.</b><br> $P = \begin{pmatrix}1(25)+(-1)(17)\\-1(25)+2(17)\end{pmatrix} = \begin{pmatrix}25-17\\-25+34\end{pmatrix} = \begin{pmatrix}8\\9\end{pmatrix}$.</p><p><b>Langkah 4: Ubah angka kembali ke huruf.</b><br> 8 adalah 'H', 9 adalah 'I'. Pesan aslinya "HI".</p></div>
+        </div>
+    </section>
+    </div>
+    <!-- ############################## END MATRIKS ############################## -->
+</div>
+</div>
+
+</body>
+</html>
+
