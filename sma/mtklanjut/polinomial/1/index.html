@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal TKA - Polinomial</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 24pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+             margin-bottom: 20px;
+             break-inside: avoid;
+             overflow-wrap: break-word;
+             word-wrap: break-word;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 20px;
+        }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; break-inside: avoid; }
+        .pembahasan p {
+            margin-bottom: 1.2em;
+        }
+        .pembahasan p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="book-container watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Polinomial (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- ############################## START POLINOMIAL ############################## -->
+    <div id="polinomial">
+    <section class="page page-content">
+      <div class="content-wrapper">
+        <h2>Topik 2: Polinomial</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Polinomial atau suku banyak adalah ekspresi matematika yang terdiri dari variabel dan koefisien. Bentuk umum polinomial dalam satu variabel $x$ dengan derajat $n$ adalah:
+            $P(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$
+            di mana $a_n, a_{n-1}, \dots, a_0$ adalah koefisien bilangan real, $a_n \neq 0$, dan $n$ adalah bilangan bulat non-negatif.</p>
+            
+            <h4>Operasi Polinomial</h4>
+            <ul>
+                <li><b>Penjumlahan & Pengurangan:</b> Menjumlahkan atau mengurangkan koefisien dari suku-suku yang memiliki pangkat variabel yang sama.</li>
+                <li><b>Perkalian:</b> Menggunakan sifat distributif untuk mengalikan setiap suku dari satu polinomial dengan setiap suku dari polinomial lainnya.</li>
+            </ul>
+            
+            <h4>Pembagian Polinomial dan Teorema Sisa</h4>
+            <p>Algoritma pembagian polinomial menyatakan bahwa untuk setiap polinomial $P(x)$ dan pembagi $D(x)$ (dengan $D(x) \neq 0$), terdapat polinomial unik $H(x)$ (hasil bagi) dan $S(x)$ (sisa) sehingga:
+            $P(x) = D(x) \cdot H(x) + S(x)$
+            di mana derajat $S(x)$ lebih kecil dari derajat $D(x)$.</p>
+            <ul>
+                <li><b>Teorema Sisa:</b> Jika polinomial $P(x)$ dibagi oleh $(x-k)$, maka sisa pembagiannya adalah $S = P(k)$.</li>
+                <li><b>Teorema Faktor:</b> $(x-k)$ adalah sebuah faktor dari polinomial $P(x)$ jika dan hanya jika $P(k)=0$.</li>
+            </ul>
+
+            <h4>Akar-Akar Polinomial dan Teorema Vieta</h4>
+            <p>Akar dari sebuah polinomial $P(x)$ adalah nilai $x$ yang membuat $P(x)=0$. Teorema Vieta memberikan hubungan antara akar-akar sebuah polinomial dengan koefisien-koefisiennya.</p>
+            <b>Untuk polinomial derajat tiga $ax^3+bx^2+cx+d=0$ dengan akar-akar $x_1, x_2, x_3$:</b>
+            <ul>
+                <li>$x_1+x_2+x_3 = -b/a$</li>
+                <li>$x_1x_2+x_1x_3+x_2x_3 = c/a$</li>
+                <li>$x_1x_2x_3 = -d/a$</li>
+            </ul>
+            <b>Untuk polinomial derajat empat $ax^4+bx^3+cx^2+dx+e=0$ dengan akar-akar $x_1, x_2, x_3, x_4$:</b>
+            <ul>
+                <li>$\sum x_i = -b/a$</li>
+                <li>$\sum x_ix_j = c/a$</li>
+                <li>$\sum x_ix_jx_k = -d/a$</li>
+                <li>$x_1x_2x_3x_4 = e/a$</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Jika polinomial $P(x) = 2x^3 - 5x^2 + ax + 18$ habis dibagi oleh $(x-3)$, maka sisa pembagian $P(x)$ oleh $(2x+1)$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">15</li><li data-option="B">18.5</li><li data-option="C">21</li><li data-option="D">22.5</li><li data-option="E">24</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Soal ini menerapkan Teorema Faktor dan Teorema Sisa. Jika $P(x)$ habis dibagi $(x-k)$, maka $P(k)=0$. Sisa pembagian $P(x)$ oleh $(ax+b)$ adalah $P(-b/a)$.</p><p><b>Langkah 1: Gunakan Teorema Faktor untuk mencari nilai $a$.</b><br>Karena $P(x)$ habis dibagi oleh $(x-3)$, maka $P(3)=0$.<br>$P(3) = 2(3)^3 - 5(3)^2 + a(3) + 18 = 0$<br>$54 - 45 + 3a + 18 = 0$<br>$3a + 27 = 0 \implies a = -9$.</p><p><b>Langkah 2: Susun ulang polinomial $P(x)$.</b><br>$P(x) = 2x^3 - 5x^2 - 9x + 18$.</p><p><b>Langkah 3: Gunakan Teorema Sisa.</b><br>Sisa pembagiannya oleh $(2x+1)$ adalah $P(-1/2)$.<br>$P(-1/2) = 2(-1/8) - 5(1/4) - 9(-1/2) + 18$<br>$= -1/4 - 5/4 + 18/4 + 72/4 = 84/4 = 21$.<br><b>Jawaban yang benar adalah C.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <b>Soal 2.</b> Diberikan polinomial $P(x) = x^3 + ax^2 + bx - 6$. Apakah $(x-1)$ merupakan faktor dari $P(x)$?
+                    <div class="kecukupan-data-stmt">(1) $P(x)$ habis dibagi oleh $(x+2)$.</div>
+                    <div class="kecukupan-data-stmt">(2) Jumlah akar-akar dari $P(x)$ adalah 1.</div>
+                     <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Pernyataan "$(x-1)$ merupakan faktor" ekuivalen dengan $P(1)=0$. $P(1) = 1+a+b-6 = a+b-5$. Pertanyaannya adalah: "Apakah $a+b=5$?".</p><p><b>Langkah 1: Analisis Pernyataan (1).</b><br>Habis dibagi $(x+2)$ berarti $P(-2)=0$.<br>$(-2)^3 + a(-2)^2 + b(-2) - 6 = 0$<br>$-8 + 4a - 2b - 6 = 0 \implies 2a-b=7$.<br>Ini tidak cukup untuk menentukan $a+b$.</p><p><b>Langkah 2: Analisis Pernyataan (2).</b><br>Jumlah akar-akar adalah 1. Menurut Vieta, jumlah akar-akar $= -a/1 = -a$. Maka $-a=1 \implies a=-1$. Ini tidak cukup untuk menentukan $a+b$.</p><p><b>Langkah 3: Analisis (1) dan (2) Bersama.</b><br>Dari (2), $a=-1$. Substitusi ke (1): $2(-1)-b=7 \implies -2-b=7 \implies b=-9$. Maka $a+b = -1-9=-10$. Karena kita bisa menjawab "Apakah $a+b=5$?" (jawabannya "Tidak"), maka kedua pernyataan cukup.<br><b>Jawaban yang benar adalah C.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 3.</b> Akar-akar persamaan $x^3-4x^2-11x+30=0$ adalah $x_1, x_2, x_3$. Nilai dari $x_1^2+x_2^2+x_3^2$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-6</li><li data-option="B">16</li><li data-option="C">25</li><li data-option="D">38</li><li data-option="E">49</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Soal ini menggunakan identitas aljabar dan Teorema Vieta. Identitas yang relevan adalah $(a+b+c)^2 = a^2+b^2+c^2 + 2(ab+ac+bc)$, sehingga $a^2+b^2+c^2 = (a+b+c)^2 - 2(ab+ac+bc)$.</p><p><b>Langkah 1: Identifikasi koefisien dan terapkan Teorema Vieta.</b><br>Dari $x^3-4x^2-11x+30=0$, kita punya $a=1, b=-4, c=-11, d=30$.<br>Jumlah akar: $x_1+x_2+x_3 = -b/a = -(-4)/1 = 4$.<br>Jumlah perkalian dua akar: $x_1x_2+x_1x_3+x_2x_3 = c/a = -11/1 = -11$.</p><p><b>Langkah 2: Gunakan identitas aljabar.</b><br>$x_1^2+x_2^2+x_3^2 = (x_1+x_2+x_3)^2 - 2(x_1x_2+x_1x_3+x_2x_3)$.</p><p><b>Langkah 3: Substitusi nilai dari Vieta.</b><br>$= (4)^2 - 2(-11) = 16 + 22 = 38$.<br><b>Jawaban yang benar adalah D.</b></p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda Kompleks</div>
+                    <b>Soal 4.</b> Polinomial $P(x)$ dibagi $(x^2-1)$ bersisa $(2x+3)$ dan dibagi $(x^2-4)$ bersisa $(x-1)$. Manakah pernyataan berikut yang benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$P(1) = 5$</li><li data-option="B">$P(-1) = 1$</li><li data-option="C">$P(2) = 1$</li><li data-option="D">$P(-2) = -3$</li><li data-option="E">Sisa pembagian $P(x)$ oleh $(x-2)(x-1)$ adalah $-4x+9$.</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Menggunakan Teorema Sisa. Jika $P(x)$ dibagi $D(x)$ bersisa $S(x)$, maka untuk setiap akar $k$ dari $D(x)$, berlaku $P(k)=S(k)$.</p><p><b>Langkah 1: Analisis informasi pertama.</b><br>Dibagi $(x^2-1)$ atau $(x-1)(x+1)$ sisa $S_1(x)=2x+3$.<br>$P(1) = S_1(1) = 2(1)+3 = 5$. (Pernyataan A benar).<br>$P(-1) = S_1(-1) = 2(-1)+3 = 1$. (Pernyataan B benar).</p><p><b>Langkah 2: Analisis informasi kedua.</b><br>Dibagi $(x^2-4)$ atau $(x-2)(x+2)$ sisa $S_2(x)=x-1$.<br>$P(2) = S_2(2) = 2-1 = 1$. (Pernyataan C benar).<br>$P(-2) = S_2(-2) = -2-1 = -3$. (Pernyataan D benar).</p><p><b>Langkah 3: Analisis informasi kelima.</b><br>Sisa bagi oleh $(x-2)(x-1)$ adalah $S_3(x)=mx+n$.<br>$P(2)=1 \implies m(2)+n=1 \implies 2m+n=1$.<br>$P(1)=5 \implies m(1)+n=5 \implies m+n=5$.<br>Kurangkan kedua persamaan: $m = -4$. Substitusi $m=-4$ ke $m+n=5$ didapat $-4+n=5 \implies n=9$. Sisanya $-4x+9$. (Pernyataan E benar).<br><b>Jawaban yang benar adalah A, B, C, D, dan E.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi (HOTS) | Tipe: Pilihan Ganda Kompleks Kategori</div>
+                    <b>Soal 5.</b> Ketinggian sebuah roket air setelah $t$ detik diluncurkan dimodelkan oleh polinomial $h(t) = -t^3 + 12t^2$. Roket akan jatuh kembali ke tanah saat $h(t)=0$. Periksa kebenaran pernyataan berikut.
+                    <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                    <tr><td>1. Roket jatuh kembali ke tanah setelah 12 detik.</td><td></td><td></td></tr>
+                    <tr><td>2. Ketinggian roket setelah 2 detik adalah 40 meter.</td><td></td><td></td></tr>
+                    <tr><td>3. Faktor dari polinomial ketinggian adalah $-t^2(t-12)$.</td><td></td><td></td></tr>
+                    </tbody></table>
+                     <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Pernyataan 1:</b><br>Roket jatuh saat $h(t)=0$ untuk $t>0$.<br>$-t^3 + 12t^2 = 0 \implies -t^2(t-12)=0$.<br>Solusinya adalah $t=0$ (saat peluncuran) dan $t=12$. Jadi roket jatuh setelah 12 detik. Pernyataan 1 <b>Benar</b>.</p><p><b>Pernyataan 2:</b><br>Substitusi $t=2$ ke dalam fungsi ketinggian.<br>$h(2) = -(2)^3 + 12(2)^2 = -8 + 12(4) = -8 + 48 = 40$. Pernyataan 2 <b>Benar</b>.</p><p><b>Pernyataan 3:</b><br>Pemfaktoran dari $h(t) = -t^3+12t^2$ adalah $-t^2(t-12)$. Pernyataan 3 <b>Benar</b>.</p></div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 6.</b> Sebuah polinomial $P(x)$ berderajat 3 memiliki faktor $(x-1)$ dan $(x+2)$. Jika $P(x)$ dibagi $(x-2)$ bersisa 24 dan $P(0)=-4$, maka $P(x)$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2x^3+4x^2-2x-4$</li><li data-option="B">$x^3+2x^2-x-2$</li><li data-option="C">$x^3+x^2-4x-4$</li><li data-option="D">$2x^3+x^2-8x-4$</li><li data-option="E">$2x^3-4x^2+2x+4$</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Jika sebuah polinomial berderajat 3 memiliki dua faktor linear, maka faktor ketiganya juga harus linear. Kita dapat menulis $P(x)$ sebagai hasil kali faktor-faktornya.</p><p><b>Langkah 1: Bentuk umum $P(x)$.</b><br>Karena faktornya $(x-1)$ dan $(x+2)$, dan berderajat 3, maka bentuk umumnya $P(x)=k(x-1)(x+2)(x-c)$.</p><p><b>Langkah 2: Gunakan informasi yang diberikan.</b><br>$P(0)=-4 \implies k(-1)(2)(-c)=-4 \implies 2kc=-4 \implies kc=-2$.<br>$P(2)=24 \implies k(1)(4)(2-c)=24 \implies k(2-c)=6$.</p><p><b>Langkah 3: Selesaikan sistem untuk $k$ dan $c$.</b><br>Dari $k(2-c)=6$, kita dapat $2k-kc=6$.<br>Substitusikan $kc=-2$: $2k-(-2)=6 \implies 2k=4 \implies k=2$.<br>Kemudian, $2c=-2 \implies c=-1$.</p><p><b>Langkah 4: Susun kembali dan ekspansi $P(x)$.</b><br>$P(x) = 2(x-1)(x+2)(x-(-1)) = 2(x-1)(x+2)(x+1)$.<br>$= 2(x^2+x-2)(x+1)$<br>$= 2(x^3+x^2+x^2+x-2x-2)$<br>$= 2(x^3+2x^2-x-2) = 2x^3+4x^2-2x-4$.<br><b>Jawaban yang benar adalah A.</b></p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div><b>1.</b> Koefisien $x^3$ dari hasil perkalian $(x^2-x+3)(2x^3-x^2+4)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">1</li><li data-option="C">5</li><li data-option="D">7</li><li data-option="E">9</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div><b>2.</b> Koefisien suku $x^2$ dari polinomial $P(x)=(2x-1)^3$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-12</li><li data-option="B">-6</li><li data-option="C">6</li><li data-option="D">8</li><li data-option="E">12</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>3.</b> Jika polinomial $P(x)$ dibagi $(x-1)$ sisanya 3 dan dibagi $(x+2)$ sisanya -6. Sisa pembagian $P(x)$ oleh $x^2+x-2$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3x$</li><li data-option="B">$3x+1$</li><li data-option="C">$3x-2$</li><li data-option="D">$2x+1$</li><li data-option="E">$-3x+6$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>4.</b> Salah satu akar dari persamaan $x^3+ax^2-x-2=0$ adalah $x=-2$. Jumlah kuadrat akar-akar lainnya adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>5.</b> Selembar karton berbentuk persegi panjang dengan ukuran 16 cm x 10 cm akan dibuat sebuah kotak tanpa tutup dengan cara memotong empat persegi identik di setiap pojoknya, lalu melipat sisinya ke atas. Jika panjang sisi persegi yang dipotong adalah $x$ cm, volume kotak sebagai fungsi dari $x$, $V(x)$, adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$4x^3-52x^2+160x$</li><li data-option="B">$2x^3-26x^2+160x$</li><li data-option="C">$x^3-26x^2+160x$</li><li data-option="D">$4x^3-26x^2+160x$</li><li data-option="E">$4x^3-52x^2+80x$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>6.</b> Apakah 1 adalah satu-satunya akar real dari $P(x)=x^3-1$? <div class="kecukupan-data-stmt">(1) $P(x)$ dapat difaktorkan menjadi $(x-1)(x^2+x+1)$.</div> <div class="kecukupan-data-stmt">(2) Diskriminan dari faktor kuadratnya adalah negatif.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks</div><b>7.</b> Diketahui polinomial $P(x)=x^4-10x^2+9$. Manakah pernyataan berikut yang benar? <b>(bisa pilih lebih dari satu jawaban)</b><div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Jumlah akar-akarnya adalah 0.</li><li data-option="B">Semua akarnya adalah bilangan real.</li><li data-option="C">$P(x)$ habis dibagi oleh $(x^2-1)$.</li><li data-option="D">Grafik $y=P(x)$ simetris terhadap sumbu-y.</li><li data-option="E">Hasil kali akar-akarnya adalah 9.</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>8.</b> Jika $x^2-2x-3$ merupakan faktor dari $x^4-2x^3-7x^2+ax+b$, maka nilai $a-b$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-20</li><li data-option="B">-4</li><li data-option="C">4</li><li data-option="D">14</li><li data-option="E">20</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>9.</b> Diketahui akar-akar persamaan $2x^3-4x^2-18x+36=0$ adalah $p, q, r$. Nilai dari $1/p + 1/q + 1/r$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1/2</li><li data-option="C">1/2</li><li data-option="D">2</li><li data-option="E">4</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>10.</b> Perkiraan populasi serangga (dalam ribuan) di suatu area setelah $t$ bulan dimodelkan oleh $P(t) = 2t^3 - 18t^2 + 36t + 5$. Populasi akan kembali ke level awal (5 ribu) pada bulan ke...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">3 dan 5</li><li data-option="B">3 dan 6</li><li data-option="C">2 dan 7</li><li data-option="D">2 dan 8</li><li data-option="E">Hanya bulan ke-9</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>11.</b> Polinomial $P(x)$ jika dibagi $(x^2-x)$ bersisa $(4-3x)$ dan jika dibagi $(x^2+x)$ bersisa $(4-x)$. Sisa pembagian $P(x)$ oleh $(x^2-1)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x+2$</li><li data-option="B">$2x+3$</li><li data-option="C">$-2x+3$</li><li data-option="D">$3x-2$</li><li data-option="E">$-x+4$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>12.</b> Diketahui $P(x) = x^3 - 3x^2 + k$. Apakah $P(x)$ memiliki sebuah akar bilangan bulat positif? <div class="kecukupan-data-stmt">(1) $k$ adalah bilangan genap.</div> <div class="kecukupan-data-stmt">(2) $k=2$.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>13.</b> Persamaan $x^4-8x^3+14x^2+8x-15=0$ memiliki akar-akar yang membentuk deret aritmetika. Nilai dari selisih akar terbesar dan terkecil adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">4</li><li data-option="C">6</li><li data-option="D">8</li><li data-option="E">10</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks Kategori</div><b>14.</b> Akar-akar dari $P(x) = x^3-6x^2+11x-6=0$ adalah $x_1, x_2, x_3$. Periksa kebenaran pernyataan berikut.
+                    <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                    <tr><td>1. Akar-akarnya adalah 1, 2, dan 3.</td><td></td><td></td></tr>
+                    <tr><td>2. Jumlah kebalikan akar-akarnya adalah 11/6.</td><td></td><td></td></tr>
+                    <tr><td>3. $P(x)$ habis dibagi oleh $(x-4)$.</td><td></td><td></td></tr>
+                    </tbody></table></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>15.</b> Konsentrasi obat dalam darah pasien setelah $t$ jam dimodelkan dengan $C(t) = -2t^3 + 12t^2 - 10t + 30$. Obat dianggap efektif selama konsentrasinya berada di atas 30 unit. Berapa lama (dalam jam) obat tersebut efektif?<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 jam</li><li data-option="B">2 jam</li><li data-option="C">3 jam</li><li data-option="D">4 jam</li><li data-option="E">5 jam</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">Kunci Jawaban dan Pembahasan Latihan Soal: Polinomial</h3>
+            <div class="pembahasan"><b>1. Jawaban: D</b><p><b>Teori Dasar:</b> Koefisien $x^k$ dari hasil perkalian dua polinomial diperoleh dengan menjumlahkan hasil kali suku-suku $x^i$ dan $x^j$ di mana $i+j=k$.</p><p><b>Langkah 1: Identifikasi pasangan suku yang menghasilkan $x^3$.</b><br>Dari $(x^2-x+3)(2x^3-x^2+4)$, suku $x^3$ dapat terbentuk dari:<br>- Suku $x^2$ dari polinomial pertama dikali suku $x$ dari kedua: $(x^2)(0x) = 0$.<br>- Suku $x$ dari pertama dikali suku $x^2$ dari kedua: $(-x)(-x^2) = x^3$.<br>- Suku konstanta dari pertama dikali suku $x^3$ dari kedua: $(3)(2x^3) = 6x^3$.</p><p><b>Langkah 2: Jumlahkan koefisiennya.</b><br>Koefisien total = $1 + 6 = 7$.</p></div>
+            <div class="pembahasan"><b>2. Jawaban: A</b><p><b>Teori Dasar:</b> Menggunakan Binomial Newton atau ekspansi langsung. $(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$.</p><p><b>Langkah 1: Ekspansi $P(x)=(2x-1)^3$.</b><br>Dengan $a=2x$ dan $b=1$:<br>$P(x) = (2x)^3 - 3(2x)^2(1) + 3(2x)(1)^2 - (1)^3$<br>$= 8x^3 - 3(4x^2) + 6x - 1$<br>$= 8x^3 - 12x^2 + 6x - 1$.</p><p><b>Langkah 2: Identifikasi koefisien $x^2$.</b><br>Koefisien dari suku $x^2$ adalah -12.</p></div>
+            <div class="pembahasan"><b>3. Jawaban: A</b><p><b>Teori Dasar:</b> Jika pembagi berderajat 2, sisa pembagiannya $S(x)$ berderajat 1, yaitu $S(x)=mx+n$.</p><p><b>Langkah 1: Faktorkan pembagi.</b><br>$x^2+x-2 = (x-1)(x+2)$.</p><p><b>Langkah 2: Terapkan Teorema Sisa.</b><br>$P(1)=3$ dan $P(-2)=-6$.</p><p><b>Langkah 3: Susun sistem persamaan untuk sisa $S(x)=mx+n$.</b><br>$S(1)=P(1) \implies m(1)+n=3 \implies m+n=3$.<br>$S(-2)=P(-2) \implies m(-2)+n=-6 \implies -2m+n=-6$.</p><p><b>Langkah 4: Selesaikan sistem persamaan.</b><br>Kurangkan kedua persamaan: $(m+n)-(-2m+n)=3-(-6) \implies 3m=9 \implies m=3$.<br>Substitusi $m=3$ ke $m+n=3$, didapat $3+n=3 \implies n=0$.</p><p><b>Langkah 5: Tuliskan sisa.</b><br>$S(x) = 3x+0 = 3x$.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: B</b><p><b>Teori Dasar:</b> Jika $k$ adalah akar, maka $P(k)=0$. Gunakan informasi ini untuk mencari $a$, lalu gunakan Vieta untuk mencari akar lain.</p><p><b>Langkah 1: Cari $a$.</b><br>Karena $x=-2$ adalah akar, maka $P(-2)=0$.<br>$(-2)^3+a(-2)^2-(-2)-2=0$<br>$-8+4a+2-2=0 \implies 4a=8 \implies a=2$.</p><p><b>Langkah 2: Gunakan Vieta pada $x^3+2x^2-x-2=0$.</b><br>Misal akar-akarnya $x_1, x_2, x_3$. Kita tahu $x_1=-2$.<br>$x_1+x_2+x_3 = -2/1 = -2 \implies -2+x_2+x_3 = -2 \implies x_2+x_3=0$.<br>$x_1x_2x_3 = -(-2)/1 = 2 \implies (-2)x_2x_3 = 2 \implies x_2x_3 = -1$.</p><p><b>Langkah 3: Hitung jumlah kuadrat akar lain.</b><br>$x_2^2+x_3^2 = (x_2+x_3)^2-2x_2x_3 = (0)^2-2(-1)=2$.</p></div>
+            <div class="pembahasan"><b>5. Jawaban: A</b><p><b>Teori Dasar:</b> Volume balok adalah panjang $\times$ lebar $\times$ tinggi.</p><p><b>Langkah 1: Tentukan dimensi kotak.</b><br>Panjang awal: 16. Setelah dipotong $x$ di kedua sisi: $p=16-2x$.<br>Lebar awal: 10. Setelah dipotong $x$ di kedua sisi: $l=10-2x$.<br>Tinggi lipatan: $t=x$.</p><p><b>Langkah 2: Hitung volume.</b><br>$V(x)=p \cdot l \cdot t = (16-2x)(10-2x)x$<br>$= (160-32x-20x+4x^2)x = (4x^2-52x+160)x$<br>$= 4x^3-52x^2+160x$.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: C</b><p><b>Teori Dasar:</b> Akar real adalah nilai $x$ yang memenuhi $P(x)=0$. Faktor kuadrat yang tidak memiliki akar real memiliki diskriminan negatif ($D=b^2-4ac < 0$).</p><p><b>Langkah 1: Analisis Pernyataan (1).</b><br>Pemfaktoran $P(x)=(x-1)(x^2+x+1)$ menunjukkan bahwa $x=1$ adalah akar. Untuk mencari akar lain, kita perlu menganalisis faktor $x^2+x+1=0$. Pernyataan (1) saja belum memberitahu sifat akar dari faktor kuadrat ini.</p><p><b>Langkah 2: Analisis Pernyataan (2).</b><br>Diskriminan faktor kuadratnya negatif. Ini memberitahu kita bahwa faktor kuadrat tersebut tidak memiliki akar real. Namun, tanpa tahu apa faktor kuadratnya, kita tidak bisa menyimpulkan apa-apa tentang $P(x)$ secara keseluruhan.</p><p><b>Langkah 3: Analisis (1) dan (2) Bersama.</b><br>Dari (1) kita tahu faktornya $(x-1)$ dan $(x^2+x+1)$. Dari (2) kita tahu diskriminan $x^2+x+1$ adalah negatif (cek: $1^2-4(1)(1)=-3 < 0$), sehingga tidak punya akar real. Maka, satu-satunya akar real dari $P(x)$ adalah $x=1$. Kedua pernyataan bersama-sama cukup.</p></div>
+            <div class="pembahasan"><b>7. Jawaban: A, B, C, D, E</b><p><b>Teori Dasar:</b> Faktorkan polinomial dengan substitusi $y=x^2$ dan gunakan Teorema Vieta.</p><p><b>Langkah 1: Faktorkan.</b><br>$y=x^2 \implies y^2-10y+9=0 \implies (y-9)(y-1)=0$.<br>Maka $x^2=9$ atau $x^2=1$. Akar-akarnya: $x=3, -3, 1, -1$.</p><p><b>Langkah 2: Analisis Pilihan.</b><br><b>A:</b> Jumlah akar: $3-3+1-1=0$. (Benar).<br><b>B:</b> Semua akar (3,-3,1,-1) adalah real. (Benar).<br><b>C:</b> $P(x)=(x^2-9)(x^2-1)$, jelas habis dibagi $(x^2-1)$. (Benar).<br><b>D:</b> $P(x)$ hanya memiliki pangkat genap ($x^4, x^2, x^0$), ini adalah ciri fungsi genap yang simetris terhadap sumbu-y. (Benar).<br><b>E:</b> Hasil kali akar: $(3)(-3)(1)(-1)=9$. (Benar).</p></div>
+            <div class="pembahasan"><b>8. Jawaban: B</b><p><b>Teori Dasar:</b> Jika $D(x)$ adalah faktor dari $P(x)$, maka akar-akar dari $D(x)$ juga merupakan akar dari $P(x)$.</p><p><b>Langkah 1: Cari akar dari faktor.</b><br>$x^2-2x-3=0 \implies (x-3)(x+1)=0$. Akarnya adalah $x=3$ dan $x=-1$.</p><p><b>Langkah 2: Gunakan akar-akar untuk membuat sistem persamaan.</b><br>$P(3)=0 \implies 3^4-2(3^3)-7(3^2)+3a+b=0$<br>$81-54-63+3a+b=0 \implies 3a+b=36$.<br>$P(-1)=0 \implies (-1)^4-2(-1^3)-7(-1^2)-a+b=0$<br>$1+2-7-a+b=0 \implies -a+b=4$.</p><p><b>Langkah 3: Selesaikan SPL.</b><br>Kurangkan persamaan pertama dengan kedua: $(3a+b)-(-a+b)=36-4 \implies 4a=32 \implies a=8$.<br>Substitusi: $-8+b=4 \implies b=12$.</p><p><b>Langkah 4: Hitung $a-b$.</b><br>$a-b = 8-12 = -4$.</p></div>
+            <div class="pembahasan"><b>9. Jawaban: C</b><p><b>Teori Dasar:</b> Gunakan Teorema Vieta dan manipulasi aljabar. $1/p+1/q+1/r = (qr+pr+pq)/(pqr)$.</p><p><b>Langkah 1: Terapkan Vieta pada $2x^3-4x^2-18x+36=0$.</b><br>$a=2, b=-4, c=-18, d=36$.<br>$pq+pr+qr = c/a = -18/2 = -9$.<br>$pqr = -d/a = -36/2 = -18$.</p><p><b>Langkah 2: Hitung ekspresi.</b><br>$(pq+pr+qr)/(pqr) = -9/(-18) = 1/2$.</p></div>
+            <div class="pembahasan"><b>10. Jawaban: B</b><p><b>Teori Dasar:</b> Populasi kembali ke level awal berarti $P(t)=5$.</p><p><b>Langkah 1: Susun persamaan.</b><br>$2t^3 - 18t^2 + 36t + 5 = 5 \implies 2t^3 - 18t^2 + 36t = 0$.</p><p><b>Langkah 2: Selesaikan persamaan untuk $t>0$.</b><br>$2t(t^2-9t+18)=0 \implies 2t(t-3)(t-6)=0$.<br>Akar-akar positifnya adalah $t=3$ dan $t=6$.</p></div>
+            <div class="pembahasan"><b>11. Jawaban: C</b><p><b>Teori Dasar:</b> Kombinasi Teorema Sisa dari beberapa pembagi.</p><p><b>Langkah 1: Ekstrak informasi.</b><br>Dibagi $x(x-1)$ sisa $4-3x \implies P(0)=4, P(1)=4-3(1)=1$.<br>Dibagi $x(x+1)$ sisa $4-x \implies P(0)=4, P(-1)=4-(-1)=5$.</p><p><b>Langkah 2: Sisa bagi oleh $x^2-1=(x-1)(x+1)$ adalah $S(x)=mx+n$.</b><br>$S(1)=P(1)=1 \implies m+n=1$.<br>$S(-1)=P(-1)=5 \implies -m+n=5$.</p><p><b>Langkah 3: Selesaikan SPL.</b><br>Jumlahkan kedua persamaan: $2n=6 \implies n=3$.<br>Substitusi ke $m+n=1 \implies m+3=1 \implies m=-2$. Sisanya $S(x)=-2x+3$.</p></div>
+            <div class="pembahasan"><b>12. Jawaban: B</b><p><b>Teori Dasar:</b> Teorema Akar Rasional menyatakan akar bulat haruslah faktor dari konstanta $k$.</p><p><b>Langkah 1: Analisis Pernyataan (1).</b><br>$k$ adalah bilangan genap. Jika $k=2$, $P(1)=1-3+2=0$, maka $x=1$ adalah akar. Jika $k=4$, faktor positif yang mungkin adalah 1, 2, 4. $P(1)=2$, $P(2)=-4$, $P(4)=16$. Tidak ada akar bulat positif. Jadi (1) SAJA tidak cukup.</p><p><b>Langkah 2: Analisis Pernyataan (2).</b><br>$k=2$. Faktor bulat positif yang mungkin dari $k=2$ adalah 1 dan 2.<br>$P(1)=1-3+2=0$. Kita menemukan akar bulat positif. Jadi (2) SAJA cukup untuk menjawab "Ya".</p></div>
+            <div class="pembahasan"><b>13. Jawaban: C</b><p><b>Teori Dasar:</b> Akar-akar dalam deret aritmetika. Cara paling efisien adalah menguji akar rasional yang mungkin.</p><p><b>Langkah 1: Uji Teorema Akar Rasional.</b><br>Faktor dari -15 adalah $\pm 1, \pm 3, \pm 5, \pm 15$.<br>$P(1)=1-8+14+8-15=0$. Jadi $x=1$ adalah akar.<br>$P(-1)=1+8+14-8-15=0$. Jadi $x=-1$ adalah akar.<br>$P(3)=81-8(27)+14(9)+8(3)-15$<br>$= 81-216+126+24-15=0$. Jadi $x=3$ adalah akar.<br>$P(5)=625-8(125)+14(25)+8(5)-15$<br>$= 625-1000+350+40-15=0$. Jadi $x=5$ adalah akar.</p><p><b>Langkah 2: Analisis akar.</b><br>Akar-akarnya adalah -1, 1, 3, 5. Ini adalah deret aritmetika dengan beda 2. Selisih terbesar dan terkecil adalah $5 - (-1) = 6$.</p></div>
+             <div class="pembahasan"><b>14. Jawaban: Benar, Benar, Salah</b><p><b>Pernyataan 1:</b> Uji akar-akar bulat yang mungkin (faktor dari -6: $\pm 1, \pm 2, \pm 3$).<br>$P(1)=1-6+11-6=0$.<br>$P(2)=8-24+22-6=0$.<br>$P(3)=27-54+33-6=0$. Pernyataan <b>Benar</b>.</p><p><b>Pernyataan 2:</b> Jumlah kebalikan: $\frac{x_1x_2+x_1x_3+x_2x_3}{x_1x_2x_3} = \frac{c/a}{-d/a} = \frac{c}{-d} = \frac{11}{-(-6)} = \frac{11}{6}$. Pernyataan <b>Benar</b>.</p><p><b>Pernyataan 3:</b> $P(4) = 4^3-6(4^2)+11(4)-6 = 64-96+44-6 = 6 \neq 0$. Tidak habis dibagi. Pernyataan <b>Salah</b>.</p></div>
+             <div class="pembahasan"><b>15. Jawaban: D</b><p><b>Teori Dasar:</b> Mencari interval waktu $t>0$ di mana pertidaksamaan polinomial $C(t) > 30$ terpenuhi.</p><p><b>Langkah 1: Susun pertidaksamaan.</b><br>$-2t^3 + 12t^2 - 10t + 30 > 30$<br>$-2t^3 + 12t^2 - 10t > 0$.</p><p><b>Langkah 2: Sederhanakan dan faktorkan.</b><br>Bagi kedua sisi dengan $-2t$. Karena pembagi negatif dan mengandung variabel $t>0$, tanda pertidaksamaan berbalik.<br>$t^2 - 6t + 5 < 0$.<br>$(t-1)(t-5) < 0$.</p><p><b>Langkah 3: Tentukan interval.</b><br>Akar-akarnya adalah $t=1$ dan $t=5$. Karena pertidaksamaan adalah "$<0$", kita mencari interval di antara kedua akar tersebut.<br>Intervalnya adalah $1 < t < 5$.</p><p><b>Langkah 4: Hitung durasi.</b><br>Lama waktu obat efektif adalah panjang interval, yaitu $5 - 1 = 4$ jam.</p></div>
+        </div>
+    </section>
+    </div>
+    <!-- ############################## END POLINOMIAL ############################## -->
+
+
+    <!-- KONTEN LENGKAP UNTUK TOPIK 3-7 akan ditambahkan di sini dengan format yang sama -->
+    <section id="fungsi" class="page">
+       <div class="content-wrapper">
+        <h2>Topik 3: Fungsi</h2>
+        <!-- Konten Fungsi Lengkap -->
+       </div>
+    </section>
+    <section id="vektor" class="page">
+       <div class="content-wrapper">
+        <h2>Topik 4: Vektor</h2>
+        <!-- Konten Vektor Lengkap -->
+       </div>
+    </section>
+    <section id="lingkaran" class="page">
+       <div class="content-wrapper">
+        <h2>Topik 5: Lingkaran</h2>
+        <!-- Konten Lingkaran Lengkap -->
+       </div>
+    </section>
+    <section id="transformasi" class="page">
+       <div class="content-wrapper">
+        <h2>Topik 6: Transformasi Geometri</h2>
+        <!-- Konten Transformasi Geometri Lengkap -->
+       </div>
+    </section>
+    <section id="limit" class="page">
+       <div class="content-wrapper">
+        <h2>Topik 7: Limit</h2>
+        <!-- Konten Limit Lengkap -->
+       </div>
+    </section>
+</div>
+</div>
+
+</body>
+</html>
