@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Hacking: Dekripsi TKA Matematika Lanjut - Vektor</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global',
+            linebreaks: { automatic: true }
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm; /* Ukuran B5 */
+            min-height: 250mm; /* Ukuran B5 */
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 350px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 38pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 20pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2, .sub-section, .kumpulan-pembahasan h3 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 24pt;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+            margin-bottom: 20px;
+            break-inside: avoid;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 20px;
+        }
+        
+        .pembahasan { 
+            background-color: #f9f9f9; 
+            border: 1px solid var(--border-color); 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin-top: 10px; 
+            break-inside: avoid; 
+            overflow-wrap: break-word; 
+            word-wrap: break-word; 
+        }
+        .pembahasan p { margin-bottom: 1.2em; }
+        .pembahasan p:last-child { margin-bottom: 0; }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            background-color: white;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+        
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Vektor (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- ############################## START VEKTOR ############################## -->
+    <div id="vektor">
+    <section class="page page-content">
+      <div class="content-wrapper">
+        <h2>Vektor</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Vektor adalah besaran yang memiliki besar (panjang) dan arah. Dalam matematika, vektor seringkali direpresentasikan sebagai segmen garis berarah. Vektor sangat penting dalam fisika untuk menggambarkan gaya, kecepatan, dan perpindahan.</p>
+            
+            <h4>Vektor pada Bidang ($R^2$) dan Ruang ($R^3$)</h4>
+            <ul>
+                <li><b>Vektor Posisi:</b> Vektor yang berpangkal di titik $O(0,0,0)$ dan berujung di titik $A$. Vektor posisi titik $A(x,y,z)$ ditulis $\vec{a} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$.</li>
+                <li><b>Vektor Basis:</b> Vektor dapat ditulis sebagai kombinasi linear dari vektor basis $\hat{i}$, $\hat{j}$, dan $\hat{k}$. $\vec{v} = v_x \hat{i} + v_y \hat{j} + v_z \hat{k}$.</li>
+                <li><b>Vektor antara Dua Titik:</b> Vektor dari titik $A$ ke $B$ adalah $\vec{AB} = \vec{b} - \vec{a} = \begin{pmatrix} x_B-x_A \\ y_B-y_A \\ z_B-z_A \end{pmatrix}$.</li>
+            </ul>
+
+            <h4>Panjang Vektor (Magnitudo/Besar)</h4>
+            <p>Panjang vektor $\vec{v} = v_x \hat{i} + v_y \hat{j} + v_z \hat{k}$ dilambangkan dengan $|\vec{v}|$ dan dihitung dengan: $$ |\vec{v}| = \sqrt{v_x^2 + v_y^2 + v_z^2} $$</p>
+            
+            <h4>Operasi Vektor</h4>
+            <ul>
+                <li><b>Penjumlahan dan Pengurangan:</b> Menjumlahkan/mengurangkan komponen yang bersesuaian.</li>
+                <li><b>Perkalian Skalar:</b> Mengalikan setiap komponen vektor dengan skalar $k$. $k\vec{a} = \begin{pmatrix} ka_x \\ ka_y \\ ka_z \end{pmatrix}$.</li>
+                <li><b>Perkalian Titik (Dot Product):</b> Hasilnya adalah skalar. Berguna untuk mencari sudut dan menguji ketegaklurusan.<br>
+                $\vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z$<br>
+                $\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos\theta$. Jika $\vec{a} \cdot \vec{b} = 0$, maka $\vec{a} \perp \vec{b}$.</li>
+                <li><b>Proyeksi Vektor:</b><br>
+                - Proyeksi Skalar Ortogonal $\vec{a}$ pada $\vec{b}$: $ |p| = \frac{\vec{a} \cdot \vec{b}}{|\vec{b}|} $<br>
+                - Proyeksi Vektor Ortogonal $\vec{a}$ pada $\vec{b}$: $ \vec{p} = \frac{\vec{a} \cdot \vec{b}}{|\vec{b}|^2} \vec{b} $</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Diketahui vektor $\vec{u} = 2\hat{i} - 3\hat{j} + 4\hat{k}$ dan $\vec{v} = -\hat{i} + 5\hat{j} - 2\hat{k}$. Vektor hasil dari $2\vec{u} - \vec{v}$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3\hat{i} - 8\hat{j} + 6\hat{k}$</li><li data-option="B">$5\hat{i} - 11\hat{j} + 10\hat{k}$</li><li data-option="C">$5\hat{i} + 11\hat{j} - 10\hat{k}$</li><li data-option="D">$3\hat{i} + 2\hat{j} + 2\hat{k}$</li><li data-option="E">$4\hat{i} - 6\hat{j} + 8\hat{k}$</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Langkah 1: Hitung $2\vec{u}$.</b><br>$2\vec{u} = 2(2\hat{i} - 3\hat{j} + 4\hat{k}) = 4\hat{i} - 6\hat{j} + 8\hat{k}$.</p><p><b>Langkah 2: Hitung $2\vec{u} - \vec{v}$.</b><br>$(4\hat{i} - 6\hat{j} + 8\hat{k}) - (-\hat{i} + 5\hat{j} - 2\hat{k})$<br>$= (4 - (-1))\hat{i} + (-6 - 5)\hat{j} + (8 - (-2))\hat{k}$<br>$= 5\hat{i} - 11\hat{j} + 10\hat{k}$.</p><p><b>Jawaban yang benar adalah B.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <b>Soal 2.</b> Diketahui titik $P(1, -2, 5)$ dan $Q(2, -4, 4)$. Jika vektor $\vec{a}$ mewakili vektor $\vec{PQ}$, maka panjang vektor $\vec{a}$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\sqrt{3}$</li><li data-option="B">$\sqrt{5}$</li><li data-option="C">$\sqrt{6}$</li><li data-option="D">3</li><li data-option="E">6</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Langkah 1: Tentukan komponen vektor $\vec{a} = \vec{PQ}$.</b><br>$\vec{a} = Q - P = (2-1)\hat{i} + (-4 - (-2))\hat{j} + (4-5)\hat{k} = 1\hat{i} - 2\hat{j} - 1\hat{k}$.</p><p><b>Langkah 2: Hitung panjang vektor $\vec{a}$.</b><br>$|\vec{a}| = \sqrt{(1)^2 + (-2)^2 + (-1)^2} = \sqrt{1 + 4 + 1} = \sqrt{6}$.</p><p><b>Jawaban yang benar adalah C.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <b>Soal 3.</b> Dua buah gaya, $\vec{F_1} = (2\hat{i} + 2\hat{j} - \hat{k})$ N dan $\vec{F_2} = (\hat{i} - 2\hat{j} + 2\hat{k})$ N, bekerja pada sebuah benda. Jika sudut antara kedua vektor gaya adalah $\theta$, maka nilai $\cos\theta$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$-4/9$</li><li data-option="B">$-1/3$</li><li data-option="C">$0$</li><li data-option="D">$1/3$</li><li data-option="E">$4/9$</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> $\cos\theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}$.</p><p><b>Langkah 1: Hitung dot product $\vec{F_1} \cdot \vec{F_2}$.</b><br>$\vec{F_1} \cdot \vec{F_2} = (2)(1) + (2)(-2) + (-1)(2) = 2 - 4 - 2 = -4$.</p><p><b>Langkah 2: Hitung panjang (magnitudo) masing-masing vektor.</b><br>$|\vec{F_1}| = \sqrt{2^2 + 2^2 + (-1)^2} = \sqrt{9} = 3$.<br>$|\vec{F_2}| = \sqrt{1^2 + (-2)^2 + 2^2} = \sqrt{9} = 3$.</p><p><b>Langkah 3: Hitung $\cos\theta$.</b><br>$\cos\theta = \frac{-4}{3 \cdot 3} = -\frac{4}{9}$.</p><p><b>Jawaban yang benar adalah A.</b></p></div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <b>Soal 4.</b> Diberikan vektor $\vec{a} = x\hat{i} - 4\hat{j} + \hat{k}$ dan $\vec{b} = x\hat{i} + x\hat{j} - 3\hat{k}$. Apakah kedua vektor tersebut saling tegak lurus? <br>
+                    (1) $x^2 - 4x - 3 = 0$<br>
+                    (2) $x = 2 + \sqrt{7}$
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Dua vektor saling tegak lurus jika $\vec{a} \cdot \vec{b} = 0$.<br>$\vec{a} \cdot \vec{b} = (x)(x) + (-4)(x) + (1)(-3) = x^2 - 4x - 3$. Pertanyaannya menjadi, "Apakah $x^2 - 4x - 3 = 0$?".</p><p><b>Analisis Pernyataan (1):</b> Pernyataan ini secara langsung memberikan syarat yang harus dipenuhi agar vektor tegak lurus. Cukup.</p><p><b>Analisis Pernyataan (2):</b> Kita substitusi $x = 2 + \sqrt{7}$ ke $x^2 - 4x - 3$.<br>$(2+\sqrt{7})^2 - 4(2+\sqrt{7}) - 3 = (4+4\sqrt{7}+7) - (8+4\sqrt{7}) - 3 = 11+4\sqrt{7}-8-4\sqrt{7}-3 = 0$. Karena hasilnya 0, pernyataan ini juga cukup.</p><p><b>Kesimpulan:</b> SALAH SATU pernyataan SAJA cukup. Jawaban yang benar adalah D.</p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda Kompleks Kategori</div>
+                    <b>Soal 5.</b> Sebuah partikel bergerak dari titik $A(1, 2, 3)$ ke titik $B(4, 6, 15)$. Vektor perpindahan partikel adalah $\vec{s}$. Tentukan kebenaran dari setiap pernyataan berikut.
+                    <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                    <tr><td>1. Komponen vektor perpindahan adalah $\vec{s} = 3\hat{i} + 4\hat{j} + 12\hat{k}$.</td><td></td><td></td></tr>
+                    <tr><td>2. Jarak yang ditempuh partikel adalah 13 satuan.</td><td></td><td></td></tr>
+                    <tr><td>3. Vektor satuan dari vektor perpindahan adalah $\frac{1}{13}(3\hat{i} + 4\hat{j} + 12\hat{k})$.</td><td></td><td></td></tr>
+                    </tbody></table>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Langkah 1 (Pernyataan 1): Hitung vektor perpindahan.</b><br>$\vec{s} = B - A = (4-1)\hat{i} + (6-2)\hat{j} + (15-3)\hat{k} = 3\hat{i} + 4\hat{j} + 12\hat{k}$. (Benar)</p><p><b>Langkah 2 (Pernyataan 2): Hitung jarak (panjang vektor).</b><br>$|\vec{s}| = \sqrt{3^2 + 4^2 + 12^2} = \sqrt{9 + 16 + 144} = \sqrt{169} = 13$. (Benar)</p><p><b>Langkah 3 (Pernyataan 3): Tentukan vektor satuan.</b><br>Vektor satuan $\hat{s} = \frac{\vec{s}}{|\vec{s}|} = \frac{3\hat{i} + 4\hat{j} + 12\hat{k}}{13}$. (Benar)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div><b>1.</b> Diberikan $\vec{p} = \begin{pmatrix} 4 \\ -1 \\ 2 \end{pmatrix}$ dan $\vec{q} = \begin{pmatrix} -3 \\ -5 \\ 1 \end{pmatrix}$. Hasil dari $\vec{p} \cdot \vec{q}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-12</li><li data-option="B">-5</li><li data-option="C">5</li><li data-option="D">19</li><li data-option="E">21</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>2.</b> Vektor posisi titik A dan B adalah $\vec{a} = 2\hat{i}+\hat{j}-3\hat{k}$ dan $\vec{b} = 4\hat{i}-2\hat{j}+\hat{k}$. Panjang dari vektor $\vec{AB}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\sqrt{17}$</li><li data-option="B">$\sqrt{21}$</li><li data-option="C">$\sqrt{29}$</li><li data-option="D">6</li><li data-option="E">7</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>3.</b> Agar vektor $\vec{a} = (p, 2, -1)$ dan $\vec{b} = (4, -3, 6)$ saling tegak lurus, maka nilai $p$ harus...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">4</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>4.</b> Sebuah pesawat terbang bergerak dengan kecepatan $\vec{v}_p = (100\hat{i} + 20\hat{j})$ km/jam relatif terhadap udara. Angin bertiup dengan kecepatan $\vec{v}_a = (10\hat{i} - 5\hat{j})$ km/jam. Kecepatan resultan pesawat relatif terhadap tanah adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$(90\hat{i} + 25\hat{j})$ km/jam</li><li data-option="B">$(110\hat{i} + 15\hat{j})$ km/jam</li><li data-option="C">$(110\hat{i} + 25\hat{j})$ km/jam</li><li data-option="D">$(90\hat{i} + 15\hat{j})$ km/jam</li><li data-option="E">$(100\hat{i} + 15\hat{j})$ km/jam</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>5.</b> Diketahui $|\vec{a}|=4$, $|\vec{b}|=6$, dan sudut antara $\vec{a}$ dan $\vec{b}$ adalah $60^\circ$. Nilai dari $\vec{a} \cdot (\vec{a}+\vec{b})$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">16</li><li data-option="B">24</li><li data-option="C">28</li><li data-option="D">32</li><li data-option="E">40</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div><b>6.</b> Diberikan vektor $\vec{v} = 6\hat{i} - 8\hat{k}$. Vektor satuan yang searah dengan $\vec{v}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$0.6\hat{i} - 0.8\hat{k}$</li><li data-option="B">$6\hat{i} - 8\hat{k}$</li><li data-option="C">$3\hat{i} - 4\hat{k}$</li><li data-option="D">$0.8\hat{i} - 0.6\hat{k}$</li><li data-option="E">$\frac{1}{100}(6\hat{i} - 8\hat{k})$</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>7.</b> Diberikan vektor $\vec{u} = 2\hat{i}+2\hat{j}-\hat{k}$ dan $\vec{v} = 2\hat{i}-3\hat{j}+6\hat{k}$. Proyeksi vektor ortogonal $\vec{u}$ pada $\vec{v}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$-\frac{8}{49}(2\hat{i}-3\hat{j}+6\hat{k})$</li><li data-option="B">$-\frac{8}{7}(2\hat{i}-3\hat{j}+6\hat{k})$</li><li data-option="C">$-\frac{4}{49}(2\hat{i}-3\hat{j}+6\hat{k})$</li><li data-option="D">$-8(2\hat{i}-3\hat{j}+6\hat{k})$</li><li data-option="E">$-\frac{4}{7}(2\hat{i}-3\hat{j}+6\hat{k})$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>8.</b> Vektor $\vec{a} = 3\hat{i}+p\hat{j}+2\hat{k}$ memiliki panjang 7. Nilai $p$ yang mungkin adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\pm\sqrt{13}$</li><li data-option="B">$\pm\sqrt{36}$</li><li data-option="C">$\pm 6$</li><li data-option="D">$\pm 36$</li><li data-option="E">Salah semua</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>9.</b> Diberikan tiga titik $A, B, C$. Apakah ketiga titik tersebut segaris (kolinear)?<br>
+                (1) $\vec{AB} = k \cdot \vec{BC}$ untuk suatu skalar $k \neq 0$.<br>
+                (2) $\vec{AC} = \vec{AB} + \vec{BC}$.
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>10.</b> Diketahui vektor $\vec{u}$ dan $\vec{v}$ membentuk sudut $\theta$. Jika $|\vec{u}|=3$, $|\vec{v}|=5$, dan $|\vec{u}+\vec{v}|=7$, maka nilai $|\vec{u}-\vec{v}|$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\sqrt{13}$</li><li data-option="B">$\sqrt{15}$</li><li data-option="C">$\sqrt{17}$</li><li data-option="D">$\sqrt{19}$</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (HOTS) | Tipe: Pilihan Ganda</div><b>11.</b> Dua orang pendaki, Ali dan Budi, memulai dari titik awal yang sama, $O(0,0)$. Ali berjalan ke titik $A(3, 4)$ km. Budi berjalan ke titik $B(-2, 3)$ km. Vektor perpindahan dari posisi Ali ke posisi Budi adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$5\hat{i} + \hat{j}$</li><li data-option="B">$\hat{i} + 7\hat{j}$</li><li data-option="C">$-5\hat{i} - \hat{j}$</li><li data-option="D">$5\hat{i} - \hat{j}$</li><li data-option="E">$-5\hat{i} + \hat{j}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda Kompleks Kategori</div><b>12.</b> Diberikan $\vec{a} = \hat{i}+2\hat{j}$ dan $\vec{b}=3\hat{i}-\hat{j}$. Tentukan kebenaran dari setiap pernyataan berikut.
+                 <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Sesuai</th><th>Tidak Sesuai</th></tr></thead><tbody>
+                    <tr><td>1. Panjang vektor $\vec{a}$ adalah $\sqrt{5}$.</td><td></td><td></td></tr>
+                    <tr><td>2. Hasil $\vec{a} \cdot \vec{b}$ adalah 1.</td><td></td><td></td></tr>
+                    <tr><td>3. Vektor $\vec{a}+\vec{b}$ adalah $4\hat{i}+\hat{j}$.</td><td></td><td></td></tr>
+                    </tbody></table></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>13.</b> Diketahui $\vec{u}= (2, 1, -2)$ dan $\vec{v}=(1, -3, 2)$. Vektor $2\vec{u}-3\vec{v}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">(1, 11, -10)</li><li data-option="B">(1, -7, 2)</li><li data-option="C">(7, -1, -2)</li><li data-option="D">(7, -7, 10)</li><li data-option="E">(-1, -11, 10)</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>14.</b> Titik-titik $A(1, 4, 2), B(3, 1, -1), C(4, 2, 2)$ adalah titik sudut segitiga ABC. Vektor $\vec{AB}$ sama dengan...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2\hat{i}-3\hat{j}-3\hat{k}$</li><li data-option="B">$-2\hat{i}+3\hat{j}+3\hat{k}$</li><li data-option="C">$4\hat{i}+5\hat{j}+\hat{k}$</li><li data-option="D">$3\hat{i}-2\hat{j}+4\hat{k}$</li><li data-option="E">$2\hat{i}+3\hat{j}+3\hat{k}$</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>15.</b> Jika vektor $\vec{a}$ dan $\vec{b}$ memenuhi $(\vec{a}+\vec{b})\cdot(\vec{a}-\vec{b})=0$ dan keduanya bukan vektor nol, maka...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\vec{a} \perp \vec{b}$</li><li data-option="B">$|\vec{a}|=|\vec{b}|$</li><li data-option="C">$\vec{a} = \vec{b}$</li><li data-option="D">$\vec{a} = -\vec{b}$</li><li data-option="E">Sudut antara $\vec{a}$ dan $\vec{b}$ adalah $60^\circ$</li></ol></div></div><div class="coret-coret"></div></div>
+             </div>
+        </div>
+    </section>
+
+    <section class="page page-content kumpulan-pembahasan">
+        <div class="content-wrapper">
+            <h3>Kunci Jawaban dan Pembahasan Latihan Soal: Vektor</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><p>$\vec{p} \cdot \vec{q} = (4)(-3) + (-1)(-5) + (2)(1) = -12 + 5 + 2 = -5$.</p></div>
+            <div class="pembahasan"><b>2. Jawaban: C</b><p>$\vec{AB} = \vec{b} - \vec{a} = (4-2)\hat{i} + (-2-1)\hat{j} + (1-(-3))\hat{k} = 2\hat{i} - 3\hat{j} + 4\hat{k}$.<br>$|\vec{AB}| = \sqrt{2^2+(-3)^2+4^2} = \sqrt{4+9+16} = \sqrt{29}$.</p></div>
+            <div class="pembahasan"><b>3. Jawaban: D</b><p>Syarat tegak lurus: $\vec{a} \cdot \vec{b} = 0$.<br>$(p)(4) + (2)(-3) + (-1)(6) = 0 \implies 4p - 6 - 6 = 0 \implies 4p = 12 \implies p=3$.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: B</b><p>Kecepatan resultan: $\vec{v}_r = \vec{v}_p + \vec{v}_a = (100\hat{i} + 20\hat{j}) + (10\hat{i} - 5\hat{j}) = (100+10)\hat{i} + (20-5)\hat{j} = 110\hat{i} + 15\hat{j}$.</p></div>
+            <div class="pembahasan"><b>5. Jawaban: C</b><p>Gunakan sifat distributif: $\vec{a} \cdot (\vec{a}+\vec{b}) = \vec{a}\cdot\vec{a} + \vec{a}\cdot\vec{b} = |\vec{a}|^2 + |\vec{a}||\vec{b}|\cos60^\circ$.<br>$= 4^2 + (4)(6)(1/2) = 16 + 12 = 28$.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: A</b><p>Panjang vektor $|\vec{v}| = \sqrt{6^2+(-8)^2} = \sqrt{36+64} = \sqrt{100}=10$.<br>Vektor satuan $\hat{v} = \frac{\vec{v}}{|\vec{v}|} = \frac{6\hat{i}-8\hat{k}}{10} = 0.6\hat{i} - 0.8\hat{k}$.</p></div>
+            <div class="pembahasan"><b>7. Jawaban: A</b><p><b>Teori Dasar:</b> Proyeksi vektor $\vec{u}$ pada $\vec{v}$ adalah $\vec{p} = \frac{\vec{u} \cdot \vec{v}}{|\vec{v}|^2} \vec{v}$.<br><b>Langkah 1: Hitung $\vec{u} \cdot \vec{v}$.</b><br>$\vec{u} \cdot \vec{v} = (2)(2) + (2)(-3) + (-1)(6) = 4 - 6 - 6 = -8$.<br><b>Langkah 2: Hitung $|\vec{v}|^2$.</b><br>$|\vec{v}|^2 = 2^2 + (-3)^2 + 6^2 = 4 + 9 + 36 = 49$.<br><b>Langkah 3: Susun proyeksi vektor.</b><br>$\vec{p} = \frac{-8}{49} \vec{v} = -\frac{8}{49}(2\hat{i}-3\hat{j}+6\hat{k})$.</p></div>
+            <div class="pembahasan"><b>8. Jawaban: C</b><p>$|\vec{a}|=7 \implies \sqrt{3^2+p^2+2^2}=7 \implies \sqrt{13+p^2}=7$.<br>Kuadratkan: $13+p^2=49 \implies p^2=36 \implies p=\pm 6$.</p></div>
+            <div class="pembahasan"><b>9. Jawaban: A</b><p><b>Analisis (1):</b> $\vec{AB} = k \cdot \vec{BC}$ adalah definisi formal tiga titik segaris. Ini berarti $\vec{AB}$ sejajar dengan $\vec{BC}$ dan berbagi titik B. Cukup.<br><b>Analisis (2):</b> $\vec{AC} = \vec{AB} + \vec{BC}$ (Aturan Segitiga) selalu benar untuk tiga titik manapun, tidak peduli segaris atau tidak. Tidak cukup.</p></div>
+            <div class="pembahasan"><b>10. Jawaban: D</b>
+                <p>$|\vec{u}+\vec{v}|^2 = |\vec{u}|^2+2\vec{u}\cdot\vec{v}+|\vec{v}|^2$<br>
+                $7^2=3^2+2\vec{u}\cdot\vec{v}+5^2$<br>
+                $49=9+2\vec{u}\cdot\vec{v}+25 \implies 2\vec{u}\cdot\vec{v}=15$.<br><br>
+                $|\vec{u}-\vec{v}|^2 = |\vec{u}|^2-2\vec{u}\cdot\vec{v}+|\vec{v}|^2$<br>
+                $|\vec{u}-\vec{v}|^2 = 3^2 - 15 + 5^2 = 9-15+25 = 19$.<br>
+                Maka, $|\vec{u}-\vec{v}| = \sqrt{19}$.
+                </p>
+            </div>
+            <div class="pembahasan"><b>11. Jawaban: C</b><p><b>Teori Dasar:</b> Vektor perpindahan dari titik A ke B adalah $\vec{AB} = \vec{b} - \vec{a}$.<br>Vektor posisi Ali adalah $\vec{a} = 3\hat{i}+4\hat{j}$.<br>Vektor posisi Budi adalah $\vec{b} = -2\hat{i}+3\hat{j}$.<br>Vektor dari Ali ke Budi adalah $\vec{AB} = \vec{b} - \vec{a} = (-2-3)\hat{i} + (3-4)\hat{j} = -5\hat{i} - \hat{j}$.</p></div>
+            <div class="pembahasan"><b>12. Jawaban: Sesuai, Sesuai, Sesuai</b><p>1. $|\vec{a}| = \sqrt{1^2+2^2} = \sqrt{5}$. (Sesuai)<br>2. $\vec{a}\cdot\vec{b} = (1)(3)+(2)(-1)=1$. (Sesuai)<br>3. $\vec{a}+\vec{b}=(1+3)\hat{i}+(2-1)\hat{j}=4\hat{i}+\hat{j}$. (Sesuai)</p></div>
+            <div class="pembahasan"><b>13. Jawaban: A</b><p>$2\vec{u} = (4, 2, -4)$, $3\vec{v} = (3, -9, 6)$.<br>$2\vec{u}-3\vec{v} = (4-3, 2-(-9), -4-6) = (1, 11, -10)$.</p></div>
+            <div class="pembahasan"><b>14. Jawaban: A</b><p>$\vec{AB} = B - A = (3-1)\hat{i}+(1-4)\hat{j}+(-1-2)\hat{k} = 2\hat{i}-3\hat{j}-3\hat{k}$.</p></div>
+            <div class="pembahasan"><b>15. Jawaban: B</b><p>$(\vec{a}+\vec{b})\cdot(\vec{a}-\vec{b}) = \vec{a}\cdot\vec{a} - \vec{b}\cdot\vec{b} = |\vec{a}|^2 - |\vec{b}|^2$.<br>Jika $|\vec{a}|^2 - |\vec{b}|^2 = 0$, maka $|\vec{a}|^2 = |\vec{b}|^2$, yang berarti $|\vec{a}|=|\vec{b}|$. Kedua vektor memiliki panjang yang sama.</p></div>
+        </div>
+    </section>
+    </div>
+    <!-- ############################## END VEKTOR ############################## -->
+
+</div>
+
+</body>
+</html>
+
