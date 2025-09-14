@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal TKA - Fungsi</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global',
+            linebreaks: { automatic: true }
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 24pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+              margin-bottom: 20px;
+              break-inside: avoid;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 20px;
+        }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; break-inside: avoid; overflow-wrap: break-word; word-wrap: break-word; }
+        .pembahasan p {
+            margin-bottom: 1.2em;
+        }
+        .pembahasan p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="book-container watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Fungsi (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- ############################## START FUNGSI ############################## -->
+    <div id="fungsi">
+    <section class="page page-content">
+      <div class="content-wrapper">
+        <h2>Topik 3: Fungsi</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Fungsi adalah relasi khusus yang memetakan setiap anggota dari himpunan asal (domain) ke tepat satu anggota himpunan kawan (kodomain). Himpunan semua nilai output yang mungkin disebut daerah hasil (range).</p>
+            
+            <h4>Domain, Kodomain, dan Range</h4>
+            <ul>
+                <li><b>Domain ($D_f$):</b> Himpunan semua input $x$ agar fungsi terdefinisi.</li>
+                <li><b>Kodomain:</b> Himpunan semua output yang mungkin.</li>
+                <li><b>Range ($R_f$):</b> Himpunan semua output $y$ yang dihasilkan oleh fungsi.</li>
+            </ul>
+            
+            <h4>Grafik dan Karakteristik Fungsi</h4>
+            <p><b>1. Fungsi Polinomial: $f(x) = a_n x^n + \dots + a_0$</b></p>
+            <ul>
+                <li><b>Domain:</b> Selalu $\mathbb{R}$ (semua bilangan real).</li>
+                <li><b>Grafik:</b> Kurva mulus dan kontinu. Perilaku ujung grafik ditentukan oleh suku dengan pangkat tertinggi ($a_n x^n$).</li>
+                <li><b>Contoh:</b> $f(x)=x^3-x$. Grafiknya naik, turun, lalu naik lagi.</li>
+            </ul>
+
+            <p><b>2. Fungsi Rasional: $f(x) = \frac{P(x)}{Q(x)}$, $P(x), Q(x)$ polinomial</b></p>
+            <ul>
+                <li><b>Domain:</b> Semua bilangan real kecuali pembuat nol penyebut ($Q(x) \neq 0$).</li>
+                <li><b>Grafik:</b> Mungkin memiliki asimtot. <b>Asimtot tegak</b> terjadi di $x=c$ jika $Q(c)=0$ dan $P(c) \neq 0$. <b>Asimtot datar</b> $y=b$ ditentukan oleh perbandingan derajat $P(x)$ dan $Q(x)$.</li>
+            </ul>
+
+            <p><b>3. Fungsi Eksponensial: $f(x) = a^x$, $a>0, a \neq 1$</b></p>
+             <ul>
+                <li><b>Domain:</b> $\mathbb{R}$.</li>
+                <li><b>Range:</b> $\{y | y > 0\}$.</li>
+                <li><b>Grafik:</b> Monoton naik jika $a>1$ dan monoton turun jika $0<a<1$. Memiliki <b>asimtot datar</b> di sumbu-x ($y=0$) dan memotong sumbu-y di $(0,1)$.</li>
+            </ul>
+
+            <p><b>4. Fungsi Logaritma: $f(x) = ^{a}\log x$, $a>0, a \neq 1$</b></p>
+            <ul>
+                <li><b>Domain:</b> $\{x | x > 0\}$ (numerus harus positif).</li>
+                <li><b>Range:</b> $\mathbb{R}$.</li>
+                <li><b>Grafik:</b> Merupakan invers dari fungsi eksponensial. Memiliki <b>asimtot tegak</b> di sumbu-y ($x=0$) dan memotong sumbu-x di $(1,0)$.</li>
+            </ul>
+
+             <p><b>5. Fungsi Nilai Mutlak: $f(x) = |g(x)|$</b></p>
+            <ul>
+                <li><b>Domain:</b> Mengikuti domain $g(x)$.</li>
+                <li><b>Range:</b> Selalu non-negatif, $\{y | y \ge 0\}$.</li>
+                <li><b>Grafik:</b> Bagian grafik $g(x)$ yang berada di bawah sumbu-x akan dicerminkan terhadap sumbu-x. Biasanya berbentuk 'V' atau memiliki sudut tajam.</li>
+            </ul>
+
+            <p><b>6. Fungsi Trigonometri: (Contoh: $f(x) = A\sin(kx+b)+C$)</b></p>
+            <ul>
+                <li><b>Domain:</b> $\mathbb{R}$ untuk sinus dan kosinus.</li>
+                <li><b>Grafik:</b> Bersifat periodik (berulang). <b>Amplitudo</b> ($|A|$) adalah simpangan maksimum. <b>Periode</b> ($2\pi/|k|$) adalah panjang satu siklus gelombang.</li>
+                <li><b>Range:</b> $[-A+C, A+C]$.</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Diberikan fungsi rasional $f(x) = \frac{2x^2 - 8}{x^2 - x - 6}$. Jumlah dari absis titik potong dengan sumbu-x dan persamaan asimtot datarnya adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Titik potong sumbu-x terjadi saat pembilang bernilai nol ($f(x)=0$). Asimtot datar ditemukan dengan membandingkan derajat pembilang ($m$) dan penyebut ($n$). Jika $m=n$, asimtot datarnya adalah $y = a/p$, di mana $a$ dan $p$ adalah koefisien suku pangkat tertinggi.</p><p><b>Langkah 1: Cari titik potong sumbu-x.</b><br>$f(x)=0 \implies 2x^2-8=0 \implies x^2=4 \implies x=2$ atau $x=-2$.<br>Jumlah absisnya adalah $2 + (-2) = 0$.</p><p><b>Langkah 2: Cari asimtot datar.</b><br>Derajat pembilang (2) sama dengan derajat penyebut (2).<br>Maka asimtot datarnya adalah $y = \frac{\text{koefisien } x^2 \text{ pembilang}}{\text{koefisien } x^2 \text{ penyebut}} = \frac{2}{1} = 2$. Persamaannya adalah $y=2$.</p><p><b>Langkah 3: Jumlahkan hasilnya.</b><br>Jumlah absis + nilai y dari asimtot datar = $0 + 2 = 2$.<br><b>Jawaban yang benar adalah C.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 2.</b> Domain dari fungsi $f(x) = \sqrt{^{2}\log(x^2-3x+2)}$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\{x | x \le 0 \text{ atau } x \ge 3\}$</li><li data-option="B">$\{x | 1 < x < 2\}$</li><li data-option="C">$\{x | x < 1 \text{ atau } x > 2\}$</li><li data-option="D">$\{x | x \le \frac{3-\sqrt{5}}{2} \text{ atau } x \ge \frac{3+\sqrt{5}}{2}\}$</li><li data-option="E">Himpunan kosong</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Domain fungsi ini memiliki dua syarat. Pertama, numerus logaritma harus positif. Kedua, ekspresi di dalam akar kuadrat harus non-negatif.</p><p><b>Langkah 1: Syarat numerus logaritma.</b><br>$x^2-3x+2 > 0 \implies (x-1)(x-2)>0$.<br>Pembuat nol: $x=1, x=2$. Garis bilangan menunjukkan solusi: $x<1$ atau $x>2$. (Syarat I)</p><p><b>Langkah 2: Syarat di dalam akar.</b><br>$^{2}\log(x^2-3x+2) \ge 0$.<br>Menggunakan sifat $^{a}\log b \ge 0 \implies b \ge 1$ (untuk $a>1$).<br>$x^2-3x+2 \ge 1 \implies x^2-3x+1 \ge 0$.<br>Gunakan rumus ABC untuk mencari akar: $x = \frac{3 \pm \sqrt{9-4}}{2} = \frac{3 \pm \sqrt{5}}{2}$.<br>Karena parabola terbuka ke atas, solusinya: $x \le \frac{3-\sqrt{5}}{2}$ atau $x \ge \frac{3+\sqrt{5}}{2}$. (Syarat II)</p><p><b>Langkah 3: Irisan kedua syarat.</b><br>Kita tahu $\frac{3-\sqrt{5}}{2} \approx \frac{3-2,24}{2} \approx 0,38$, yang mana $<1$.<br>Dan $\frac{3+\sqrt{5}}{2} \approx \frac{3+2,24}{2} \approx 2,62$, yang mana $>2$.<br>Irisan dari (Syarat I) dan (Syarat II) adalah $x \le \frac{3-\sqrt{5}}{2}$ atau $x \ge \frac{3+\sqrt{5}}{2}$.<br><b>Jawaban yang benar adalah D.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 3.</b> Jika $g(x) = 2x - 1$ dan $(f \circ g)(x) = \frac{x+8}{2x+1}$, maka $f^{-1}(2)$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Hubungan fungsi dan inversnya adalah jika $f(a)=b$, maka $f^{-1}(b)=a$. Kita ingin mencari $f^{-1}(2)$, jadi kita perlu menemukan sebuah nilai $a$ sehingga $f(a)=2$.</p><p><b>Langkah 1: Cari nilai $a$ yang memenuhi $f(a)=2$.</b><br>Kita diberikan $(f \circ g)(x) = f(g(x)) = f(2x-1)$. Ini berarti output dari fungsi komposisi adalah hasil dari fungsi $f$ yang inputnya adalah $g(x)$.<br>Kita ingin outputnya 2, jadi kita set: $f(g(x)) = 2 \implies \frac{x+8}{2x+1} = 2$.</p><p><b>Langkah 2: Selesaikan persamaan untuk $x$.</b><br>$x+8 = 2(2x+1) \implies x+8 = 4x+2 \implies 6 = 3x \implies x=2$.</p><p><b>Langkah 3: Cari nilai $a$, yaitu input untuk $f$.</b><br>Ketika $x=2$, input yang masuk ke fungsi $f$ adalah $g(2)$.<br>$a = g(2) = 2(2)-1 = 3$.<br>Jadi, kita telah menemukan bahwa ketika input untuk $f$ adalah 3, outputnya adalah 2. Dengan kata lain, $f(3)=2$.</p><p><b>Langkah 4: Terapkan definisi invers.</b><br>Karena $f(3)=2$, maka $f^{-1}(2)=3$.<br><b>Jawaban yang benar adalah D.</b></p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 4.</b> Jumlah semua nilai $x$ yang memenuhi persamaan $|x+2| + |2x-4| = 6$ adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-2/3</li><li data-option="B">0</li><li data-option="C">4/3</li><li data-option="D">2</li><li data-option="E">8/3</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Persamaan nilai mutlak diselesaikan dengan membaginya menjadi beberapa interval berdasarkan titik pembuat nol di dalam nilai mutlak.</p>
+                        <p><b>Langkah 1: Tentukan titik pembuat nol.</b><br>
+                        $x+2=0 \implies x=-2$.<br>
+                        $2x-4=0 \implies x=2$.<br>
+                        Interval yang terbentuk adalah: (I) $x<-2$, (II) $-2 \le x < 2$, (III) $x \ge 2$.</p>
+                        <p><b>Langkah 2: Analisis setiap interval.</b><br>
+                        <b>(I) $x<-2$:</b> $(x+2)$ negatif, $(2x-4)$ negatif.<br>
+                        $-(x+2) - (2x-4) = 6$<br>
+                        $-x-2-2x+4=6$<br>
+                        $-3x+2=6 \implies -3x=4 \implies x=-4/3$.<br>
+                        (Tidak memenuhi $x<-2$, solusi ditolak).</p>
+                        <p><b>(II) $-2 \le x < 2$:</b> $(x+2)$ positif, $(2x-4)$ negatif.<br>
+                        $(x+2) - (2x-4) = 6$<br>
+                        $x+2-2x+4=6$<br>
+                        $-x+6=6 \implies x=0$.<br>
+                        (Memenuhi $-2 \le x < 2$, solusi diterima).</p>
+                        <p><b>(III) $x \ge 2$:</b> $(x+2)$ positif, $(2x-4)$ positif.<br>
+                        $(x+2) + (2x-4) = 6$<br>
+                        $3x-2=6 \implies 3x=8 \implies x=8/3$.<br>
+                        (Memenuhi $x \ge 2$, solusi diterima).</p>
+                        <p><b>Langkah 3: Jumlahkan semua solusi yang valid.</b><br>
+                        Solusi yang ditemukan adalah $x = 0$ dan $x = 8/3$.<br>
+                        Jumlahnya adalah $0 + 8/3 = 8/3$.<br>
+                        <b>Jawaban yang benar adalah E.</b></p>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 5.</b> Sebuah bianglala memiliki diameter 20 meter dan titik terendahnya 2 meter di atas tanah. Bianglala berputar satu putaran penuh setiap 4 menit. Jika $h(t)$ adalah ketinggian seseorang di atas tanah setelah $t$ menit (dengan $t=0$ saat berada di titik terendah), fungsi trigonometri yang memodelkan ketinggian orang tersebut adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$h(t) = 10\cos(\frac{\pi}{2}t) + 12$</li><li data-option="B">$h(t) = -10\cos(\frac{\pi}{2}t) + 12$</li><li data-option="C">$h(t) = 10\sin(\frac{\pi}{2}t) + 12$</li><li data-option="D">$h(t) = -10\sin(\frac{\pi}{2}t) + 12$</li><li data-option="E">$h(t) = -20\cos(\pi t) + 22$</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><p><b>Teori Dasar:</b> Ketinggian pada bianglala dapat dimodelkan dengan fungsi kosinus $y = A\cos(k(t-d))+C$. Karena dimulai dari titik terendah, kita menggunakan kosinus terbalik (amplitudo negatif).</p><p><b>Langkah 1: Tentukan Amplitudo (A) dan Pergeseran Vertikal (C).</b><br>Jari-jari = Diameter / 2 = 20/2 = 10 meter. Ini adalah Amplitudo, $A=10$.<br>Pusat bianglala berada di ketinggian (Titik Terendah + Jari-jari) = $2+10=12$ meter. Ini adalah pergeseran vertikal (garis tengah), $C=12$.</p><p><b>Langkah 2: Tentukan konstanta periode (k).</b><br>Periode $P=4$ menit. Rumus periode adalah $P = 2\pi/k$.<br>$4 = 2\pi/k \implies k = 2\pi/4 = \pi/2$.</p><p><b>Langkah 3: Susun fungsi.</b><br>Karena pada $t=0$ berada di titik terendah, kita gunakan fungsi $-A\cos(kt)+C$.<br>$h(t) = -10\cos(\frac{\pi}{2}t) + 12$.<br><b>Jawaban yang benar adalah B.</b></p></div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div>
+                    <b>Soal 6.</b> Sebuah roket air diluncurkan ke atas. Ketinggian roket (dalam meter) setelah $t$ detik diberikan oleh fungsi polinomial $h(t) = -5t^2 + 40t + 2$. Ketinggian maksimum yang dicapai roket adalah...
+                    <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">80 meter</li><li data-option="B">82 meter</li><li data-option="C">84 meter</li><li data-option="D">90 meter</li><li data-option="E">162 meter</li></ol></div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                        <p><b>Teori Dasar:</b> Fungsi ketinggian adalah fungsi kuadrat $h(t) = at^2+bt+c$ dengan $a<0$ (parabola terbuka ke bawah). Ketinggian maksimum terjadi pada puncak parabola.</p>
+                        <p><b>Langkah 1: Cari waktu saat mencapai ketinggian maksimum.</b><br>Waktu untuk mencapai puncak diberikan oleh sumbu simetri parabola, $t = -b/(2a)$.<br>Dari $h(t) = -5t^2 + 40t + 2$, kita punya $a=-5$ dan $b=40$.<br>$t = -40 / (2 \cdot -5) = -40 / -10 = 4$ detik.</p>
+                        <p><b>Langkah 2: Hitung ketinggian maksimum.</b><br>Substitusikan $t=4$ ke dalam fungsi ketinggian.<br>$h(4) = -5(4)^2 + 40(4) + 2$<br>$h(4) = -5(16) + 160 + 2$<br>$h(4) = -80 + 160 + 2 = 82$ meter.<br><b>Jawaban yang benar adalah B.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>1.</b> Asimtot tegak dari grafik fungsi $f(x) = \frac{x^2-4}{x^2-5x+6}$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x=2$ dan $x=3$</li><li data-option="B">$x=-2$ dan $x=2$</li><li data-option="C">$x=3$ saja</li><li data-option="D">$x=2$ saja</li><li data-option="E">$y=1$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>2.</b> Range dari fungsi trigonometri $f(x) = 5 - 3\cos(2x - \pi/2)$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$[2, 8]$</li><li data-option="B">$[-3, 3]$</li><li data-option="C">$[5, 8]$</li><li data-option="D">$[-8, -2]$</li><li data-option="E">$[2, 5]$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>3.</b> Jika $f(x+2) = \frac{x+5}{x+1}$, maka $f^{-1}(2)$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">1</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div><b>4.</b> Himpunan penyelesaian dari $|2x-1| \ge |x+3|$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\{x | x \le -2/3 \text{ atau } x \ge 4\}$</li><li data-option="B">$\{x | -2/3 \le x \le 4\}$</li><li data-option="C">$\{x | x \le -4 \text{ atau } x \ge 2/3\}$</li><li data-option="D">$\{x | x \le -2/3\}$</li><li data-option="E">$\{x \ge 4\}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>5.</b> Diberikan fungsi $f(x) = ^{a}\log (x-b)$. Apakah grafik fungsi $f(x)$ memotong sumbu-y?
+                <div class="kecukupan-data-stmt">(1) $a>1$ dan $b<0$.</div>
+                <div class="kecukupan-data-stmt">(2) Asimtot tegak grafik berada di sebelah kiri sumbu-y.</div>
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>6.</b> Konsentrasi sebuah obat dalam darah pasien (dalam mg/L) setelah $t$ jam disuntikkan dimodelkan oleh fungsi eksponensial $C(t) = 12(0,75)^t$. Obat tersebut tidak lagi efektif jika konsentrasinya di bawah 5,3 mg/L. Setelah berapa jam obat tersebut menjadi tidak efektif? ($^{0,75}\log(0,44) \approx 2,8$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2 jam</li><li data-option="B">2,4 jam</li><li data-option="C">2,8 jam</li><li data-option="D">3 jam</li><li data-option="E">3,2 jam</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>7.</b> Jika $f(x) = \sqrt{x^2+1}$ dan $(g \circ f)(x) = \frac{\sqrt{x^2+1}-1}{x^2}$, maka $g(x+1)$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{1}{x+2}$</li><li data-option="B">$\frac{x-1}{x^2-1}$</li><li data-option="C">$\frac{x}{x^2+1}$</li><li data-option="D">$\frac{x+1}{x^2-1}$</li><li data-option="E">$\frac{x}{x^2+2x+1}$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>8.</b> Domain dari fungsi $f(x)=^{x-2}\log(3-x)$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\{x | 1 < x < 2\}$</li><li data-option="B">$\{x | 0 < x < 2, x \neq 1\}$</li><li data-option="C">$\{x | x > 2, x \neq 3\}$</li><li data-option="D">$\{x | 2 < x < 3\}$</li><li data-option="E">$\{x | 0 < x < 2\}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div><b>9.</b> Jika $f(x)$ adalah fungsi polinomial yang memenuhi $f(1)=5$ dan $f(-1)=-1$, maka sisa pembagian $f(x)$ oleh $x^2-1$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2x+3$</li><li data-option="B">$3x+2$</li><li data-option="C">$2x-3$</li><li data-option="D">$3x-2$</li><li data-option="E">$x+4$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>10.</b> Keuntungan bulanan (dalam juta rupiah) sebuah perusahaan mainan dari penjualan $x$ ratus unit produk dimodelkan oleh $P(x) = -x^2+50x-400$. Jumlah unit yang harus dijual agar perusahaan memperoleh keuntungan maksimum adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">20 ratus unit</li><li data-option="B">25 ratus unit</li><li data-option="C">30 ratus unit</li><li data-option="D">40 ratus unit</li><li data-option="E">50 ratus unit</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div><b>11.</b> Sebuah termometer dirancang untuk mengukur suhu dengan akurat. Jika suhu yang terbaca adalah $T_b$ dan suhu sebenarnya adalah $T_s$, spesifikasi menyatakan bahwa selisih antara suhu terbaca dan suhu sebenarnya tidak boleh lebih dari 0,4°C. Pertidaksamaan nilai mutlak yang merepresentasikan kondisi ini adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$|T_b - T_s| \le 0,4$</li><li data-option="B">$|T_b - T_s| \ge 0,4$</li><li data-option="C">$|T_b + T_s| \le 0,4$</li><li data-option="D">$|T_b| - |T_s| \le 0,4$</li><li data-option="E">$T_b - T_s \le 0,4$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>12.</b> Diketahui $f(x-1) = x-2$ dan $g(x) = \sqrt{x+3}$. Jika $(f^{-1} \circ g)(a) = 5$, maka nilai $a$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">4</li><li data-option="C">9</li><li data-option="D">13</li><li data-option="E">16</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks</div><b>13.</b> Manakah dari fungsi-fungsi berikut yang merupakan fungsi genap? (Bisa pilih lebih dari satu jawaban)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$f(x) = x^4 - 2x^2$</li><li data-option="B">$f(x) = |x| + 3$</li><li data-option="C">$f(x) = \cos(x) - x^2$</li><li data-option="D">$f(x) = \sin(x) + x$</li><li data-option="E">$f(x) = 2^x + 2^{-x}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda Kompleks Kategori</div><b>14.</b> Diberikan fungsi $f(x)=3^{x-1}$. Periksa kebenaran pernyataan berikut.
+                 <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                    <tr><td>1. Grafik $f(x)$ memotong sumbu-y di $(0, 1/3)$.</td><td></td><td></td></tr>
+                    <tr><td>2. Domain $f(x)$ adalah $\mathbb{R}$ dan Range-nya adalah $\{y|y>0\}$.</td><td></td><td></td></tr>
+                    <tr><td>3. Fungsi inversnya adalah $f^{-1}(x) = 1 + ^{3}\log x$.</td><td></td><td></td></tr>
+                    </tbody></table></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div><b>15.</b> Jika $f(x) = ax+b$, $g(x)=cx+d$, serta $(f \circ g)(x)=(g \circ f)(x)$ untuk semua $x$, maka hubungan yang pasti benar adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$a=c$</li><li data-option="B">$b=d$</li><li data-option="C">$ad+b = bc+d$</li><li data-option="D">$ab+d=cd+b$</li><li data-option="E">$b(1-c) = d(1-a)$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content kumpulan-pembahasan">
+        <div class="content-wrapper">
+            <h3>Kunci Jawaban dan Pembahasan Latihan Soal: Fungsi</h3>
+            <div class="pembahasan"><b>1. Jawaban: C</b><p><b>Teori Dasar:</b> Asimtot tegak terjadi pada nilai $x$ yang membuat penyebut fungsi rasional menjadi nol, tetapi pembilangnya tidak nol.</p><p><b>Langkah 1: Faktorkan pembilang dan penyebut.</b><br>$f(x) = \frac{(x-2)(x+2)}{(x-2)(x-3)}$.</p><p><b>Langkah 2: Identifikasi pembuat nol penyebut.</b><br>Penyebut menjadi nol saat $x=2$ atau $x=3$.</p><p><b>Langkah 3: Analisis setiap nilai.</b><br>Untuk $x=2$: Pembilang juga menjadi nol. Karena ada faktor $(x-2)$ yang sama di pembilang dan penyebut, ini menandakan adanya 'lubang' (hole) pada grafik di $x=2$, bukan asimtot tegak.<br>Untuk $x=3$: Penyebut menjadi nol, tetapi pembilang tidak nol ($3^2-4=5$). Maka, $x=3$ adalah satu-satunya asimtot tegak.</p></div>
+            <div class="pembahasan"><b>2. Jawaban: A</b>
+                <p><b>Teori Dasar:</b> Nilai dari fungsi kosinus, $\cos(\theta)$, selalu berada dalam interval $[-1, 1]$.</p>
+                <p><b>Langkah 1: Tentukan interval nilai dasar cosinus.</b><br>$-1 \le \cos(2x - \pi/2) \le 1$.</p>
+                <p><b>Langkah 2: Kalikan dengan -3.</b> Perkalian dengan bilangan negatif membalik tanda ketidaksamaan.<br>
+                $(-1)(-3) \ge -3\cos(2x - \pi/2) \ge (1)(-3)$<br>
+                $3 \ge -3\cos(2x - \pi/2) \ge -3$.</p>
+                <p><b>Langkah 3: Tambahkan 5.</b><br>
+                $5+3 \ge 5 - 3\cos(2x - \pi/2) \ge 5-3$<br>
+                $8 \ge f(x) \ge 2$.</p>
+                <p><b>Langkah 4: Tuliskan range.</b> Range fungsi adalah $[2, 8]$.</p>
+            </div>
+            <div class="pembahasan"><b>3. Jawaban: E</b><p><b>Teori Dasar:</b> Jika $f(a)=b$, maka $f^{-1}(b)=a$. Kita ingin mencari $f^{-1}(2)$, jadi kita perlu mencari nilai $k$ sehingga $f(k)=2$.</p><p><b>Langkah 1: Hubungkan $f(x+2)$ dengan $f(k)=2$.</b> Kita set output dari $f(x+2)$ menjadi 2. $\frac{x+5}{x+1} = 2$.</p><p><b>Langkah 2: Cari nilai $x$.</b> $x+5 = 2(x+1) \implies x+5 = 2x+2 \implies x=3$.</p><p><b>Langkah 3: Cari nilai $k$.</b> Saat outputnya 2, input untuk fungsi $f$ adalah $k=x+2$. Karena $x=3$, maka $k=3+2=5$. Jadi, kita tahu $f(5)=2$.</p><p><b>Langkah 4: Gunakan definisi invers.</b> Karena $f(5)=2$, maka $f^{-1}(2)=5$.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: A</b>
+                <p><b>Teori Dasar:</b> Pertidaksamaan $|A| \ge |B|$ ekuivalen dengan $A^2 \ge B^2$. Ini dapat diselesaikan dengan $(A-B)(A+B) \ge 0$.</p>
+                <p><b>Langkah 1: Gunakan rumus selisih kuadrat.</b><br>$((2x-1)-(x+3))((2x-1)+(x+3)) \ge 0$.</p>
+                <p><b>Langkah 2: Sederhanakan.</b><br>$(x-4)(3x+2) \ge 0$.</p>
+                <p><b>Langkah 3: Tentukan pembuat nol dan garis bilangan.</b> Pembuat nol adalah $x=4$ dan $x=-2/3$. Karena pertidaksamaan 'lebih besar dari atau sama dengan', kita ambil daerah di luar akar. Solusinya adalah $x \le -2/3$ atau $x \ge 4$.</p>
+            </div>
+            <div class="pembahasan"><b>5. Jawaban: D</b><p><b>Teori Dasar:</b> Grafik memotong sumbu-y saat $x=0$. Agar $f(0)$ terdefinisi, $0$ harus ada di domain, yaitu $x-b>0 \implies 0-b>0 \implies b<0$. Pertanyaannya adalah "Apakah $b<0$?".</p><p><b>Analisis (1):</b> Pernyataan (1) secara eksplisit menyatakan $b<0$. Ini langsung menjawab pertanyaan. Cukup.</p><p><b>Analisis (2):</b> Asimtot tegak dari grafik $f(x)=^{a}\log(x-b)$ adalah garis $x-b=0$ atau $x=b$. Jika asimtot berada di sebelah kiri sumbu-y, maka nilai absisnya negatif, sehingga $b<0$. Ini juga menjawab pertanyaan. Cukup. Karena masing-masing pernyataan SAJA cukup, jawabannya D.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: C</b><p><b>Teori Dasar:</b> Soal ini meminta waktu $t$ saat $C(t)$ mencapai nilai tertentu. Kita perlu menyelesaikan persamaan eksponensial.</p><p><b>Langkah 1: Susun pertidaksamaan.</b> Obat tidak efektif saat $C(t) < 5,3$. Kita cari batasnya saat $C(t) = 5,3$.<br>$12(0,75)^t = 5,3$.</p><p><b>Langkah 2: Selesaikan untuk $t$.</b><br>$(0,75)^t = 5,3 / 12 \approx 0,4416... \approx 0,44$.<br>Untuk menyelesaikan $0,75^t = 0,44$, kita gunakan logaritma.<br>$t = ^{0,75}\log(0,44)$.</p><p><b>Langkah 3: Gunakan informasi dari soal.</b><br>Diberikan bahwa $^{0,75}\log(0,44) \approx 2,8$.<br>Jadi, setelah sekitar 2,8 jam, konsentrasi obat mencapai 5,3 mg/L dan setelah itu akan terus turun (karena basis 0,75 < 1).<br><b>Jawaban yang benar adalah C.</b></p></div>
+             <div class="pembahasan"><b>7. Jawaban: A</b><p><b>Teori Dasar:</b> $(g \circ f)(x) = g(f(x))$. Kita perlu menemukan bentuk $g(y)$ dari $g(\sqrt{x^2+1})$ dengan cara substitusi.</p><p><b>Langkah 1: Misalkan $y = f(x) = \sqrt{x^2+1}$.</b><br>Dari sini, kita bisa dapatkan hubungan $y^2 = x^2+1 \implies x^2 = y^2-1$.</p><p><b>Langkah 2: Substitusikan ke dalam $(g \circ f)(x)$.</b><br>$(g \circ f)(x) = \frac{f(x)-1}{x^2} \implies g(y) = \frac{y-1}{y^2-1}$.</p><p><b>Langkah 3: Sederhanakan $g(y)$.</b><br>$g(y) = \frac{y-1}{(y-1)(y+1)} = \frac{1}{y+1}$. Maka, $g(x) = \frac{1}{x+1}$.</p><p><b>Langkah 4: Cari $g(x+1)$.</b><br>Ganti setiap $x$ di $g(x)$ dengan $(x+1)$.<br>$g(x+1) = \frac{1}{(x+1)+1} = \frac{1}{x+2}$.</p></div>
+             <div class="pembahasan"><b>8. Jawaban: D</b><p><b>Teori Dasar:</b> Syarat domain fungsi $^{a}\log b$ adalah: (1) basis $a>0$, (2) basis $a \neq 1$, dan (3) numerus $b>0$.</p><p><b>Langkah 1: Syarat Basis ($a=x-2$).</b><br>(1) $x-2 > 0 \implies x > 2$.<br>(2) $x-2 \neq 1 \implies x \neq 3$.</p><p><b>Langkah 2: Syarat Numerus ($b=3-x$).</b><br>(3) $3-x > 0 \implies x < 3$.</p><p><b>Langkah 3: Irisan semua syarat.</b><br>Kita mencari irisan dari ($x>2$), ($x \neq 3$), dan ($x<3$).<br>Jika digambarkan pada garis bilangan, daerah yang memenuhi ketiganya adalah daerah di antara 2 dan 3. Jadi, $2 < x < 3$.</p></div>
+            <div class="pembahasan"><b>9. Jawaban: B</b><p><b>Teori Dasar:</b> Berdasarkan Teorema Sisa, sisa pembagian polinomial $f(x)$ oleh $(x-a)$ adalah $f(a)$. Sisa pembagian oleh polinomial kuadrat $(x-a)(x-b)$ adalah polinomial linear $S(x)=mx+n$.</p><p><b>Langkah 1: Tentukan sisa.</b><br>Pembagi adalah $x^2-1=(x-1)(x+1)$. Sisa pembagiannya adalah $S(x)=mx+n$.</p><p><b>Langkah 2: Gunakan Teorema Sisa untuk membentuk sistem persamaan.</b><br>$f(1) = S(1) \implies 5 = m(1)+n \implies m+n=5$.<br>$f(-1) = S(-1) \implies -1 = m(-1)+n \implies -m+n=-1$.</p><p><b>Langkah 3: Selesaikan sistem persamaan.</b><br>Jumlahkan kedua persamaan: $(m+n)+(-m+n) = 5+(-1) \implies 2n=4 \implies n=2$.<br>Substitusikan $n=2$ ke persamaan pertama: $m+2=5 \implies m=3$.<br>Sisa pembagiannya adalah $S(x)=3x+2$.</p></div>
+            <div class="pembahasan"><b>10. Jawaban: B</b><p><b>Teori Dasar:</b> Keuntungan maksimum dari fungsi kuadrat $P(x)=ax^2+bx+c$ (dengan $a<0$) terjadi pada sumbu simetri $x=-b/(2a)$.</p><p><b>Langkah 1: Identifikasi koefisien.</b><br>Dari $P(x)=-x^2+50x-400$, kita punya $a=-1$ dan $b=50$.</p><p><b>Langkah 2: Hitung sumbu simetri.</b><br>$x = -50 / (2 \cdot -1) = -50/-2 = 25$.</p><p><b>Langkah 3: Interpretasikan hasil.</b><br>Karena $x$ adalah dalam ratusan unit, maka jumlah unit yang harus dijual untuk keuntungan maksimum adalah 25 ratus unit atau 2.500 unit.<br><b>Jawaban yang benar adalah B.</b></p></div>
+            <div class="pembahasan"><b>11. Jawaban: A</b><p><b>Teori Dasar:</b> Nilai mutlak dari selisih dua bilangan, $|A-B|$, merepresentasikan jarak atau perbedaan absolut antara A dan B.</p><p><b>Pembahasan:</b> Soal menyatakan "selisih antara suhu terbaca ($T_b$) dan suhu sebenarnya ($T_s$) tidak boleh lebih dari 0,4°C".<br>Selisih antara $T_b$ dan $T_s$ adalah $|T_b - T_s|$.<br>"Tidak boleh lebih dari 0,4" berarti "kurang dari atau sama dengan 0,4", yang dilambangkan dengan $\le 0,4$.<br>Menggabungkan keduanya, kita mendapatkan pertidaksamaan: $|T_b - T_s| \le 0,4$.<br><b>Jawaban yang benar adalah A.</b></p></div>
+            <div class="pembahasan"><b>12. Jawaban: D</b><p><b>Teori Dasar:</b> $(f^{-1} \circ g)(a) = f^{-1}(g(a)) = 5$. Dengan sifat invers, ini berarti $f(5)=g(a)$.</p><p><b>Langkah 1: Cari bentuk $f(x)$.</b><br>Misal $y=x-1 \implies x=y+1$.<br>$f(y) = (y+1)-2 = y-1$. Jadi, $f(x)=x-1$.</p><p><b>Langkah 2: Hitung $f(5)$.</b><br>$f(5) = 5-1=4$.</p><p><b>Langkah 3: Selesaikan $g(a)=f(5)$.</b><br>$g(a)=4 \implies \sqrt{a+3}=4$.<br>Kuadratkan kedua ruas: $a+3=16 \implies a=13$.</p></div>
+            <div class="pembahasan"><b>13. Jawaban: A, B, C, E</b><p><b>Teori Dasar:</b> Fungsi genap memenuhi $f(-x)=f(x)$.</p><p><b>A:</b> $f(-x)=(-x)^4-2(-x)^2=x^4-2x^2=f(x)$. Genap.<br><b>B:</b> $f(-x)=|-x|+3=|x|+3=f(x)$. Genap.<br><b>C:</b> $f(-x)=\cos(-x)-(-x)^2=\cos(x)-x^2=f(x)$. Genap.<br><b>D:</b> $f(-x)=\sin(-x)+(-x)=-\sin(x)-x = -(\sin x + x)=-f(x)$. Ganjil.<br><b>E:</b> $f(-x)=2^{-x}+2^{-(-x)}=2^{-x}+2^x=f(x)$. Genap.</p></div>
+            <div class="pembahasan"><b>14. Jawaban: Benar, Benar, Benar</b><p><b>1:</b> Titik potong sumbu-y terjadi saat $x=0$. $f(0)=3^{0-1}=3^{-1}=1/3$. Titiknya $(0, 1/3)$. (Benar).</p><p><b>2:</b> $f(x)$ adalah fungsi eksponensial. Domainnya selalu $\mathbb{R}$. Range-nya (karena tidak ada pergeseran vertikal) adalah $\{y|y>0\}$. (Benar).</p><p><b>3:</b> Cari invers. $y=3^{x-1} \implies ^{3}\log y = x-1 \implies x = 1 + ^{3}\log y$. Jadi $f^{-1}(x)=1+^{3}\log x$. (Benar).</p></div>
+            <div class="pembahasan"><b>15. Jawaban: E</b>
+                <p><b>Teori Dasar:</b> Tuliskan kedua komposisi dan setarakan.</p>
+                <p><b>Langkah 1: Hitung $(f \circ g)(x)$.</b><br>
+                $f(g(x)) = f(cx+d) = a(cx+d)+b$<br>
+                $= acx + ad + b$.</p>
+                <p><b>Langkah 2: Hitung $(g \circ f)(x)$.</b><br>
+                $g(f(x)) = g(ax+b) = c(ax+b)+d$<br>
+                $= acx + bc + d$.</p>
+                <p><b>Langkah 3: Setarakan keduanya.</b><br>
+                $acx + ad + b = acx + bc + d$<br>
+                $ad + b = bc + d$.</p>
+                <p><b>Langkah 4: Ubah ke bentuk pilihan.</b><br>
+                $b-d=bc-ad \implies b-bc=d-ad$<br>
+                $\implies b(1-c)=d(1-a)$. Ini cocok dengan pilihan E.</p>
+            </div>
+        </div>
+    </section>
+    </div>
+    <!-- ############################## END FUNGSI ############################## -->
+
+</div>
+
+</body>
+</html>
+
