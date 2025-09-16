@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Hacking: Dekripsi TKA Matematika Lanjut - Lingkaran</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global',
+            linebreaks: { automatic: true }
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm; /* Ukuran B5 */
+            min-height: 250mm; /* Ukuran B5 */
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 350px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 38pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 20pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2, .sub-section, .kumpulan-pembahasan h3 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Mencegah watermark muncul di cover */
+        .cover-page::before {
+            content: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 24pt;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+            margin-bottom: 20px;
+            break-inside: avoid;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        /* NEW CSS FOR ALIGNMENT */
+        .soal-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0 8px;
+            align-items: start;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 0; /* REMOVED PADDING */
+        }
+        
+        .pembahasan { 
+            background-color: #f9f9f9; 
+            border: 1px solid var(--border-color); 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin-top: 10px; 
+            break-inside: avoid; 
+            overflow-wrap: break-word; 
+            word-wrap: break-word; 
+        }
+        .pembahasan p { margin-bottom: 1.2em; }
+        .pembahasan p:last-child { margin-bottom: 0; }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            background-color: white;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+        
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Lingkaran (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- ############################## START LINGKARAN ############################## -->
+    <div id="lingkaran">
+    <section class="page page-content">
+      <div class="content-wrapper">
+        <h2>Lingkaran</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Lingkaran adalah himpunan semua titik pada bidang datar yang memiliki jarak yang sama dari suatu titik tetap, yang disebut pusat. Jarak yang sama tersebut disebut jari-jari (radius).</p>
+            
+            <h4>Persamaan Lingkaran</h4>
+            <ul>
+                <li><b>Pusat di O(0,0):</b> Persamaan lingkaran dengan pusat di titik asal dan jari-jari $r$ adalah: $$x^2 + y^2 = r^2$$</li>
+                <li><b>Pusat di P(a,b):</b> Persamaan lingkaran dengan pusat di $(a,b)$ dan jari-jari $r$ adalah: $$(x-a)^2 + (y-b)^2 = r^2$$</li>
+                <li><b>Bentuk Umum:</b> Penjabaran dari bentuk pusat $(a,b)$ menghasilkan bentuk umum: $$x^2 + y^2 + Ax + By + C = 0$$ di mana pusatnya adalah $P(-\frac{A}{2}, -\frac{B}{2})$ dan jari-jarinya $r = \sqrt{(\frac{A}{2})^2 + (\frac{B}{2})^2 - C}$.</li>
+            </ul>
+
+            <h4>Persamaan Garis Singgung Lingkaran (PGS)</h4>
+            <ul>
+                <li><b>Melalui Titik $(x_1, y_1)$ pada Lingkaran:</b>
+                    <ul>
+                        <li>Pada $x^2+y^2=r^2$, PGS-nya adalah $x_1x+y_1y=r^2$.</li>
+                        <li>Pada $(x-a)^2+(y-b)^2=r^2$, PGS-nya adalah $(x_1-a)(x-a)+(y_1-b)(y-b)=r^2$.</li>
+                    </ul>
+                </li>
+                <li><b>Dengan Gradien $m$:</b>
+                    <ul>
+                        <li>Pada $x^2+y^2=r^2$, PGS-nya adalah $y = mx \pm r\sqrt{m^2+1}$.</li>
+                        <li>Pada $(x-a)^2+(y-b)^2=r^2$, PGS-nya adalah $y-b = m(x-a) \pm r\sqrt{m^2+1}$.</li>
+                    </ul>
+                </li>
+            </ul>
+             <h4>Luas dan Keliling Daerah Lingkaran</h4>
+            <ul>
+                <li><b>Panjang Busur:</b> Bagian dari keliling lingkaran. Untuk sudut pusat $\theta$ (dalam derajat): $$s = \frac{\theta}{360^\circ} \times 2\pi r$$</li>
+                <li><b>Luas Juring:</b> Daerah yang dibatasi oleh dua jari-jari dan satu busur. Untuk sudut pusat $\theta$ (dalam derajat): $$L_{juring} = \frac{\theta}{360^\circ} \times \pi r^2$$</li>
+                <li><b>Luas Tembereng:</b> Daerah yang dibatasi oleh tali busur dan busur. $$L_{tembereng} = L_{juring} - L_{\triangle}$$</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>Soal 1.</b></div>
+                        <div class="soal-konten">
+                            Persamaan lingkaran yang berpusat di titik $(-4, 3)$ dan memiliki jari-jari 7 adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$(x-4)^2 + (y+3)^2 = 49$</li>
+                                <li data-option="B">$(x+4)^2 + (y-3)^2 = 49$</li>
+                                <li data-option="C">$(x-4)^2 + (y-3)^2 = 7$</li>
+                                <li data-option="D">$(x+4)^2 + (y-3)^2 = 7$</li>
+                                <li data-option="E">$x^2 + y^2 = 49$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                    <p><b>Teori Dasar:</b> Persamaan lingkaran dengan pusat $(a,b)$ dan jari-jari $r$ adalah $(x-a)^2 + (y-b)^2 = r^2$.</p>
+                    <p><b>Langkah 1: Substitusi nilai pusat dan jari-jari.</b><br>
+                    Pusat $(a,b) = (-4, 3)$ dan jari-jari $r=7$.<br>
+                    Persamaannya menjadi $(x - (-4))^2 + (y - 3)^2 = 7^2$.</p>
+                    <p><b>Langkah 2: Sederhanakan persamaan.</b><br>
+                    $(x+4)^2 + (y-3)^2 = 49$.</p>
+                    <p><b>Jawaban yang benar adalah B.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                     <div class="soal-grid">
+                        <div class="soal-nomor"><b>Soal 2.</b></div>
+                        <div class="soal-konten">
+                            Salah satu persamaan garis singgung lingkaran $x^2+y^2=25$ yang sejajar dengan garis $3x-4y+8=0$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$3x - 4y = 25$</li>
+                                <li data-option="B">$4x + 3y = 25$</li>
+                                <li data-option="C">$3x + 4y = 25$</li>
+                                <li data-option="D">$4x - 3y = 20$</li>
+                                <li data-option="E">$3x - 4y = 20$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                    <p><b>Teori Dasar:</b> Garis singgung pada $x^2+y^2=r^2$ dengan gradien $m$ adalah $y = mx \pm r\sqrt{m^2+1}$.</p>
+                    <p><b>Langkah 1: Cari gradien garis.</b><br>
+                    Garis $3x-4y+8=0 \implies 4y = 3x+8 \implies y = \frac{3}{4}x+2$. Gradiennya, $m_1 = 3/4$.<br>
+                    Karena sejajar, gradien garis singgung ($m_2$) sama dengan $m_1$, jadi $m_2=3/4$.</p>
+                    <p><b>Langkah 2: Identifikasi jari-jari lingkaran.</b><br>
+                    Dari $x^2+y^2=25$, kita dapatkan $r^2=25 \implies r=5$.</p>
+                    <p><b>Langkah 3: Substitusi ke rumus PGS.</b><br>
+                    $y = \frac{3}{4}x \pm 5\sqrt{(\frac{3}{4})^2+1} = \frac{3}{4}x \pm 5\sqrt{\frac{25}{16}} = \frac{3}{4}x \pm \frac{25}{4}$.<br>
+                    Kalikan kedua ruas dengan 4: $4y = 3x \pm 25 \implies 3x - 4y = \pm 25$. Salah satu persamaannya adalah $3x-4y=25$.</p>
+                    <p><b>Jawaban yang benar adalah A.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>Soal 3.</b></div>
+                        <div class="soal-konten">
+                             Garis $y=x+c$ menyinggung lingkaran $x^2+y^2=r^2$. Berapakah nilai $r$? <br>
+                            (1) $c^2 = 50$<br>
+                            (2) Garis singgung tersebut melalui titik $(5, -5)$.
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                    <p><b>Teori Dasar:</b> Syarat garis menyinggung lingkaran adalah diskriminan ($D$) dari persamaan kuadrat hasil substitusi adalah nol ($D=b^2-4ac=0$).</p>
+                    <p><b>Langkah Awal: Lakukan substitusi.</b><br>
+                    $x^2 + (x+c)^2 = r^2 \implies 2x^2+2cx+(c^2-r^2)=0$.<br>
+                    Syarat menyinggung: $D=0 \implies (2c)^2 - 4(2)(c^2-r^2)=0 \implies -4c^2+8r^2=0 \implies 2r^2=c^2$.</p>
+                    <p><b>Analisis Pernyataan (1):</b> $c^2=50$. Maka $2r^2=50 \implies r^2=25 \implies r=5$. Cukup.</p>
+                    <p><b>Analisis Pernyataan (2):</b> Titik $(5, -5)$ dilalui garis $y=x+c$, maka $-5=5+c \implies c=-10$.<br>
+                    Maka $2r^2=(-10)^2=100 \implies r^2=50 \implies r=5\sqrt{2}$. Cukup.</p>
+                    <p><b>Kesimpulan:</b> SALAH SATU pernyataan SAJA cukup. Jawaban yang benar adalah D.</p></div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>Soal 4.</b></div>
+                        <div class="soal-konten">
+                            Sebuah taman berbentuk lingkaran dengan persamaan $x^2+y^2-10x-4y-7=0$ (dalam meter). Di sekeliling taman akan dipasang pagar dengan biaya Rp50.000 per meter. Total biaya yang dibutuhkan adalah... ($\pi \approx 3,14$)
+                             <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">Rp1.884.000</li>
+                                <li data-option="B">Rp2.512.000</li>
+                                <li data-option="C">Rp3.140.000</li>
+                                <li data-option="D">Rp3.768.000</li>
+                                <li data-option="E">Rp6.280.000</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                    <p><b>Teori Dasar:</b> Biaya total = Keliling Lingkaran $\times$ Biaya per meter. Keliling = $2\pi r$.</p>
+                    <p><b>Langkah 1: Cari jari-jari lingkaran.</b><br>
+                    Dari $x^2+y^2-10x-4y-7=0$, jari-jari $r = \sqrt{(-\frac{-10}{2})^2+(-\frac{-4}{2})^2 - (-7)} = \sqrt{5^2+2^2+7} = \sqrt{36}=6$ meter.</p>
+                     <p><b>Langkah 2: Hitung keliling taman.</b><br>
+                    Keliling = $2 \pi r = 2 \times 3,14 \times 6 = 37,68$ meter.</p>
+                    <p><b>Langkah 3: Hitung biaya total.</b><br>
+                    Biaya = $37,68 \text{ m} \times \text{Rp50.000/m} = \text{Rp1.884.000}$.</p>
+                    <p><b>Jawaban yang benar adalah A.</b></p></div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>Soal 5.</b></div>
+                        <div class="soal-konten">
+                            Jarak terdekat dari titik $(7, 1)$ ke lingkaran $x^2 + y^2 = 9$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$5\sqrt{2}-3$</li>
+                                <li data-option="B">$5\sqrt{2}$</li>
+                                <li data-option="C">$2\sqrt{2}$</li>
+                                <li data-option="D">$3$</li>
+                                <li data-option="E">$5\sqrt{2}+3$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b>
+                    <p><b>Teori Dasar:</b> Jarak terdekat dari titik di luar lingkaran ke lingkaran adalah jarak dari titik tersebut ke pusat lingkaran, dikurangi jari-jari.</p>
+                    <p><b>Langkah 1: Identifikasi pusat dan jari-jari lingkaran.</b><br>
+                    Lingkaran $x^2+y^2=9$ berpusat di $P(0,0)$ dan berjari-jari $r=\sqrt{9}=3$.</p>
+                    <p><b>Langkah 2: Hitung jarak dari titik ke pusat lingkaran.</b><br>
+                    Titik $T(7,1)$. Jarak $TP = \sqrt{(7-0)^2 + (1-0)^2} = \sqrt{49+1} = \sqrt{50} = 5\sqrt{2}$.</p>
+                    <p><b>Langkah 3: Hitung jarak terdekat.</b><br>
+                    Jarak terdekat = Jarak $TP$ - jari-jari $r$.<br>
+                    Jarak = $5\sqrt{2} - 3$.</p>
+                    <p><b>Jawaban yang benar adalah A.</b></p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+            <h3 class="sub-section">3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>1.</b></div>
+                        <div class="soal-konten">
+                            Pusat dan jari-jari dari lingkaran $(x+3)^2 + (y-2)^2 = 8$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pusat $(3,-2)$, jari-jari $2\sqrt{2}$</li><li data-option="B">Pusat $(-3,2)$, jari-jari $2\sqrt{2}$</li><li data-option="C">Pusat $(3,-2)$, jari-jari $4\sqrt{2}$</li><li data-option="D">Pusat $(-3,2)$, jari-jari $8$</li><li data-option="E">Pusat $(3,2)$, jari-jari $8$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>2.</b></div>
+                        <div class="soal-konten">
+                             Persamaan garis singgung lingkaran $x^2+y^2-2x+4y-13=0$ di titik $(4,1)$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3x+3y-15=0$</li><li data-option="B">$3x-3y-15=0$</li><li data-option="C">$4x+y-17=0$</li><li data-option="D">$4x-y-15=0$</li><li data-option="E">$x-3y-1=0$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>3.</b></div>
+                        <div class="soal-konten">
+                            Agar garis $y=kx$ MEMOTONG lingkaran $(x-2)^2+y^2=1$ di dua titik berbeda, maka nilai $k$ yang memenuhi adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$k<-\sqrt{3}$ atau $k>\sqrt{3}$</li><li data-option="B">$-\sqrt{3} < k < \sqrt{3}$</li><li data-option="C">$k<-\frac{1}{\sqrt{3}}$ atau $k>\frac{1}{\sqrt{3}}$</li><li data-option="D">$-\frac{1}{\sqrt{3}} < k < \frac{1}{\sqrt{3}}$</li><li data-option="E">$k= \pm \sqrt{3}$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>4.</b></div>
+                        <div class="soal-konten">
+                            Sebuah satelit mengorbit bumi dalam lintasan melingkar yang dapat dimodelkan oleh persamaan $x^2+y^2=42.250.000$ (dalam km). Jari-jari orbit satelit tersebut adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">6.500 km</li><li data-option="B">6.750 km</li><li data-option="C">21.125.000 km</li><li data-option="D">42.250 km</li><li data-option="E">6.500.000 km</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>5.</b></div>
+                        <div class="soal-konten">
+                            Apakah titik $T(p,q)$ terletak di dalam lingkaran $L$? (1) Persamaan lingkaran $L$ adalah $x^2+y^2=16$. (2) $p^2+q^2=10$.
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>6.</b></div>
+                        <div class="soal-konten">
+                            Persamaan lingkaran yang berdiameter AB dengan titik $A(-2,3)$ dan $B(4,-1)$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x^2+y^2-2x-2y-11=0$</li><li data-option="B">$x^2+y^2+2x+2y-11=0$</li><li data-option="C">$x^2+y^2-2x-2y+11=0$</li><li data-option="D">$x^2+y^2+2x-2y-13=0$</li><li data-option="E">$x^2+y^2-2x+2y-13=0$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>7.</b></div>
+                        <div class="soal-konten">
+                             Luas juring lingkaran $x^2+y^2=36$ yang dibatasi oleh sudut pusat $60^\circ$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3\pi$</li><li data-option="B">$4\pi$</li><li data-option="C">$6\pi$</li><li data-option="D">$9\pi$</li><li data-option="E">$12\pi$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks (Bisa pilih lebih dari satu jawaban)</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>8.</b></div>
+                        <div class="soal-konten">
+                            Manakah di antara garis berikut yang menyinggung lingkaran $x^2+y^2=8$? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$y=x+4$</li><li data-option="B">$y=-x-4$</li><li data-option="C">$x+y=4$</li><li data-option="D">$y=x+2$</li><li data-option="E">$x-y=-4$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>9.</b></div>
+                        <div class="soal-konten">
+                            Lingkaran $L_1: (x-2)^2 + (y-1)^2 = 4$ dan $L_2: (x-5)^2 + (y-5)^2 = r^2$ bersinggungan di luar. Nilai $r$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>10.</b></div>
+                        <div class="soal-konten">
+                            Panjang busur lingkaran yang berjari-jari 12 cm dengan sudut pusat $150^\circ$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$5\pi$ cm</li><li data-option="B">$10\pi$ cm</li><li data-option="C">$12\pi$ cm</li><li data-option="D">$15\pi$ cm</li><li data-option="E">$20\pi$ cm</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda Kompleks Kategori</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>11.</b></div>
+                        <div class="soal-konten">
+                            Diberikan persamaan lingkaran $x^2+y^2-6x+8y+9=0$. Periksa kebenaran setiap pernyataan berikut.
+                             <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                                <tr><td>1. Pusat lingkaran adalah $(3, -4)$.</td><td></td><td></td></tr>
+                                <tr><td>2. Jari-jari lingkaran adalah 4.</td><td></td><td></td></tr>
+                                <tr><td>3. Lingkaran menyinggung sumbu-x.</td><td></td><td></td></tr>
+                                </tbody></table>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>12.</b></div>
+                        <div class="soal-konten">
+                            Dari titik $(5,0)$ dibuat garis singgung pada lingkaran $x^2+y^2=9$. Jarak dari titik pusat ke masing-masing garis singgung adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">3</li><li data-option="C">4</li><li data-option="D">5</li><li data-option="E">6</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi (HOTS) | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>13.</b></div>
+                        <div class="soal-konten">
+                            Dua roda gigi dengan jari-jari masing-masing 10 cm dan 4 cm diletakkan bersinggungan pada sebuah bidang datar. Jarak antara pusat kedua roda gigi tersebut adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">6 cm</li><li data-option="B">10 cm</li><li data-option="C">14 cm</li><li data-option="D">20 cm</li><li data-option="E">24 cm</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>14.</b></div>
+                        <div class="soal-konten">
+                            Sebuah radar memiliki jangkauan melingkar dengan persamaan $(x-10)^2 + (y-20)^2 = 400$. Sebuah pesawat berada pada koordinat $(25, 25)$. Apakah pesawat tersebut terdeteksi radar?
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Terdeteksi, karena di dalam jangkauan.</li><li data-option="B">Terdeteksi, karena tepat di batas jangkauan.</li><li data-option="C">Tidak terdeteksi, karena di luar jangkauan.</li><li data-option="D">Informasi tidak cukup.</li><li data-option="E">Pesawat dan radar berada di titik yang sama.</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan">
+                    <div class="keterangan-soal">Level: Penalaran (HOTS) | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>15.</b></div>
+                        <div class="soal-konten">
+                             Luas daerah irisan dari dua lingkaran $L_1: x^2+y^2=4$ dan $L_2: (x-2)^2+y^2=4$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{8\pi}{3}-2\sqrt{3}$</li><li data-option="B">$\frac{4\pi}{3}-\sqrt{3}$</li><li data-option="C">$4\pi-2\sqrt{3}$</li><li data-option="D">$\frac{8\pi}{3}-\sqrt{3}$</li><li data-option="E">$2\pi-2\sqrt{3}$</li></ol></div>
+                        </div>
+                    </div>
+                </div><div class="coret-coret"></div></div>
+             </div>
+        </div>
+    </section>
+
+    <section class="page page-content kumpulan-pembahasan">
+        <div class="content-wrapper">
+            <h3>Kunci Jawaban dan Pembahasan Latihan Soal: Lingkaran</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><p>Dari $(x-a)^2+(y-b)^2=r^2$, kita punya pusat $(a,b)$ dan jari-jari $r$.<br>$(x+3)^2 \implies a=-3$.<br>$(y-2)^2 \implies b=2$.<br>$r^2=8 \implies r=\sqrt{8}=2\sqrt{2}$. Pusat $(-3,2)$, jari-jari $2\sqrt{2}$.</p></div>
+            <div class="pembahasan"><b>2. Jawaban: A</b><p><b>Revisi Soal:</b> Persamaan lingkaran yang benar adalah $x^2+y^2-2x+4y-13=0$ agar titik $(4,1)$ berada pada lingkaran.<br><b>Pembahasan:</b> Gunakan rumus bagi adil $x_1x+y_1y+A\frac{x+x_1}{2}+B\frac{y+y_1}{2}+C=0$.<br>
+            $4x+y-2\frac{x+4}{2}+4\frac{y+1}{2}-13=0 \implies 4x+y-(x+4)+2(y+1)-13=0 \implies 3x+3y-15=0$.</p></div>
+            <div class="pembahasan"><b>3. Jawaban: D</b><p><b>Revisi Soal:</b> Pertanyaan diubah menjadi "memotong di dua titik berbeda" agar sesuai dengan kunci jawaban.<br><b>Pembahasan:</b> Syarat memotong di dua titik berbeda: $D>0$.<br>Substitusi: $(x-2)^2+(kx)^2=1 \implies (1+k^2)x^2-4x+3=0$.<br>$D = (-4)^2 - 4(1+k^2)(3) > 0 \implies 16 - 12-12k^2 > 0 \implies 4-12k^2 > 0 \implies 1-3k^2 > 0 \implies k^2 < 1/3$.<br>Solusinya adalah $-\frac{1}{\sqrt{3}} < k < \frac{1}{\sqrt{3}}$.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: A</b><p>$r^2 = 42.250.000 \implies r = \sqrt{42.250.000} = \sqrt{4225 \times 10000} = 65 \times 100 = 6500$ km.</p></div>
+            <div class="pembahasan"><b>5. Jawaban: C</b><p><b>Teori Dasar:</b> Titik $(p,q)$ ada di dalam lingkaran $x^2+y^2=r^2$ jika $p^2+q^2 < r^2$.<br><b>Analisis (1):</b> Kita tahu $r^2=16$. Tidak tahu nilai $p^2+q^2$. Tidak cukup.<br><b>Analisis (2):</b> Kita tahu $p^2+q^2=10$. Tidak tahu nilai $r^2$. Tidak cukup.<br><b>Bersama-sama:</b> Kita tahu $p^2+q^2=10$ dan $r^2=16$. Karena $10 < 16$, maka titik ada di dalam lingkaran. Cukup.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: A</b><p>Pusat P = $(\frac{-2+4}{2}, \frac{3-1}{2})=(1,1)$.<br>$r^2 = (\text{jarak dari pusat ke A})^2 = (1-(-2))^2+(1-3)^2 = 3^2+(-2)^2=13$.<br>Persamaan: $(x-1)^2+(y-1)^2=13 \implies x^2+y^2-2x-2y-11=0$.</p></div>
+            <div class="pembahasan"><b>7. Jawaban: C</b><p>$r^2=36 \implies r=6$.<br>Luas Juring = $\frac{60^\circ}{360^\circ} \times \pi r^2 = \frac{1}{6} \pi (6^2) = 6\pi$.</p></div>
+            <div class="pembahasan"><b>8. Jawaban: A, B, C, E</b><p>Syarat menyinggung $y=mx+c$ pada $x^2+y^2=r^2$ adalah $c^2=r^2(m^2+1)$. Di sini $r^2=8$.<br>A: $y=x+4$. $m=1, c=4 \implies c^2=16$. $r^2(m^2+1)=8(1^2+1)=16$. Sama. Menyinggung.<br>B: $y=-x-4$. $m=-1, c=-4 \implies c^2=16$. $r^2(m^2+1)=8((-1)^2+1)=16$. Sama. Menyinggung.<br>C: $y=-x+4$, $m=-1, c=4 \implies c^2=16$. Sama. Menyinggung.<br>D: $y=x+2$. $m=1, c=2 \implies c^2=4$. Tidak sama. Tidak menyinggung.<br>E: $y=x+4$, sama dengan A. Menyinggung.</p></div>
+            <div class="pembahasan"><b>9. Jawaban: C</b><p>Syarat bersinggungan luar: Jarak pusat = $r_1+r_2$.<br>Pusat $P_1(2,1)$, $r_1=2$. Pusat $P_2(5,5)$, $r_2=r$.<br>Jarak $d = \sqrt{(5-2)^2+(5-1)^2} = \sqrt{9+16}=5$.<br>$d=r_1+r_2 \implies 5=2+r \implies r=3$.</p></div>
+            <div class="pembahasan"><b>10. Jawaban: B</b><p>Panjang Busur = $\frac{150^\circ}{360^\circ} \times 2\pi r = \frac{5}{12} \times 2\pi (12) = 10\pi$ cm.</p></div>
+            <div class="pembahasan"><b>11. Jawaban: Benar, Benar, Benar</b><p>Pusat: $(-\frac{-6}{2}, -\frac{8}{2})=(3,-4)$. (Benar)<br>Jari-jari: $r=\sqrt{3^2+(-4)^2-9} = \sqrt{9+16-9}=\sqrt{16}=4$. (Benar)<br>Jarak pusat ke sumbu-x adalah $|-4|=4$. Karena jarak sama dengan jari-jari, lingkaran menyinggung sumbu-x. (Benar)</p></div>
+            <div class="pembahasan"><b>12. Jawaban: B</b><p>Jarak dari titik pusat lingkaran ke garis singgungnya selalu sama dengan jari-jari lingkaran. Dari $x^2+y^2=9$, jari-jarinya adalah $r=\sqrt{9}=3$.</p></div>
+            <div class="pembahasan"><b>13. Jawaban: C</b><p><b>Teori Dasar:</b> Jika dua lingkaran bersinggungan luar, jarak antara kedua pusatnya sama dengan jumlah kedua jari-jarinya ($d = r_1 + r_2$).<br>Dalam kasus roda gigi, jarak antar pusatnya adalah $d = 10 \text{ cm} + 4 \text{ cm} = 14 \text{ cm}$.</p></div>
+            <div class="pembahasan"><b>14. Jawaban: A</b><p><b>Teori Dasar:</b> Cek posisi titik $(x_1, y_1)$ terhadap lingkaran $(x-a)^2+(y-b)^2=r^2$. Jika $(x_1-a)^2+(y_1-b)^2 < r^2$, titik di dalam.<br>Substitusi titik $(25,25)$ ke sisi kiri persamaan: $(25-10)^2+(25-20)^2 = 15^2+5^2 = 225+25 = 250$.<br>Jangkauan radar $r^2=400$. Karena $250 < 400$, pesawat berada di dalam jangkauan radar.</p></div>
+             <div class="pembahasan"><b>15. Jawaban: A</b><p><b>Teori Dasar:</b> Luas irisan dua lingkaran identik yang berpotongan adalah dua kali luas tembereng.<br>
+             Titik potong: $x^2+y^2=(x-2)^2+y^2 \implies x^2=x^2-4x+4 \implies 4x=4 \implies x=1$.<br>
+             Substitusi $x=1$ ke $x^2+y^2=4 \implies 1+y^2=4 \implies y^2=3 \implies y=\pm\sqrt{3}$.<br>
+             Titik potongnya $(1, \sqrt{3})$ dan $(1, -\sqrt{3})$. Titik ini, bersama pusat $(0,0)$ dan $(2,0)$, membentuk dua segitiga sama sisi dengan sisi 2. Sudut pusat pada masing-masing lingkaran adalah $120^\circ$ atau $2\pi/3$ radian.<br>
+             Luas satu tembereng = Luas juring - Luas segitiga.<br>
+             $= \frac{120^\circ}{360^\circ} \pi r^2 - \frac{1}{2} r^2 \sin(120^\circ) = \frac{1}{3}\pi(2^2) - \frac{1}{2}(2^2)(\frac{\sqrt{3}}{2}) = \frac{4\pi}{3} - \sqrt{3}$.<br>
+             Luas irisan adalah 2 kali luas tembereng: $2 \times (\frac{4\pi}{3} - \sqrt{3}) = \frac{8\pi}{3} - 2\sqrt{3}$.</p></div>
+        </div>
+    </section>
+    </div>
+    <!-- ############################## END LINGKARAN ############################## -->
+
+</div>
+
+</body>
+</html>
+
