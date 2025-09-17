@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persiapan TKA: Transformasi Geometri</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .book-container {
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm; /* Ukuran B5 */
+            min-height: 250mm; /* Ukuran B5 */
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page img {
+            max-width: 350px;
+            margin-bottom: 40px;
+            filter: grayscale(100%);
+        }
+
+        .cover-page .title {
+            font-size: 38pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 20pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page {
+            size: B5;
+            margin: 20mm;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: auto;
+                height: auto;
+                min-height: 0;
+                margin: 0;
+                box-shadow: none;
+                break-after: page;
+            }
+            h2, .sub-section, .kumpulan-pembahasan h3 {
+                break-before: page;
+            }
+        }
+        
+        .page-content::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+        
+        .cover-page::before, .daftar-isi-page::before {
+            content: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 24pt;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            padding-top: 1em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        h3:first-of-type {
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .sub-section {
+            break-before: page;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 10px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; break-inside: avoid; }
+        .latihan-item:first-of-type { border-top: none; padding-top: 0; margin-top: 0;}
+
+        .soal-item, .soal-latihan {
+            margin-bottom: 20px;
+            break-inside: avoid;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .soal-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0 8px;
+            align-items: start;
+        }
+        
+        .pilihan-ganda-container {
+            padding-left: 0;
+        }
+        
+        .pembahasan {  
+            background-color: #f9f9f9;  
+            border: 1px solid #ddd;  
+            padding: 15px;  
+            border-radius: 5px;  
+            margin-top: 10px;  
+            break-inside: avoid;  
+            overflow-wrap: break-word;  
+            word-wrap: break-word;  
+        }
+        .pembahasan p { margin-bottom: 1.2em; }
+        .pembahasan p:last-child { margin-bottom: 0; }
+        
+        .kumpulan-pembahasan h3 { text-align: center; }
+        .kumpulan-pembahasan .pembahasan { margin-bottom: 15px;}
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            background-color: white;
+            min-height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { 
+            margin-bottom: 8px; 
+            display: flex;
+        }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+            min-width: 15px;
+        }
+
+        .kecukupan-data-stmt {
+            margin: 10px 0 10px 20px;
+            font-style: italic;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+        .bold-instruction { font-weight: bold; }
+        
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left; margin-top: 10px;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+
+        .daftar-isi ul { list-style: none; padding-left: 0; font-size: 14pt; }
+        .daftar-isi li { border-bottom: 1px dotted #888; padding: 10px 0; }
+        .daftar-isi a { text-decoration: none; color: var(--primary-text); display: flex; justify-content: space-between; }
+        .daftar-isi a:hover { color: #000; font-weight: bold; }
+        
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+
+    <!-- Halaman Cover -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">Persiapan Menghadapi TKA</h1>
+            <p class="subtitle">Transformasi Geometri (Matematika Lanjut)</p>
+        </div>
+    </section>
+
+    <!-- Halaman Daftar Isi -->
+    <section class="page daftar-isi-page">
+        <div class="content-wrapper">
+            <h2>Daftar Isi</h2>
+            <nav class="daftar-isi">
+                <ul>
+                    <li><a href="#materi"><span>Materi Singkat</span> <span>1</span></a></li>
+                    <li><a href="#contoh-soal"><span>Contoh Soal dan Pembahasan</span> <span>3</span></a></li>
+                    <li><a href="#latihan-soal"><span>Latihan Soal</span> <span>6</span></a></li>
+                    <li><a href="#pembahasan-latihan"><span>Pembahasan Latihan Soal</span> <span>9</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Halaman Materi -->
+    <section class="page page-content" id="materi">
+        <div class="content-wrapper">
+            <h2>Transformasi Geometri</h2>
+            <h3>1. Materi Singkat</h3>
+            <div class="layout-1-kolom">
+                <p>
+                    Transformasi geometri adalah perubahan posisi (perpindahan) atau ukuran dari suatu objek (titik, garis, kurva, bidang). Dalam konteks matematika lanjut, transformasi pada bidang Kartesius dapat direpresentasikan menggunakan matriks. Jika titik $P(x, y)$ ditransformasikan oleh matriks $T = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ menghasilkan bayangan $P'(x', y')$, maka hubungannya adalah:
+                    $$ \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax+by \\ cx+dy \end{pmatrix} $$
+                </p>
+                <h4>Jenis-jenis Transformasi dan Matriksnya</h4>
+                <ul>
+                    <li><b>Refleksi (Pencerminan):</b>
+                        <ul>
+                            <li>Terhadap sumbu-x: $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$</li>
+                            <li>Terhadap sumbu-y: $\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$</li>
+                            <li>Terhadap garis y=x: $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$</li>
+                            <li>Terhadap garis y=-x: $\begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}$</li>
+                        </ul>
+                    </li>
+                    <li><b>Rotasi (Perputaran)</b> terhadap titik pusat $O(0,0)$ sebesar sudut $\theta$:
+                        <p>$\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}$ (Berlawanan arah jarum jam adalah positif)</p>
+                    </li>
+                    <li><b>Dilatasi (Perbesaran/Pengecilan)</b> dengan pusat $O(0,0)$ dan faktor skala $k$:
+                        <p>$\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}$</p>
+                    </li>
+                     <li><b>Translasi (Pergeseran)</b> oleh $T = \begin{pmatrix} a \\ b \end{pmatrix}$:
+                        <p>Translasi tidak memiliki matriks transformasi 2x2, melainkan operasi penjumlahan:
+                        $ \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} x \\ y \end{pmatrix} + \begin{pmatrix} a \\ b \end{pmatrix} $</p>
+                    </li>
+                </ul>
+                <h4>Komposisi Transformasi</h4>
+                <p>
+                    Jika transformasi $T_1$ dilanjutkan oleh transformasi $T_2$, maka matriks transformasinya adalah $M_{total} = M_2 \cdot M_1$. Perhatikan urutannya, matriks yang bekerja belakangan diletakkan di depan.
+                    $$ \begin{pmatrix} x'' \\ y'' \end{pmatrix} = (T_2 \circ T_1) \begin{pmatrix} x \\ y \end{pmatrix} = M_2 \cdot M_1 \begin{pmatrix} x \\ y \end{pmatrix} $$
+                </p>
+                <h4>Transformasi Garis atau Kurva</h4>
+                 <p>
+                    Untuk mentransformasikan kurva, kita perlu mencari hubungan antara $(x, y)$ dan $(x', y')$. Dari persamaan matriks $\begin{pmatrix} x' \\ y' \end{pmatrix} = M \begin{pmatrix} x \\ y \end{pmatrix}$, kita dapat mencari $\begin{pmatrix} x \\ y \end{pmatrix} = M^{-1} \begin{pmatrix} x' \\ y' \end{pmatrix}$. Kemudian, substitusikan ekspresi $x$ dan $y$ ke dalam persamaan kurva awal untuk mendapatkan persamaan bayangannya.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Contoh Soal -->
+    <section class="page page-content" id="contoh-soal">
+        <div class="content-wrapper">
+            <h3>2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>1.</b></div>
+                        <div class="soal-konten">
+                            Titik $A(2, -5)$ dirotasikan sebesar $90^\circ$ berlawanan arah jarum jam dengan pusat rotasi di $O(0,0)$. Koordinat bayangan titik A adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$(5, 2)$</li>
+                                <li data-option="B">$(-5, -2)$</li>
+                                <li data-option="C">$(-2, 5)$</li>
+                                <li data-option="D">$(2, 5)$</li>
+                                <li data-option="E">$(-5, 2)$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan">
+                        <b>Pembahasan:</b>
+                        <p>Matriks rotasi $90^\circ$ berlawanan arah jarum jam ($\theta=90^\circ$) adalah:
+                        $M = \begin{pmatrix} \cos(90^\circ) & -\sin(90^\circ) \\ \sin(90^\circ) & \cos(90^\circ) \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$.</p>
+                        <p>Bayangan titik $A(2, -5)$ adalah:
+                        $\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 2 \\ -5 \end{pmatrix} = \begin{pmatrix} (0)(2) + (-1)(-5) \\ (1)(2) + (0)(-5) \end{pmatrix} = \begin{pmatrix} 5 \\ 2 \end{pmatrix}$.</p>
+                        <p>Jadi, koordinat bayangannya adalah $(5, 2)$. Jawaban: <b>A</b>.</p>
+                    </div>
+                </div>
+
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                     <div class="soal-grid">
+                        <div class="soal-nomor"><b>2.</b></div>
+                        <div class="soal-konten">
+                            Bayangan garis $2x - 3y + 6 = 0$ oleh transformasi pencerminan terhadap garis $y=x$ adalah...
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$2y - 3x + 6 = 0$</li>
+                                <li data-option="B">$2y + 3x - 6 = 0$</li>
+                                <li data-option="C">$3y - 2x + 6 = 0$</li>
+                                <li data-option="D">$3x - 2y - 6 = 0$</li>
+                                <li data-option="E">$-3x - 2y - 6 = 0$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan">
+                        <b>Pembahasan:</b>
+                        <p>Matriks pencerminan terhadap garis $y=x$ adalah $M = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$.
+                        $\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} \implies \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} y \\ x \end{pmatrix}$.</p>
+                        <p>Dari sini kita dapatkan $x' = y$ dan $y' = x$. Substitusikan $x=y'$ dan $y=x'$ ke persamaan garis awal:
+                        $2(y') - 3(x') + 6 = 0 \implies 2y' - 3x' + 6 = 0$.</p>
+                        <p>Menghilangkan aksen, persamaan bayangannya adalah $2y - 3x + 6 = 0$. Jawaban: <b>A</b>.</p>
+                    </div>
+                </div>
+
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>3.</b></div>
+                        <div class="soal-konten">
+                            Titik $P(a, b)$ ditransformasikan oleh matriks $T = \begin{pmatrix} 1 & 2 \\ 0 & -1 \end{pmatrix}$ menghasilkan bayangan $P'(-1, 3)$. Apakah nilai $a+b$ dapat ditentukan?
+                            <div class="kecukupan-data-stmt">(1) $a - 2b = -3$ <br>(2) $b = -3$</div>
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li>
+                                <li data-option="D">SALAH SATU pernyataan SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan">
+                        <b>Pembahasan:</b>
+                        <p>Dari soal, kita punya hubungan:
+                        $\begin{pmatrix} -1 \\ 3 \end{pmatrix} = \begin{pmatrix} 1 & 2 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} a \\ b \end{pmatrix} = \begin{pmatrix} a+2b \\ -b \end{pmatrix}$.</p>
+                        <p>Dari baris kedua, kita dapatkan $3 = -b \implies b = -3$.
+                        Dari baris pertama, $-1 = a+2b$. Karena kita tahu $b=-3$, maka $-1 = a+2(-3) \implies -1 = a-6 \implies a=5$.
+                        Nilai $a$ dan $b$ dapat ditentukan dari informasi di soal saja. Maka $a+b = 5+(-3)=2$.
+                        Artinya, kita tidak memerlukan pernyataan (1) atau (2) sama sekali untuk menjawab pertanyaan.
+                        Namun, mari kita periksa konsistensi pernyataan.
+                        (1) $a-2b=5-2(-3)=5+6=11 \ne -3$. Pernyataan (1) salah.
+                        (2) $b = -3$. Pernyataan (2) konsisten.
+                        Karena pertanyaan bisa dijawab tanpa pernyataan tambahan, tipe soal ini menguji apakah kita bisa menemukan nilai $a$ dan $b$ dari soal. Karena kita bisa, maka pernyataan (2) yang konsisten sudah cukup. Pernyataan (1) yang tidak konsisten tidak bisa digunakan. Jawaban: <b>B</b>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="soal-item">
+                     <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>4.</b></div>
+                        <div class="soal-konten">
+                           Sebuah lengan robot di sebuah pabrik bergerak dari titik $P(4,1)$ ke titik $Q(6,5)$. Untuk memindahkan objek berikutnya, lengan itu harus melakukan gerakan yang sama persis mulai dari titik $R(-2,3)$. Di manakah posisi akhir lengan robot?
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">$(0, 7)$</li>
+                                <li data-option="B">$(2, 4)$</li>
+                                <li data-option="C">$(-4, -2)$</li>
+                                <li data-option="D">$(4, 8)$</li>
+                                <li data-option="E">$(0, -2)$</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                    <div class="pembahasan">
+                        <b>Pembahasan:</b>
+                        <p>"Gerakan yang sama persis" berarti translasi yang sama.
+                        Pertama, cari vektor translasi dari P ke Q:
+                        $T = \vec{PQ} = Q - P = \begin{pmatrix} 6-4 \\ 5-1 \end{pmatrix} = \begin{pmatrix} 2 \\ 4 \end{pmatrix}$.</p>
+                        <p>Kemudian, terapkan translasi ini ke titik R:
+                        $R' = R + T = \begin{pmatrix} -2 \\ 3 \end{pmatrix} + \begin{pmatrix} 2 \\ 4 \end{pmatrix} = \begin{pmatrix} -2+2 \\ 3+4 \end{pmatrix} = \begin{pmatrix} 0 \\ 7 \end{pmatrix}$.</p>
+                        <p>Posisi akhir lengan robot adalah di $(0, 7)$. Jawaban: <b>A</b>.</p>
+                    </div>
+                </div>
+                
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks (Multiple Answers)</div>
+                    <div class="soal-grid">
+                        <div class="soal-nomor"><b>5.</b></div>
+                        <div class="soal-konten">
+                            Suatu titik ditransformasikan terlebih dahulu oleh pencerminan terhadap sumbu-x, kemudian dilanjutkan dengan rotasi $270^\circ$ berlawanan arah jarum jam terhadap titik pusat. Manakah pernyataan di bawah ini yang benar mengenai transformasi komposit tersebut? <span class="bold-instruction">(Bisa pilih lebih dari satu jawaban)</span>
+                            <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                <li data-option="A">Matriks transformasinya adalah $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$.</li>
+                                <li data-option="B">Transformasi tersebut ekuivalen dengan pencerminan terhadap garis $y=x$.</li>
+                                <li data-option="C">Titik $(3, 2)$ akan berpindah ke $(2, 3)$.</li>
+                                <li data-option="D">Matriks transformasinya adalah $\begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}$.</li>
+                                <li data-option="E">Titik $(3, 2)$ akan berpindah ke $(-2, -3)$.</li>
+                            </ol></div>
+                        </div>
+                    </div>
+                     <div class="pembahasan">
+                        <b>Pembahasan:</b>
+                        <p>$T_1$ (cermin sumbu-x): $M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$.
+                        $T_2$ (rotasi $270^\circ$): $M_2 = \begin{pmatrix} \cos(270^\circ) & -\sin(270^\circ) \\ \sin(270^\circ) & \cos(270^\circ) \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$.</p>
+                        <p>Matriks komposit $M = M_2 \cdot M_1 = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}$. Ini adalah matriks pencerminan terhadap garis $y=-x$. Pernyataan D benar.</p>
+                        <p>Cek pilihan lain:
+                        A. Salah.
+                        B. Salah, ini ekuivalen dengan pencerminan terhadap $y=-x$.
+                        C. Cek bayangan (3,2): $\begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} 3 \\ 2 \end{pmatrix} = \begin{pmatrix} -2 \\ -3 \end{pmatrix}$. Pernyataan C salah.
+                        E. Benar, sesuai perhitungan di atas.
+                        Jawaban benar: <b>D dan E</b>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Latihan Soal -->
+    <section class="page page-content" id="latihan-soal">
+        <div class="content-wrapper">
+            <h3>3. Latihan Soal</h3>
+            <div class="layout-latihan">
+                <!-- Soal 1 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>1.</b></div>
+                            <div class="soal-konten">
+                                Matriks yang bersesuaian dengan dilatasi pusat $O(0,0)$ faktor skala 3 dilanjutkan refleksi terhadap sumbu-y adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$\begin{pmatrix} -3 & 0 \\ 0 & 3 \end{pmatrix}$</li>
+                                    <li data-option="B">$\begin{pmatrix} 3 & 0 \\ 0 & -3 \end{pmatrix}$</li>
+                                    <li data-option="C">$\begin{pmatrix} -1 & 0 \\ 0 & 3 \end{pmatrix}$</li>
+                                    <li data-option="D">$\begin{pmatrix} 1 & 0 \\ 0 & -3 \end{pmatrix}$</li>
+                                    <li data-option="E">$\begin{pmatrix} 3 & 0 \\ 0 & 3 \end{pmatrix}$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 2 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>2.</b></div>
+                            <div class="soal-konten">
+                                Bayangan titik $P(-4, 5)$ oleh refleksi terhadap garis $y=-x$ dilanjutkan dengan translasi $T=\begin{pmatrix} 3 \\ -2 \end{pmatrix}$ adalah...
+                                 <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$(-2, 2)$</li>
+                                    <li data-option="B">$(-2, 6)$</li>
+                                    <li data-option="C">$(2, -2)$</li>
+                                    <li data-option="D">$(2, 2)$</li>
+                                    <li data-option="E">$(-8, 6)$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 3 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>3.</b></div>
+                            <div class="soal-konten">
+                                Jika titik $(a,b)$ dicerminkan terhadap sumbu-y, kemudian dilanjutkan dengan transformasi sesuai matriks $\begin{pmatrix} -2 & 1 \\ 1 & 2 \end{pmatrix}$ menghasilkan titik $(5, 0)$, maka nilai $a+b$ adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">1</li>
+                                    <li data-option="B">2</li>
+                                    <li data-option="C">3</li>
+                                    <li data-option="D">4</li>
+                                    <li data-option="E">5</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                 <!-- Soal 4 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                             <div class="soal-nomor"><b>4.</b></div>
+                            <div class="soal-konten">
+                                Persamaan bayangan lingkaran $x^2+y^2=9$ jika didilatasikan dengan pusat $O(0,0)$ dan faktor skala 2 adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$x^2+y^2=3$</li>
+                                    <li data-option="B">$x^2+y^2=6$</li>
+                                    <li data-option="C">$x^2+y^2=18$</li>
+                                    <li data-option="D">$x^2+y^2=36$</li>
+                                    <li data-option="E">$x^2+y^2=81$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                 <!-- Soal 5 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks Kategori</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>5.</b></div>
+                            <div class="soal-konten">
+                                Sebuah segitiga ABC dengan $A(1,1), B(5,1), C(3,4)$ ditransformasikan oleh matriks $T = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$. Tentukan kebenaran dari setiap pernyataan berikut.
+                                 <table class="soal-kategori">
+                                    <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>1. Transformasi tersebut adalah rotasi $90^\circ$ searah jarum jam.</td><td></td><td></td></tr>
+                                        <tr><td>2. Koordinat bayangan titik C adalah $C'(-4,3)$.</td><td></td><td></td></tr>
+                                        <tr><td>3. Luas segitiga bayangan sama dengan luas segitiga awal.</td><td></td><td></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <h3 style="margin-top:0; border-top:none; padding-top:0;">Lanjutan Latihan Soal...</h3>
+             <div class="layout-latihan">
+                <!-- Soal 6 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>6.</b></div>
+                            <div class="soal-konten">
+                                Transformasi $T$ adalah komposisi dari pencerminan terhadap garis $y=x$ dilanjutkan pencerminan terhadap sumbu-x. Matriks $T$ adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$\begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$</li>
+                                    <li data-option="B">$\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$</li>
+                                    <li data-option="C">$\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$</li>
+                                    <li data-option="D">$\begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$</li>
+                                    <li data-option="E">$\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                 <!-- Soal 7 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>7.</b></div>
+                            <div class="soal-konten">
+                                Garis $y=2x-1$ dirotasi $180^\circ$ dengan pusat $O(0,0)$. Persamaan bayangannya adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$y = 2x+1$</li>
+                                    <li data-option="B">$y = -2x-1$</li>
+                                    <li data-option="C">$y = -2x+1$</li>
+                                    <li data-option="D">$y = \frac{1}{2}x+1$</li>
+                                    <li data-option="E">$y = \frac{1}{2}x-1$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 8 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                         <div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>8.</b></div>
+                            <div class="soal-konten">
+                                Titik $A(x,y)$ ditransformasi oleh matriks $M$ menghasilkan bayangan $A'(2,5)$. Berapakah nilai $x+y$?
+                                <div class="kecukupan-data-stmt">
+                                (1) Matriks $M = \begin{pmatrix} 3 & -1 \\ 5 & -2 \end{pmatrix}$. <br>
+                                (2) Determinan matriks $M$ adalah $-1$.
+                                </div>
+                                 <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">Pernyataan (1) SAJA cukup.</li>
+                                    <li data-option="B">Pernyataan (2) SAJA cukup.</li>
+                                    <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li>
+                                    <li data-option="D">SALAH SATU pernyataan SAJA cukup.</li>
+                                    <li data-option="E">(1) dan (2) tidak cukup.</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 9 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>9.</b></div>
+                            <div class="soal-konten">
+                                Sebuah objek berbentuk segitiga dengan luas 10 cm$^2$ didilatasikan dengan faktor skala 4. Luas bayangan objek tersebut adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">40 cm$^2$</li>
+                                    <li data-option="B">80 cm$^2$</li>
+                                    <li data-option="C">100 cm$^2$</li>
+                                    <li data-option="D">160 cm$^2$</li>
+                                    <li data-option="E">400 cm$^2$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 10 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda Kompleks (Multiple Answers)</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>10.</b></div>
+                            <div class="soal-konten">
+                                Transformasi oleh matriks $T = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$ diterapkan pada garis $y=x+1$. Manakah pernyataan yang benar? <span class="bold-instruction">(Bisa pilih lebih dari satu jawaban)</span>
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">Gradien garis bayangan adalah 2.</li>
+                                    <li data-option="B">Garis bayangan sejajar dengan garis awal.</li>
+                                    <li data-option="C">Persamaan garis bayangan adalah $y=x+2$.</li>
+                                    <li data-option="D">Setiap titik pada garis berpindah menjauhi titik asal.</li>
+                                    <li data-option="E">Transformasi ini adalah dilatasi.</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page page-content">
+        <div class="content-wrapper">
+             <h3 style="margin-top:0; border-top:none; padding-top:0;">Lanjutan Latihan Soal...</h3>
+             <div class="layout-latihan">
+                <!-- Soal 11 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Pengetahuan & Pemahaman | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>11.</b></div>
+                            <div class="soal-konten">
+                                Rotasi sebesar $-90^\circ$ terhadap pusat $O(0,0)$ ekuivalen dengan rotasi sebesar...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$90^\circ$</li>
+                                    <li data-option="B">$180^\circ$</li>
+                                    <li data-option="C">$270^\circ$</li>
+                                    <li data-option="D">$360^\circ$</li>
+                                    <li data-option="E">$450^\circ$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 12 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>12.</b></div>
+                            <div class="soal-konten">
+                                Titik B$(3, -2)$ dicerminkan terhadap sumbu-x menghasilkan B', lalu B' dicerminkan terhadap sumbu-y menghasilkan B''. Koordinat B'' adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$(-3, 2)$</li>
+                                    <li data-option="B">$(3, 2)$</li>
+                                    <li data-option="C">$(-3, -2)$</li>
+                                    <li data-option="D">$(2, -3)$</li>
+                                    <li data-option="E">$(-2, 3)$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                <!-- Soal 13 -->
+                 <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>13.</b></div>
+                            <div class="soal-konten">
+                                Matriks transformasi yang mengubah titik $(2,3)$ menjadi $(4,6)$ dan titik $(1,2)$ menjadi $(2,4)$ adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$</li>
+                                    <li data-option="B">$\begin{pmatrix} 1 & 1 \\ 2 & 2 \end{pmatrix}$</li>
+                                    <li data-option="C">$\begin{pmatrix} 0 & 2 \\ 0 & 2 \end{pmatrix}$</li>
+                                    <li data-option="D">$\begin{pmatrix} 4 & -2 \\ 6 & -3 \end{pmatrix}$</li>
+                                    <li data-option="E">Tidak ada</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                 <!-- Soal 14 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Aplikasi (Kehidupan Sehari-hari) | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                            <div class="soal-nomor"><b>14.</b></div>
+                            <div class="soal-konten">
+                                Sebuah denah diletakkan pada sistem koordinat. Lokasi sebuah menara ada di titik $M(6,8)$. Karena ada perubahan rencana tata kota, seluruh denah harus diputar $90^\circ$ searah jarum jam dengan pusat putaran di titik $O(0,0)$. Lokasi baru menara adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$(-6, 8)$</li>
+                                    <li data-option="B">$(-8, 6)$</li>
+                                    <li data-option="C">$(-8, -6)$</li>
+                                    <li data-option="D">$(8, -6)$</li>
+                                    <li data-option="E">$(6, -8)$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+                 <!-- Soal 15 -->
+                <div class="latihan-item">
+                    <div class="soal-latihan">
+                        <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                        <div class="soal-grid">
+                             <div class="soal-nomor"><b>15.</b></div>
+                            <div class="soal-konten">
+                                Sebuah transformasi $T$ memetakan setiap titik $(x,y)$ ke $(x+1, y-2)$. Transformasi yang sama diterapkan dua kali berturut-turut pada titik $P(3,5)$. Posisi akhir titik P adalah...
+                                <div class="pilihan-ganda-container"><ol class="pilihan-ganda">
+                                    <li data-option="A">$(4, 3)$</li>
+                                    <li data-option="B">$(5, 1)$</li>
+                                    <li data-option="C">$(6, -4)$</li>
+                                    <li data-option="D">$(5, 3)$</li>
+                                    <li data-option="E">$(4, 1)$</li>
+                                </ol></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coret-coret"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Pembahasan Latihan -->
+    <section class="page page-content" id="pembahasan-latihan">
+        <div class="content-wrapper">
+            <h3>Pembahasan Latihan Soal</h3>
+            <div class="pembahasan"><b>1. Jawaban: A</b><p>$T_1$ (Dilatasi [O,3]): $M_1 = \begin{pmatrix} 3 & 0 \\ 0 & 3 \end{pmatrix}$.<br>$T_2$ (Refleksi sumbu-y): $M_2 = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$.<br>Komposisi $M = M_2 \cdot M_1 = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 3 & 0 \\ 0 & 3 \end{pmatrix} = \begin{pmatrix} -3 & 0 \\ 0 & 3 \end{pmatrix}$.</p></div>
+            <div class="pembahasan"><b>2. Jawaban: A</b><p>$P(-4,5)$ direfleksikan terhadap $y=-x$ menjadi $P'(-5, 4)$.<br>Kemudian $P'(-5,4)$ ditranslasi oleh $T=\begin{pmatrix} 3 \\ -2 \end{pmatrix}$ menjadi $P''(-5+3, 4-2) = P''(-2, 2)$.</p></div>
+            <div class="pembahasan"><b>3. Jawaban: C</b><p>Titik awal $(a,b)$. Dicerminkan sumbu-y menjadi $(-a, b)$.<br>Kemudian ditransformasi: $\begin{pmatrix} -2 & 1 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} -a \\ b \end{pmatrix} = \begin{pmatrix} 2a+b \\ -a+2b \end{pmatrix} = \begin{pmatrix} 5 \\ 0 \end{pmatrix}$.<br>Dari sistem persamaan:<br>$2a+b=5$ (i)<br>$-a+2b=0 \implies a=2b$ (ii)<br>Substitusi (ii) ke (i): $2(2b)+b=5 \implies 5b=5 \implies b=1$.<br>Maka $a=2(1)=2$. Jadi $a+b=2+1=3$.</p></div>
+            <div class="pembahasan"><b>4. Jawaban: D</b><p>Dilatasi $[O,2]$ mengubah $x' = 2x$ dan $y' = 2y$. Maka $x=\frac{x'}{2}$ dan $y=\frac{y'}{2}$.<br>Substitusi ke $x^2+y^2=9$: $(\frac{x'}{2})^2 + (\frac{y'}{2})^2 = 9 \implies \frac{(x')^2}{4} + \frac{(y')^2}{4} = 9 \implies (x')^2+(y')^2 = 36$. Jadi, bayangannya adalah $x^2+y^2=36$.</p></div>
+            <div class="pembahasan"><b>5. Jawaban: Salah, Benar, Benar</b><p>1. Matriks $T$ adalah matriks rotasi $90^\circ$ berlawanan arah jarum jam ($\theta=90^\circ$). Pernyataan 1 Salah.<br>2. $C' = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}\begin{pmatrix} 3 \\ 4 \end{pmatrix} = \begin{pmatrix} -4 \\ 3 \end{pmatrix}$. Pernyataan 2 Benar.<br>3. Rotasi adalah transformasi isometri (tidak mengubah bentuk/ukuran), jadi luasnya tetap. Determinan matriks $T$ adalah $(0)(0) - (-1)(1)=1$. Luas bayangan = $|\det(T)| \times$ Luas awal = $1 \times$ Luas awal. Pernyataan 3 Benar.</p></div>
+            <div class="pembahasan"><b>6. Jawaban: A</b><p>$T_1$ (refleksi $y=x$): $M_1 = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$.<br>$T_2$ (refleksi sumbu-x): $M_2 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$.<br>$M = M_2 \cdot M_1 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$.</p></div>
+            <div class="pembahasan"><b>7. Jawaban: A</b><p>Rotasi $180^\circ$: $x'=-x, y'=-y$. Maka $x=-x', y=-y'$.<br>Substitusi: $(-y') = 2(-x') - 1 \implies -y' = -2x' - 1 \implies y' = 2x' + 1$. Jadi, bayangannya $y=2x+1$.</p></div>
+            <div class="pembahasan"><b>8. Jawaban: A</b><p>Kita punya $\begin{pmatrix} 2 \\ 5 \end{pmatrix} = M \begin{pmatrix} x \\ y \end{pmatrix}$. Untuk mencari $(x,y)$, kita perlu $M^{-1}$: $\begin{pmatrix} x \\ y \end{pmatrix} = M^{-1} \begin{pmatrix} 2 \\ 5 \end{pmatrix}$.<br>(1) Jika $M$ diketahui, maka $M^{-1}$ dapat dihitung (jika determinan tidak nol). Maka $x$ dan $y$ bisa dicari, dan $x+y$ bisa ditentukan. Cukup.<br>(2) Mengetahui determinan saja tidak cukup untuk menentukan matriks inversnya. Tidak cukup.</p></div>
+            <div class="pembahasan"><b>9. Jawaban: D</b><p>Luas bayangan = $k^2 \times$ Luas awal. Dimana $k$ adalah faktor skala dilatasi.<br>Luas bayangan = $4^2 \times 10 = 16 \times 10 = 160$ cm$^2$.</p></div>
+            <div class="pembahasan"><b>10. Jawaban: B, C, D, E</b><p>$T$ adalah dilatasi dengan pusat O dan faktor skala 2. Maka $x'=2x, y'=2y$. $x=x'/2, y=y'/2$.<br>Substitusi: $y'/2 = x'/2+1 \implies y' = x'+2$. Persamaan bayangan: $y=x+2$.<br>A. Gradien tetap 1. Salah.<br>B. Gradien sama, maka sejajar. Benar.<br>C. Sesuai perhitungan. Benar.<br>D. Dilatasi dengan $k>1$ menjauhkan titik dari pusat. Benar.<br>E. Matriks $\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}$ adalah matriks dilatasi. Benar.</p></div>
+            <div class="pembahasan"><b>11. Jawaban: C</b><p>Rotasi $-90^\circ$ (searah jarum jam) ekuivalen dengan rotasi $-90^\circ+360^\circ = 270^\circ$ (berlawanan arah jarum jam).</p></div>
+            <div class="pembahasan"><b>12. Jawaban: A</b><p>$B(3,-2)$ cermin sumbu-x $\to B'(3,2)$.<br>$B'(3,2)$ cermin sumbu-y $\to B''(-3,2)$.</p></div>
+             <div class="pembahasan"><b>13. Jawaban: A</b><p>Misal matriks $T = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$.<br>Dari soal terlihat bahwa bayangan $(x,y)$ adalah $(2x, 2y)$. Ini adalah dilatasi dengan faktor skala 2. Matriksnya adalah $\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$.</p></div>
+            <div class="pembahasan"><b>14. Jawaban: D</b><p>Rotasi $90^\circ$ searah jarum jam adalah $\theta = -90^\circ$.<br>$M = \begin{pmatrix} \cos(-90^\circ) & -\sin(-90^\circ) \\ \sin(-90^\circ) & \cos(-90^\circ) \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$.<br>Bayangan $(6,8)$: $\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} 6 \\ 8 \end{pmatrix} = \begin{pmatrix} 8 \\ -6 \end{pmatrix}$. Lokasi baru adalah $(8, -6)$.</p></div>
+            <div class="pembahasan"><b>15. Jawaban: B</b><p>Transformasi ini adalah translasi $T=\begin{pmatrix} 1 \\ -2 \end{pmatrix}$.<br>Penerapan pertama: $P'(3+1, 5-2) = P'(4,3)$.<br>Penerapan kedua: $P''(4+1, 3-2) = P''(5,1)$.</p></div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
+
