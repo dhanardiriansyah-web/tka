@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL TKA MATEMATIKA LANJUT</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #6e95f0; /* Warna diubah menjadi biru */
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #6e95f0; /* Warna diubah menjadi biru */
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .cover-page {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .cover-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28pt;
+        font-weight: 900;
+        color: var(--header-title-color);
+        line-height: 1.3;
+        margin: 20px 0;
+      }
+      .cover-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16pt;
+        color: var(--secondary-text);
+        font-weight: 700;
+      }
+      .cover-logo {
+        max-width: 200px;
+        margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 10px 2.5cm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        line-height: 1.2;
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: var(--primary-text);
+      }
+       .header-logo {
+        max-height: 45px;
+      }
+      .content-wrapper {
+        width: 100%;
+        flex-grow: 1;
+      }
+      .manual-flex-layout {
+        display: flex;
+        gap: 15mm;
+        align-items: flex-start;
+      }
+      .manual-flex-layout .kolom {
+        flex: 1;
+        width: 50%;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        margin-bottom: 20px;
+        break-inside: avoid;
+        text-align: justify;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 18px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        text-indent: -20px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+       .soal-kategori {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        margin-top: 10px;
+        font-size: 9pt;
+      }
+      .soal-kategori th, .soal-kategori td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+      }
+      .soal-kategori th { background-color: #f2f2f2; }
+      .soal-kategori th:not(:first-child) { text-align: center; width: 50px; }
+      .soal-kategori td:not(:first-child) { text-align: center; }
+       .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 9pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th { background-color: #f2f2f2; }
+      .wacana-box, .soal-gambar-deskripsi {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ccc;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-style: italic;
+        text-align: center;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .footer-logo {
+          max-height: 30px;
+      }
+       .pembahasan-wrapper {
+        text-align: justify;
+        border: 1px solid #eee;
+        padding: 20px;
+        background-color: #fafafa;
+        border-radius: 5px;
+      }
+      .pembahasan-title {
+        font-weight: bold;
+        font-size: 11pt;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        border-left: 4px solid var(--header-title-color);
+        padding-left: 10px;
+      }
+      .pembahasan-wrapper .jawaban-box {
+        background-color: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      @media print {
+        @page { size: A4; margin: 0; }
+        body { background-color: white; margin: 0; }
+        .page { width: 100%; min-height: 29.7cm; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        .page-header { display: block; margin: -1.8cm -2.5cm 20px -2.5cm; position: relative; }
+        .header-top-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">BANK SOAL<br>TKA MATEMATika LANJUT</h1>
+        <p class="cover-subtitle">Latihan Soal TKA Matematika Lanjut</p>
+    </section>
+
+    <!-- HALAMAN 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA LANJUT</div>
+                    <div class="header-title-sub"><strong>Latihan Soal TKA Matematika Lanjut</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                           Diketahui matriks $P = \begin{pmatrix} 2 & 1 & 0 \\ 3 & -1 & 4 \\ 1 & 2 & 1 \end{pmatrix}$. Jika $P^T$ adalah transpose dari matriks P, maka determinan dari matriks $(P - P^T)$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">-21</li>
+                               <li data-option="B">0</li>
+                               <li data-option="C">15</li>
+                               <li data-option="D">21</li>
+                               <li data-option="E">25</li>
+                           </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            Diberikan matriks $A = \begin{pmatrix} a & 2 \\ 3 & 1 \end{pmatrix}$. Apakah matriks $A$ memiliki invers?
+                            <div style="margin-top:10px; margin-bottom:10px; text-align: left;">
+                                (1) $a \neq 6$<br>
+                                (2) Determinan dari matriks $A^2$ adalah 25.
+                            </div>
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                               <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                               <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                               <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                               <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            Diketahui matriks $A = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}$ dan $B = \begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix}$. Manakah dari pernyataan berikut yang benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                             <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$A^{-1} = \begin{pmatrix} 1 & -1 \\ -2 & 3 \end{pmatrix}$</span></div>
+                                <div><input type="checkbox"/><span>$\det(AB) = 1$</span></div>
+                                <div><input type="checkbox"/><span>$(AB)^{-1} = B^{-1}A^{-1}$</span></div>
+                                <div><input type="checkbox"/><span>$AB = \begin{pmatrix} 7 & 18 \\ 5 & 13 \end{pmatrix}$</span></div>
+                                <div><input type="checkbox"/><span>Matriks $A+B$ adalah matriks singular.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            Jika polinomial $P(x) = x^4 - 2x^3 + ax + b$ dibagi oleh $(x^2 - 2x - 3)$, sisanya adalah $(2x+1)$. Nilai dari $a-b$ adalah...
+                            <ol class="pilihan-ganda">
+                               <li data-option="A">-10</li>
+                               <li data-option="B">-6</li>
+                               <li data-option="C">4</li>
+                               <li data-option="D">8</li>
+                               <li data-option="E">12</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+             <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- HALAMAN 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA LANJUT</div>
+                    <div class="header-title-sub"><strong>Latihan Soal TKA Matematika Lanjut</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                           Salah satu akar dari persamaan polinomial $2x^3 - 7x^2 - 7x + 30 = 0$ adalah 2. Jumlah dua akar lainnya adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">-3,5</li>
+                               <li data-option="B">-1,5</li>
+                               <li data-option="C">1,5</li>
+                               <li data-option="D">2,5</li>
+                               <li data-option="E">3,5</li>
+                           </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            Diketahui polinomial $P(x) = x^3 - (a+1)x^2 - x + (a+1)$. Tentukan kebenaran dari setiap pernyataan berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$(x-1)$ selalu merupakan faktor dari $P(x)$ untuk setiap nilai $a$.</td><td></td><td></td></tr>
+                                    <tr><td>Jika $a=2$, maka jumlah akar-akar $P(x)$ adalah 3.</td><td></td><td></td></tr>
+                                    <tr><td>Jika $a=0$, $P(x)$ memiliki tiga akar real berbeda.</td><td></td><td></td></tr>
+                                    <tr><td>$P(x)$ selalu habis dibagi oleh $(x-(a+1))$.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                           Domain dari fungsi $f(x) = \frac{\sqrt{x^2-4}}{x^2-x-6}$ agar terdefinisi pada himpunan bilangan real adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$\{x \mid x \leq -2 \text{ atau } x \geq 2, x \neq 3\}$</li>
+                               <li data-option="B">$\{x \mid x < -2 \text{ atau } x > 3\}$</li>
+                               <li data-option="C">$\{x \mid -2 \leq x \leq 2, x \neq -2\}$</li>
+                               <li data-option="D">$\{x \mid x \leq -2 \text{ atau } x > 3\}$</li>
+                               <li data-option="E">$\{x \mid x < -2 \text{ atau } x \geq 2, x \neq 3\}$</li>
+                           </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                           <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_m0lt02_8490.png" alt="Grafik Fungsi Polinomial" style="max-width: 100%; height: auto; display: block; margin: 10px auto 15px auto;">
+                           Persamaan yang paling mungkin untuk grafik fungsi di atas adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$y = (x+2)(x-1)(x-3)$</li>
+                               <li data-option="B">$y = -(x+2)(x-1)(x-3)$</li>
+                               <li data-option="C">$y = x(x+2)(x-3)$</li>
+                               <li data-option="D">$y = -2(x+2)(x-1)(x-3)$</li>
+                               <li data-option="E">$y = 2(x-2)(x+1)(x+3)$</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+             <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA LANJUT</div>
+                    <div class="header-title-sub"><strong>Latihan Soal TKA Matematika Lanjut</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                           Diberikan fungsi $f(x) = ax+2$ dan $g(x) = 3x-1$. Berapakah nilai dari $(f \circ g)(2)$?
+                           <div style="margin-top:10px; margin-bottom:10px; text-align: left;">
+                               (1) $f(1) = 4$<br>
+                               (2) Grafik fungsi $f(x)$ sejajar dengan garis $y=2x+5$.
+                           </div>
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                               <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                               <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                               <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                               <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                           </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            Diketahui vektor $\vec{u} = 2\mathbf{i} - 2\mathbf{j} + \mathbf{k}$ dan $\vec{v} = 3\mathbf{i} + \mathbf{j} + 2\mathbf{k}$. Proyeksi skalar ortogonal vektor $\vec{u}$ pada $\vec{v}$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$\frac{\sqrt{14}}{2}$</li>
+                               <li data-option="B">$\frac{6}{\sqrt{14}}$</li>
+                               <li data-option="C">$\frac{3}{\sqrt{14}}$</li>
+                               <li data-option="D">6</li>
+                               <li data-option="E">3</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            Diketahui vektor $\vec{a}$ dan $\vec{b}$ membentuk sudut $0^\circ$. Jika $|\vec{a}| = 4$ dan $|\vec{b}| = 5$, maka nilai dari $\vec{a} \cdot (\vec{a} + \vec{b})$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">16</li>
+                               <li data-option="B">20</li>
+                               <li data-option="C">26</li>
+                               <li data-option="D">30</li>
+                               <li data-option="E">36</li>
+                           </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                           Diketahui titik A(1, 0, -2), B(2, 1, -1), dan C(2, 0, -3). Manakah pernyataan berikut yang benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                             <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Vektor $\vec{AB}$ adalah $\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$.</span></div>
+                                <div><input type="checkbox"/><span>Panjang vektor $\vec{AC}$ adalah 3.</span></div>
+                                <div><input type="checkbox"/><span>Vektor satuan dari $\vec{AB}$ adalah $\frac{1}{\sqrt{3}}(\mathbf{i} + \mathbf{j} + \mathbf{k})$.</span></div>
+                                <div><input type="checkbox"/><span>Titik A, B, dan C membentuk segitiga siku-siku.</span></div>
+                                <div><input type="checkbox"/><span>$\vec{AB} \cdot \vec{AC} = 0$.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+             <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA LANJUT</div>
+                    <div class="header-title-sub"><strong>Latihan Soal TKA Matematika Lanjut</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            Persamaan lingkaran yang berpusat di titik (2, -3) dan menyinggung garis $3x - 4y + 7 = 0$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$(x-2)^2 + (y+3)^2 = 5$</li>
+                               <li data-option="B">$(x-2)^2 + (y+3)^2 = 25$</li>
+                               <li data-option="C">$(x+2)^2 + (y-3)^2 = 25$</li>
+                               <li data-option="D">$(x-2)^2 + (y+3)^2 = 50$</li>
+                               <li data-option="E">$(x+2)^2 + (y-3)^2 = 5$</li>
+                           </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            Salah satu persamaan garis singgung pada lingkaran $x^2 + y^2 = 25$ yang sejajar dengan garis $3x - 4y - 1 = 0$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$3x - 4y = 20$</li>
+                               <li data-option="B">$4x - 3y = 25$</li>
+                               <li data-option="C">$3x + 4y = 25$</li>
+                               <li data-option="D">$3x - 4y = 25$</li>
+                               <li data-option="E">$4x + 3y = 20$</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            Diberikan lingkaran $L \equiv (x-1)^2 + (y-2)^2 = 4$. Tentukan kebenaran dari setiap pernyataan berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Garis $y=x+3$ memotong lingkaran di dua titik.</td><td></td><td></td></tr>
+                                    <tr><td>Garis $x=3$ menyinggung lingkaran.</td><td></td><td></td></tr>
+                                    <tr><td>Garis $y=4$ menyinggung lingkaran.</td><td></td><td></td></tr>
+                                    <tr><td>Jarak dari pusat lingkaran ke garis $y=5$ lebih kecil dari jari-jari.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            Bayangan dari garis $-x - 2y + 5 = 0$ oleh transformasi yang diwakili oleh matriks $T = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">$x - y + 5 = 0$</li>
+                               <li data-option="B">$x + y + 5 = 0$</li>
+                               <li data-option="C">$3x - y + 5 = 0$</li>
+                               <li data-option="D">$-x + y + 5 = 0$</li>
+                               <li data-option="E">$x - 3y + 5 = 0$</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+             <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA LANJUT</div>
+                    <div class="header-title-sub"><strong>Latihan Soal TKA Matematika Lanjut</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                           Sebuah segitiga ABC dengan titik sudut A(1, 1), B(5, 1), dan C(3, 4) ditransformasikan oleh matriks $M = \begin{pmatrix} 3 & 1 \\ 2 & 2 \end{pmatrix}$. Luas bayangan segitiga tersebut adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">6</li>
+                               <li data-option="B">12</li>
+                               <li data-option="C">24</li>
+                               <li data-option="D">30</li>
+                               <li data-option="E">36</li>
+                           </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                           Nilai dari $$\displaystyle \lim_{x \to 2} \frac{x^3 - 8}{x^2 - x - 2}$$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">0</li>
+                               <li data-option="B">$\frac{4}{5}$</li>
+                               <li data-option="C">$\frac{12}{5}$</li>
+                               <li data-option="D">4</li>
+                               <li data-option="E">Tidak ada</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            Nilai dari $$\displaystyle \lim_{x \to 0} \frac{\sqrt{16+x} - \sqrt{16-x}}{x}$$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">0</li>
+                               <li data-option="B">$\frac{1}{4}$</li>
+                               <li data-option="C">$\frac{1}{2}$</li>
+                               <li data-option="D">1</li>
+                               <li data-option="E">4</li>
+                           </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                           Nilai dari $$\displaystyle \lim_{x \to 0} \frac{1 - \cos(6x)}{x \tan(9x)}$$ adalah...
+                           <ol class="pilihan-ganda">
+                               <li data-option="A">2</li>
+                               <li data-option="B">3</li>
+                               <li data-option="C">6</li>
+                               <li data-option="D">9</li>
+                               <li data-option="E">12</li>
+                           </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+             <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Sampul Pembahasan -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">KUNCI JAWABAN<br>& PEMBAHASAN</h1>
+        <p class="cover-subtitle">BANK SOAL TKA MATEMATIKA LANJUT</p>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 1 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. 0</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini berkaitan dengan beberapa konsep penting dalam aljabar matriks:</p>
+                    <ul>
+                        <li><b>Transpose Matriks ($P^T$)</b>: Operasi di mana kita menukar posisi baris dengan kolom. Baris pertama menjadi kolom pertama, baris kedua menjadi kolom kedua, dan seterusnya.</li>
+                        <li><b>Determinan Matriks (det(P))</b>: Sebuah nilai skalar khusus yang dapat dihitung dari elemen-elemen matriks persegi. Determinan memberikan informasi penting tentang matriks, misalnya apakah matriks tersebut memiliki invers.</li>
+                        <li><b>Matriks Antisimट्रis (Skew-Symmetric)</b>: Sebuah matriks persegi $M$ dikatakan antisimetris jika transposenya sama dengan negatifnya ($M^T = -M$). Ciri utamanya adalah semua elemen pada diagonal utamanya bernilai nol, dan elemen $m_{ij} = -m_{ji}$ (elemen di seberang diagonal utama saling berlawanan tanda).</li>
+                        <li><b>Sifat Khusus</b>: Ada sebuah teorema penting yang menyatakan bahwa determinan dari matriks antisimetris berordo ganjil (seperti 3x3, 5x5, dst.) selalu bernilai nol.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Menentukan Transpose dari Matriks P ($P^T$).</b><br>
+                    Matriks awal adalah $P = \begin{pmatrix} 2 & 1 & 0 \\ 3 & -1 & 4 \\ 1 & 2 & 1 \end{pmatrix}$.<br>
+                    Untuk mendapatkan $P^T$, kita ubah setiap baris menjadi kolom:<br>
+                    - Baris 1 `(2 1 0)` menjadi Kolom 1.<br>
+                    - Baris 2 `(3 -1 4)` menjadi Kolom 2.<br>
+                    - Baris 3 `(1 2 1)` menjadi Kolom 3.<br>
+                    Sehingga, $P^T = \begin{pmatrix} 2 & 3 & 1 \\ 1 & -1 & 2 \\ 0 & 4 & 1 \end{pmatrix}$.</p>
+                    
+                    <p><b>Langkah 2: Menghitung Matriks Hasil Pengurangan ($M = P - P^T$).</b><br>
+                    Kita kurangkan setiap elemen yang bersesuaian pada matriks P dan $P^T$.<br>
+                    $M = \begin{pmatrix} 2-2 & 1-3 & 0-1 \\ 3-1 & -1-(-1) & 4-2 \\ 1-0 & 2-4 & 1-1 \end{pmatrix} = \begin{pmatrix} 0 & -2 & -1 \\ 2 & 0 & 2 \\ 1 & -2 & 0 \end{pmatrix}$.</p>
+                    
+                    <p><b>Langkah 3: Menganalisis Sifat Matriks Hasil dan Menarik Kesimpulan.</b><br>
+                    Perhatikan matriks $M$ yang kita dapatkan:
+                    <ul>
+                        <li>Elemen diagonal utamanya adalah nol.</li>
+                        <li>Elemen lainnya saling berlawanan: $m_{12}=-2$ dan $m_{21}=2$; $m_{13}=-1$ dan $m_{31}=1$; $m_{23}=2$ dan $m_{32}=-2$.</li>
+                    </ul>
+                    Ini adalah ciri-ciri matriks antisimetris. Karena matriks $M$ berordo 3x3 (ganjil) dan bersifat antisimetris, berdasarkan teorema, kita bisa langsung menyimpulkan bahwa determinannya adalah 0.</p>
+                    
+                    <p><b>Langkah 4: (Verifikasi) Menghitung Determinan Secara Manual dengan Aturan Sarrus.</b><br>
+                    Untuk memastikan, kita bisa menghitungnya:<br>
+                    $\det(M) = [ (0 \cdot 0 \cdot 0) + (-2 \cdot 2 \cdot 1) + (-1 \cdot 2 \cdot -2) ] - [ (1 \cdot 0 \cdot -1) + (-2 \cdot 2 \cdot 0) + (0 \cdot 2 \cdot -2) ]$<br>
+                    $\det(M) = [ 0 + (-4) + 4 ] - [ 0 + 0 + 0 ]$<br>
+                    $\det(M) = 0 - 0 = 0$.<br>
+                    Hasil perhitungan manual mengkonfirmasi kesimpulan dari teorema.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 2 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Invers Matriks</b>: Sebuah matriks persegi $A$ dikatakan memiliki invers (disebut $A^{-1}$) jika ada matriks lain yang ketika dikalikan dengan $A$ menghasilkan matriks identitas. Invers ini hanya ada jika matriks tersebut "tidak kolaps", yang secara matematis diukur oleh determinannya.</li>
+                        <li><b>Syarat Invers</b>: Syarat mutlak sebuah matriks persegi untuk memiliki invers adalah determinannya <b>tidak boleh nol</b> ($\det(A) \neq 0$). Matriks yang determinannya nol disebut <b>matriks singular</b> dan tidak memiliki invers.</li>
+                        <li><b>Determinan Matriks 2x2</b>: Untuk matriks $A = \begin{pmatrix} p & q \\ r & s \end{pmatrix}$, determinannya adalah $\det(A) = ps - qr$.</li>
+                        <li><b>Sifat Determinan</b>: Untuk matriks persegi $A$ dan bilangan bulat $n$, berlaku sifat $\det(A^n) = (\det(A))^n$.</li>
+                    </ul>
+                    <div class="pembahasan-title">Analisis Pertanyaan</div>
+                    <p>Pertanyaan "Apakah matriks A memiliki invers?" secara matematis sama dengan menanyakan "Apakah determinan matriks A tidak sama dengan nol?".<br>
+                    Mari kita hitung determinan matriks A: $A = \begin{pmatrix} a & 2 \\ 3 & 1 \end{pmatrix}$.<br>
+                    $\det(A) = (a)(1) - (2)(3) = a-6$.<br>
+                    Jadi, pertanyaan inti yang harus dijawab adalah: <b>"Apakah $a-6 \neq 0$?"</b> atau dengan kata lain, <b>"Apakah $a \neq 6$?"</b>. Kita perlu mencari tahu apakah informasi yang diberikan bisa menjawab pertanyaan ini secara pasti.</p>
+                    
+                    <div class="pembahasan-title">Analisis Kecukupan Data</div>
+                    <p><b>Analisis Pernyataan (1) SAJA: $a \neq 6$</b><br>
+                    Pernyataan ini secara langsung dan eksplisit memberikan jawaban untuk pertanyaan inti kita ("Apakah $a \neq 6$?"). Jawabannya adalah "Ya". Karena kita bisa menjawab pertanyaan dengan pasti hanya dengan pernyataan (1), maka <b>pernyataan (1) SAJA cukup</b>.</p>
+                    
+                    <p><b>Analisis Pernyataan (2) SAJA: Determinan dari matriks $A^2$ adalah 25.</b><br>
+                    Pernyataan ini memberi tahu kita bahwa $\det(A^2) = 25$.<br>
+                    Menggunakan sifat determinan, kita tahu bahwa $\det(A^2) = (\det(A))^2$.<br>
+                    Maka, $(\det(A))^2 = 25$.<br>
+                    Dengan mengakarkan kedua sisi, kita mendapatkan dua kemungkinan nilai untuk determinan A: $\det(A) = 5$ atau $\det(A) = -5$.<br>
+                    Perhatikan bahwa kedua kemungkinan nilai ini (5 dan -5) sama-sama bukan nol. Jadi, apa pun nilai $\det(A)$ yang sebenarnya, kita bisa pastikan bahwa $\det(A) \neq 0$. Karena kita bisa menjawab pertanyaan ("Apakah $\det(A) \neq 0$?") dengan pasti, maka <b>pernyataan (2) SAJA cukup</b>.</p>
+
+                    <p><b>Kesimpulan</b><br>
+                    Karena pernyataan (1) saja sudah cukup, dan pernyataan (2) saja juga sudah cukup, maka jawaban yang tepat adalah D.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 3 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Pernyataan (1), (2), (3), dan (4) benar.</div>
+                    <div class="pembahasan-title">Analisis Setiap Pernyataan</div>
+                    <p>Kita akan memeriksa kebenaran setiap pernyataan satu per satu.</p>
+                    
+                    <p><b>Pernyataan (1): $A^{-1} = \begin{pmatrix} 1 & -1 \\ -2 & 3 \end{pmatrix}$</b><br>
+                    Untuk mencari invers matriks 2x2 $M=\begin{pmatrix}a&b\\c&d\end{pmatrix}$, rumusnya adalah $M^{-1} = \frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.<br>
+                    Untuk matriks $A = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}$:
+                    - Determinan: $\det(A) = (3)(1) - (1)(2) = 3 - 2 = 1$.
+                    - Invers: $A^{-1} = \frac{1}{1}\begin{pmatrix} 1 & -1 \\ -2 & 3 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ -2 & 3 \end{pmatrix}$.
+                    Pernyataan ini <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan (2): $\det(AB) = 1$</b><br>
+                    Sifat determinan menyatakan $\det(AB) = \det(A) \times \det(B)$.
+                    - $\det(A)$ sudah kita hitung, yaitu 1.
+                    - $\det(B) = (2)(3) - (5)(1) = 6 - 5 = 1$.
+                    - Maka, $\det(AB) = 1 \times 1 = 1$.
+                    Pernyataan ini <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan (3): $(AB)^{-1} = B^{-1}A^{-1}$</b><br>
+                    Ini adalah salah satu sifat dasar dari invers matriks. Saat menginverskan hasil perkalian dua matriks, urutannya dibalik. Ini adalah sebuah identitas yang selalu berlaku untuk matriks yang memiliki invers.
+                    Pernyataan ini <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan (4): $AB = \begin{pmatrix} 7 & 18 \\ 5 & 13 \end{pmatrix}$</b><br>
+                    Kita lakukan perkalian matriks (baris kali kolom):<br>
+                    $AB = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}\begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix} = \begin{pmatrix} (3\cdot2+1\cdot1) & (3\cdot5+1\cdot3) \\ (2\cdot2+1\cdot1) & (2\cdot5+1\cdot3) \end{pmatrix} = \begin{pmatrix} 6+1 & 15+3 \\ 4+1 & 10+3 \end{pmatrix} = \begin{pmatrix} 7 & 18 \\ 5 & 13 \end{pmatrix}$.
+                    Pernyataan ini <b>BENAR</b>.</p>
+                    
+                    <p><b>Pernyataan (5): Matriks $A+B$ adalah matriks singular.</b><br>
+                    Matriks singular adalah matriks yang determinannya nol.
+                    - $A+B = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix} + \begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix} = \begin{pmatrix} 3+2 & 1+5 \\ 2+1 & 1+3 \end{pmatrix} = \begin{pmatrix} 5 & 6 \\ 3 & 4 \end{pmatrix}$.
+                    - $\det(A+B) = (5)(4) - (6)(3) = 20 - 18 = 2$.
+                    Karena determinannya 2 (bukan 0), matriks $A+B$ bukan matriks singular.
+                    Pernyataan ini <b>SALAH</b>.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 4 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. 4</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p><b>Teorema Sisa Polinomial</b>: Teorema ini adalah fondasi untuk menyelesaikan soal ini. Bunyinya adalah: "Jika sebuah polinomial $P(x)$ dibagi oleh suatu pembagi $(x-k)$, maka sisa pembagiannya adalah $S = P(k)$."<br>
+                    Artinya, jika kita memasukkan nilai $x$ yang membuat pembagi menjadi nol (yaitu $x=k$) ke dalam polinomial, hasilnya akan sama dengan sisa pembagiannya.<br>
+                    Jika pembaginya bisa difaktorkan, misalnya menjadi $(x-k_1)(x-k_2)$, maka kita bisa menggunakan teorema ini dua kali: $P(k_1) = S(k_1)$ dan $P(k_2) = S(k_2)$, di mana $S(x)$ adalah fungsi sisa.</p>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Faktorkan Pembagi dan Tentukan Akar-akarnya.</b><br>
+                    Pembaginya adalah $x^2 - 2x - 3$. Kita faktorkan untuk mencari nilai-nilai $x$ yang membuatnya nol.<br>
+                    $x^2 - 2x - 3 = (x-3)(x+1)$.<br>
+                    Akar-akarnya adalah $x=3$ dan $x=-1$. Ini adalah nilai-nilai 'ajaib' yang akan kita gunakan.</p>
+                    
+                    <p><b>Langkah 2: Terapkan Teorema Sisa untuk Akar Pertama ($x=3$).</b><br>
+                    Menurut teorema, $P(3)$ harus sama dengan $S(3)$.
+                    - Polinomial: $P(x) = x^4 - 2x^3 + ax + b$
+                    - Sisa: $S(x) = 2x+1$
+                    - $P(3) = (3)^4 - 2(3)^3 + a(3) + b = 81 - 2(27) + 3a + b = 81 - 54 + 3a + b = 27 + 3a + b$.
+                    - $S(3) = 2(3) + 1 = 7$.
+                    - Kita samakan keduanya: $27 + 3a + b = 7 \implies 3a+b = 7 - 27 \implies 3a+b = -20$. (Persamaan 1)</p>
+
+                    <p><b>Langkah 3: Terapkan Teorema Sisa untuk Akar Kedua ($x=-1$).</b><br>
+                    Sekarang kita lakukan hal yang sama untuk $x=-1$. $P(-1)$ harus sama dengan $S(-1)$.
+                    - $P(-1) = (-1)^4 - 2(-1)^3 + a(-1) + b = 1 - 2(-1) - a + b = 1 + 2 - a + b = 3 - a + b$.
+                    - $S(-1) = 2(-1) + 1 = -1$.
+                    - Kita samakan keduanya: $3 - a + b = -1 \implies -a+b = -1 - 3 \implies -a+b = -4$. (Persamaan 2)</p>
+                    
+                    <p><b>Langkah 4: Selesaikan Sistem Persamaan Linear.</b><br>
+                    Kita punya dua persamaan dengan dua variabel ($a$ dan $b$):
+                    1) $3a+b = -20$
+                    2) $-a+b = -4$
+                    Metode termudah adalah eliminasi. Kita kurangkan Persamaan 2 dari Persamaan 1:
+                    $(3a - (-a)) + (b-b) = (-20 - (-4))$
+                    $4a = -16 \implies a = -4$.<br>
+                    Substitusikan nilai $a=-4$ ke Persamaan 2:
+                    $-(-4) + b = -4 \implies 4 + b = -4 \implies b = -8$.</p>
+                    
+                    <p><b>Langkah 5: Hitung Nilai yang Ditanyakan.</b><br>
+                    Soal meminta nilai dari $a-b$.<br>
+                    $a-b = (-4) - (-8) = -4 + 8 = 4$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 5 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. 1,5</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p><b>Teorema Vieta</b> adalah sebuah teorema yang memberikan hubungan antara koefisien-koefisien dari sebuah polinomial dengan jumlah dan hasil kali dari akar-akarnya. Untuk polinomial berderajat tiga (kubik) dengan bentuk umum $Ax^3+Bx^2+Cx+D=0$ yang memiliki akar-akar $x_1, x_2, x_3$, berlaku hubungan berikut:</p>
+                    <ul>
+                        <li><b>Jumlah semua akar</b>: $x_1+x_2+x_3 = -\frac{B}{A}$</li>
+                        <li><b>Jumlah hasil kali setiap dua akar</b>: $x_1x_2+x_1x_3+x_2x_3 = \frac{C}{A}$</li>
+                        <li><b>Hasil kali semua akar</b>: $x_1x_2x_3 = -\frac{D}{A}$</li>
+                    </ul>
+                    Untuk soal ini, kita hanya memerlukan rumus pertama, yaitu jumlah semua akar.
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Identifikasi Koefisien Polinomial.</b><br>
+                    Polinomial yang diberikan adalah $2x^3 - 7x^2 - 7x + 30 = 0$.
+                    Kita cocokkan dengan bentuk umum $Ax^3+Bx^2+Cx+D=0$:
+                    - $A = 2$
+                    - $B = -7$
+                    - $C = -7$
+                    - $D = 30$</p>
+                    
+                    <p><b>Langkah 2: Gunakan Teorema Vieta untuk Menghitung Jumlah Semua Akar.</b><br>
+                    Misalkan akar-akarnya adalah $x_1, x_2,$ dan $x_3$.
+                    Menggunakan rumus jumlah akar:
+                    $x_1+x_2+x_3 = -\frac{B}{A} = -\frac{-7}{2} = \frac{7}{2} = 3,5$.
+                    Jadi, total dari ketiga akar persamaan tersebut adalah 3,5.</p>
+                    
+                    <p><b>Langkah 3: Gunakan Informasi Akar yang Diketahui.</b><br>
+                    Soal memberi tahu kita bahwa salah satu akarnya adalah 2. Mari kita sebut akar ini $x_1$. Jadi, $x_1 = 2$.
+                    Kita substitusikan nilai ini ke dalam persamaan jumlah akar dari Langkah 2:
+                    $2 + x_2 + x_3 = 3,5$.</p>
+
+                    <p><b>Langkah 4: Hitung Jumlah Dua Akar Lainnya.</b><br>
+                    Yang ditanyakan adalah jumlah dua akar lainnya, yaitu $x_2 + x_3$. Dari persamaan di atas, kita tinggal memindahruaskan angka 2:
+                    $x_2 + x_3 = 3,5 - 2$
+                    $x_2 + x_3 = 1,5$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 6 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Salah, Benar.</div>
+                    <div class="pembahasan-title">Analisis Setiap Pernyataan</div>
+                    <p>Polinomial: $P(x) = x^3 - (a+1)x^2 - x + (a+1)$.</p>
+
+                    <p><b>Pernyataan 1: $(x-1)$ selalu merupakan faktor dari $P(x)$ untuk setiap nilai $a$.</b><br>
+                    <b>Teori:</b> Menurut Teorema Faktor, $(x-k)$ adalah faktor dari $P(x)$ jika dan hanya jika $P(k)=0$.
+                    <b>Pembuktian:</b> Kita uji dengan memasukkan $x=1$ ke dalam $P(x)$.
+                    $$
+                    \begin{aligned}
+                    P(1) &= (1)^3 - (a+1)(1)^2 - (1) + (a+1) \\
+                         &= 1 - (a+1) - 1 + (a+1) \\
+                         &= (1-1) + (-(a+1) + (a+1)) \\
+                         &= 0
+                    \end{aligned}
+                    $$
+                    Karena $P(1)=0$ tanpa bergantung pada nilai $a$, maka $(x-1)$ selalu menjadi faktor. Pernyataan ini <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 2: Jika $a=2$, maka jumlah akar-akar $P(x)$ adalah 3.</b><br>
+                    <b>Teori:</b> Menurut Teorema Vieta, jumlah akar-akar ($x_1+x_2+x_3$) dari polinomial $Ax^3+Bx^2+Cx+D=0$ adalah $-B/A$.
+                    <b>Pembuktian:</b> Koefisien $x^2$ adalah $B = -(a+1)$ dan koefisien $x^3$ adalah $A=1$.
+                    Jumlah akar = $-\frac{-(a+1)}{1} = a+1$.
+                    Jika $a=2$, maka jumlah akarnya adalah $2+1=3$. Pernyataan ini <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 3: Jika $a=0$, $P(x)$ memiliki tiga akar real berbeda.</b><br>
+                    <b>Pembuktian:</b> Jika $a=0$, polinomialnya menjadi $P(x) = x^3 - (0+1)x^2 - x + (0+1) = x^3 - x^2 - x + 1$.
+                    Kita bisa faktorkan:
+                    $$
+                    \begin{aligned}
+                    P(x) &= x^2(x-1) - 1(x-1) \\
+                         &= (x^2-1)(x-1) \\
+                         &= (x-1)(x+1)(x-1) \\
+                         &= (x-1)^2(x+1)
+                    \end{aligned}
+                    $$
+                    Akar-akar dari $P(x)=0$ adalah $x=1$ (akar ganda/kembar) dan $x=-1$.
+                    Jadi, polinomial ini hanya memiliki dua akar real yang berbeda (yaitu 1 dan -1), bukan tiga. Pernyataan ini <b>SALAH</b>.</p>
+
+                    <p><b>Pernyataan 4: $P(x)$ selalu habis dibagi oleh $(x-(a+1))$.</b><br>
+                    <b>Teori:</b> Sama seperti pernyataan 1, kita uji apakah $P(a+1)=0$.
+                    <b>Pembuktian:</b> Kita substitusikan $x = a+1$ ke dalam $P(x)$.
+                    $$
+                    \begin{aligned}
+                    P(a+1) &= (a+1)^3 - (a+1)(a+1)^2 - (a+1) + (a+1) \\
+                           &= (a+1)^3 - (a+1)^3 \\
+                           &= 0
+                    \end{aligned}
+                    $$
+                    Karena hasilnya selalu nol, maka $(x-(a+1))$ selalu menjadi faktor (artinya $P(x)$ habis dibagi). Pernyataan ini <b>BENAR</b>.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 7 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: E. $\{x \mid x < -2 \text{ atau } x \geq 2, x \neq 3\}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p><b>Domain (Daerah Asal)</b> sebuah fungsi adalah himpunan semua nilai input (x) yang valid sehingga fungsi tersebut menghasilkan output (y) yang merupakan bilangan real. Untuk fungsi rasional dengan akar kuadrat seperti ini, ada dua aturan utama yang harus dipenuhi:</p>
+                    <ol>
+                        <li><b>Syarat Akar Kuadrat</b>: Ekspresi di dalam akar kuadrat ($\sqrt{\dots}$) tidak boleh negatif, karena akar dari bilangan negatif bukanlah bilangan real. Jadi, ekspresi tersebut harus lebih besar dari atau sama dengan nol ($\geq 0$).</li>
+                        <li><b>Syarat Penyebut</b>: Penyebut dalam sebuah pecahan tidak boleh bernilai nol, karena pembagian dengan nol tidak terdefinisi. Jadi, ekspresi di penyebut harus tidak sama dengan nol ($\neq 0$).</li>
+                    </ol>
+                    Domain akhir adalah irisan dari semua nilai x yang memenuhi kedua syarat tersebut.
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Terapkan Syarat Akar Kuadrat.</b><br>
+                    Ekspresi di dalam akar adalah $x^2-4$. Maka syaratnya adalah:
+                    $x^2 - 4 \geq 0$.<br>
+                    Kita faktorkan: $(x-2)(x+2) \geq 0$.
+                    Pembuat nolnya adalah $x=2$ dan $x=-2$. Kita buat garis bilangan untuk menguji interval:
+                    <br>---($+$)--- [-2] ---($-$)--- [2] ---($+$)---<br>
+                    Karena kita mencari yang $\geq 0$, kita ambil daerah yang bertanda positif. Jadi, dari syarat ini, kita dapatkan $x \leq -2$ atau $x \geq 2$.</p>
+                    
+                    <p><b>Langkah 2: Terapkan Syarat Penyebut.</b><br>
+                    Ekspresi di penyebut adalah $x^2-x-6$. Maka syaratnya adalah:
+                    $x^2 - x - 6 \neq 0$.<br>
+                    Kita faktorkan: $(x-3)(x+2) \neq 0$.
+                    Ini berarti $x-3 \neq 0$ dan $x+2 \neq 0$.
+                    Jadi, dari syarat ini, kita dapatkan $x \neq 3$ dan $x \neq -2$.</p>
+                    
+                    <p><b>Langkah 3: Gabungkan (Iriskan) Kedua Syarat.</b><br>
+                    Sekarang kita harus mencari nilai-nilai $x$ yang memenuhi semua kondisi yang telah kita temukan.
+                    - Dari Langkah 1: $x \leq -2$ ATAU $x \geq 2$.
+                    - Dari Langkah 2: $x \neq 3$ DAN $x \neq -2$.
+                    
+                    Mari kita analisis gabungannya:
+                    - Untuk bagian $x \leq -2$: Kita harus menggabungkannya dengan syarat $x \neq -2$. Jika $x$ harus lebih kecil atau sama dengan -2, tetapi tidak boleh sama dengan -2, maka yang tersisa adalah $x < -2$.
+                    - Untuk bagian $x \geq 2$: Kita harus menggabungkannya dengan syarat $x \neq 3$. Kedua kondisi ini bisa terjadi bersamaan. Jadi, kita tulis sebagai $x \geq 2, x \neq 3$.
+                    
+                    Menggabungkan kedua hasil analisis, domain akhirnya adalah $x < -2$ atau ($x \geq 2$ dan $x \neq 3$). Dalam notasi himpunan, ini ditulis sebagai $\{x \mid x < -2 \text{ atau } x \geq 2, x \neq 3\}$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 8 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $y = (x+2)(x-1)(x-3)$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Akar Polinomial dan Perpotongan Sumbu-x</b>: Jika sebuah grafik fungsi polinomial $y=f(x)$ memotong sumbu-x di titik $x=r$, maka $r$ adalah akar dari polinomial tersebut. Ini berarti $(x-r)$ adalah salah satu faktor dari $f(x)$.</li>
+                        <li><b>Bentuk Umum dari Faktor</b>: Jika sebuah polinomial berderajat 3 memiliki akar-akar $r_1, r_2,$ dan $r_3$, maka persamaannya dapat ditulis dalam bentuk umum $y = k(x-r_1)(x-r_2)(x-r_3)$, di mana $k$ adalah konstanta pengali yang menentukan "peregangan" vertikal grafik.</li>
+                        <li><b>Perpotongan Sumbu-y</b>: Titik di mana grafik memotong sumbu-y terjadi ketika nilai $x=0$. Koordinat titik ini dapat digunakan untuk menemukan nilai konstanta $k$.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Tentukan Faktor-faktor Polinomial dari Titik Potong Sumbu-x.</b><br>
+                    Dari deskripsi, kita tahu grafik memotong sumbu-x di tiga titik:
+                    - $x = -2 \implies$ faktornya adalah $(x - (-2)) = (x+2)$.
+                    - $x = 1 \implies$ faktornya adalah $(x-1)$.
+                    - $x = 3 \implies$ faktornya adalah $(x-3)$.
+                    Dengan menggabungkan faktor-faktor ini, kita dapat menulis bentuk umum persamaan fungsinya:
+                    $y = k(x+2)(x-1)(x-3)$.</p>
+
+                    <p><b>Langkah 2: Gunakan Titik Potong Sumbu-y untuk Menemukan Nilai $k$.</b><br>
+                    Kita diberi tahu bahwa grafik memotong sumbu-y di $y=6$. Ini berarti grafik melalui titik $(0, 6)$.
+                    Kita substitusikan $x=0$ dan $y=6$ ke dalam persamaan umum:
+                    $6 = k(0+2)(0-1)(0-3)$.<br>
+                    $6 = k(2)(-1)(-3)$.<br>
+                    $6 = k(6)$.<br>
+                    Dengan membagi kedua sisi dengan 6, kita dapatkan $k=1$.</p>
+                    
+                    <p><b>Langkah 3: Tulis Persamaan Akhir.</b><br>
+                    Setelah mengetahui $k=1$, kita substitusikan kembali ke persamaan umum:
+                    $y = 1 \cdot (x+2)(x-1)(x-3)$.<br>
+                    $y = (x+2)(x-1)(x-3)$.</p>
+                    
+                    <p><b>Langkah 4: Verifikasi dengan Deskripsi Grafik.</b><br>
+                    Persamaan $y = (x+2)(x-1)(x-3)$ jika dikalikan akan memiliki suku dengan pangkat tertinggi $x^3$ (positif). Grafik polinomial orde tiga dengan koefisien positif memiliki bentuk umum naik-turun-naik, yang sesuai dengan deskripsi adanya titik puncak lalu titik lembah. Jadi, persamaan ini cocok dengan semua informasi yang diberikan.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 9 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Fungsi Komposisi</b>: $(f \circ g)(x)$ berarti "fungsi f dari fungsi g dari x", atau $f(g(x))$. Untuk menghitung nilainya, kita kerjakan dari dalam ke luar: hitung dulu nilai $g(x)$, lalu gunakan hasilnya sebagai input untuk fungsi $f$.</li>
+                        <li><b>Gradien (Kemiringan)</b>: Untuk fungsi linear berbentuk $y=mx+c$, nilai $m$ adalah gradiennya. Gradien menentukan kemiringan garis.</li>
+                        <li><b>Garis Sejajar</b>: Dua garis dikatakan sejajar jika dan hanya jika keduanya memiliki gradien yang sama.</li>
+                    </ul>
+                    <div class="pembahasan-title">Analisis Pertanyaan</div>
+                    <p>Kita diminta untuk mencari nilai dari $(f \circ g)(2)$. Mari kita uraikan:
+                    $(f \circ g)(2) = f(g(2))$.</p>
+                    <p><b>Langkah A: Hitung nilai $g(2)$.</b><br>
+                    Diketahui $g(x) = 3x-1$.
+                    $g(2) = 3(2) - 1 = 6 - 1 = 5$.</p>
+                    <p><b>Langkah B: Substitusikan ke dalam $f(x)$.</b><br>
+                    Sekarang kita perlu mencari $f(g(2))$, yang berarti kita perlu mencari $f(5)$.
+                    Diketahui $f(x) = ax+2$.
+                    $f(5) = a(5) + 2 = 5a+2$.</p>
+                    <p>Hasil akhirnya adalah $5a+2$. Terlihat bahwa kita tidak bisa mendapatkan nilai numerik yang pasti kecuali kita tahu nilai dari $a$. Jadi, pertanyaan inti yang harus dijawab oleh data yang diberikan adalah: <b>"Berapakah nilai $a$?"</b></p>
+
+                    <div class="pembahasan-title">Analisis Kecukupan Data</div>
+                    <p><b>Analisis Pernyataan (1) SAJA: $f(1) = 4$</b><br>
+                    Pernyataan ini memberikan kita satu set nilai input dan output untuk fungsi $f$. Kita bisa substitusikan ke dalam rumus $f(x)=ax+2$.
+                    $f(1) = a(1) + 2 = 4$.<br>
+                    $a + 2 = 4 \implies a = 2$.
+                    Karena kita berhasil menemukan nilai $a$ yang unik, kita bisa menghitung nilai $f(5) = 5(2)+2 = 12$. Jadi, pernyataan (1) <b>cukup</b>.</p>
+
+                    <p><b>Analisis Pernyataan (2) SAJA: Grafik fungsi $f(x)$ sejajar dengan garis $y=2x+5$.</b><br>
+                    Garis yang sejajar memiliki gradien yang sama.
+                    - Gradien dari $f(x) = ax+2$ adalah koefisien dari $x$, yaitu $a$.
+                    - Gradien dari garis $y=2x+5$ adalah koefisien dari $x$, yaitu $2$.
+                    Karena kedua garis sejajar, maka gradiennya harus sama: $a=2$.
+                    Sama seperti sebelumnya, kita berhasil menemukan nilai $a$ yang unik. Kita bisa menghitung nilai $f(5) = 5(2)+2 = 12$. Jadi, pernyataan (2) <b>cukup</b>.</p>
+
+                    <p><b>Kesimpulan</b><br>
+                    Karena pernyataan (1) saja cukup dan pernyataan (2) saja juga cukup, jawaban yang benar adalah D.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 10 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $\frac{6}{\sqrt{14}}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Proyeksi Skalar Ortogonal</b>: Bayangkan ada dua vektor, $\vec{u}$ dan $\vec{v}$. Jika kita menyinari vektor $\vec{u}$ dengan senter dari arah yang tegak lurus dengan $\vec{v}$, bayangan dari $\vec{u}$ yang jatuh tepat di sepanjang garis $\vec{v}$ itulah yang disebut proyeksi. Proyeksi skalar adalah <b>panjang</b> dari bayangan tersebut. Nilainya bisa positif jika bayangannya searah dengan $\vec{v}$, atau negatif jika berlawanan arah.</li>
+                        <li><b>Rumus Proyeksi Skalar</b>: Panjang proyeksi $\vec{u}$ pada $\vec{v}$ (sering dilambangkan $|\vec{p}|$) dihitung dengan rumus: $$|\vec{p}| = \frac{\vec{u} \cdot \vec{v}}{|\vec{v}|}$$</li>
+                        <li><b>Perkalian Titik (Dot Product)</b>: Untuk vektor $\vec{u} = u_1\mathbf{i} + u_2\mathbf{j} + u_3\mathbf{k}$ dan $\vec{v} = v_1\mathbf{i} + v_2\mathbf{j} + v_3\mathbf{k}$, perkalian titiknya adalah $\vec{u} \cdot \vec{v} = u_1v_1 + u_2v_2 + u_3v_3$.</li>
+                        <li><b>Panjang (Magnitudo) Vektor</b>: Panjang dari vektor $\vec{v}$ adalah $|\vec{v}| = \sqrt{v_1^2 + v_2^2 + v_3^2}$.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Hitung Perkalian Titik ($\vec{u} \cdot \vec{v}$).</b><br>
+                    Diberikan $\vec{u} = 2\mathbf{i} - 2\mathbf{j} + \mathbf{k}$ dan $\vec{v} = 3\mathbf{i} + \mathbf{j} + 2\mathbf{k}$.
+                    $\vec{u} \cdot \vec{v} = (2)(3) + (-2)(1) + (1)(2)$
+                    $\vec{u} \cdot \vec{v} = 6 - 2 + 2 = 6$.</p>
+                    
+                    <p><b>Langkah 2: Hitung Panjang Vektor $\vec{v}$ ($|\vec{v}|$).</b><br>
+                    $|\vec{v}| = \sqrt{(3)^2 + (1)^2 + (2)^2}$
+                    $|\vec{v}| = \sqrt{9 + 1 + 4} = \sqrt{14}$.</p>
+                    
+                    <p><b>Langkah 3: Masukkan Hasil ke Rumus Proyeksi Skalar.</b><br>
+                    Proyeksi skalar $\vec{u}$ pada $\vec{v}$ adalah:
+                    $|\vec{p}| = \frac{\vec{u} \cdot \vec{v}}{|\vec{v}|} = \frac{6}{\sqrt{14}}$.<br>
+                    Jawaban ini sudah sesuai dengan salah satu pilihan, jadi tidak perlu dirasionalkan.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 11 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: E. 36</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Perkalian Titik (Dot Product)</b>: Operasi antara dua vektor yang menghasilkan sebuah skalar (bilangan biasa, bukan vektor).</li>
+                        <li><b>Sifat Distributif</b>: Perkalian titik bersifat distributif, artinya $\vec{a} \cdot (\vec{b} + \vec{c}) = (\vec{a} \cdot \vec{b}) + (\vec{a} \cdot \vec{c})$.</li>
+                        <li><b>Perkalian Titik dengan Diri Sendiri</b>: Perkalian titik sebuah vektor dengan dirinya sendiri menghasilkan kuadrat dari panjangnya: $\vec{a} \cdot \vec{a} = |\vec{a}|^2$.</li>
+                        <li><b>Definisi Geometris Perkalian Titik</b>: $\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos\theta$, di mana $\theta$ adalah sudut yang dibentuk oleh kedua vektor.</li>
+                        <li><b>Sudut $0^\circ$</b>: Jika sudut antara dua vektor adalah $0^\circ$, artinya kedua vektor tersebut searah. Nilai $\cos(0^\circ) = 1$.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Uraikan Ekspresi Menggunakan Sifat Distributif.</b><br>
+                    Ekspresi yang ingin kita hitung adalah $\vec{a} \cdot (\vec{a} + \vec{b})$.
+                    Dengan menggunakan sifat distributif, kita dapat menguraikannya menjadi:
+                    $\vec{a} \cdot (\vec{a} + \vec{b}) = (\vec{a} \cdot \vec{a}) + (\vec{a} \cdot \vec{b})$.</p>
+                    
+                    <p><b>Langkah 2: Ganti Suku-suku dengan Definisi dan Sifatnya.</b><br>
+                    Sekarang kita ganti setiap suku dalam ekspresi yang telah diuraikan:
+                    - Suku pertama, $(\vec{a} \cdot \vec{a})$, berdasarkan sifatnya, sama dengan $|\vec{a}|^2$.
+                    - Suku kedua, $(\vec{a} \cdot \vec{b})$, berdasarkan definisi geometrisnya, sama dengan $|\vec{a}| |\vec{b}| \cos\theta$.
+                    Jadi, ekspresi kita menjadi: $|\vec{a}|^2 + |\vec{a}| |\vec{b}| \cos\theta$.</p>
+                    
+                    <p><b>Langkah 3: Substitusikan Nilai-nilai yang Diketahui dari Soal.</b><br>
+                    Soal memberikan informasi berikut:
+                    - $|\vec{a}| = 4$
+                    - $|\vec{b}| = 5$
+                    - Sudut $\theta = 0^\circ$, sehingga $\cos(0^\circ) = 1$.
+                    
+                    Kita masukkan nilai-nilai ini ke dalam ekspresi dari Langkah 2:
+                    $(4)^2 + (4)(5) \cos(0^\circ)$.</p>
+                    
+                    <p><b>Langkah 4: Lakukan Perhitungan Aritmetika Akhir.</b><br>
+                    $= 16 + (4)(5)(1)$
+                    $= 16 + 20$
+                    $= 36$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 12 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Pernyataan (1), (3), (4), dan (5) benar.</div>
+                    <div class="pembahasan-title">Analisis Setiap Pernyataan</div>
+                    <p>Titik yang diketahui: A(1, 0, -2), B(2, 1, -1), C(2, 0, -3).</p>
+                    
+                    <p><b>Pernyataan 1: Vektor $\vec{AB}$ adalah $\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$.</b><br>
+                    <b>Teori:</b> Vektor yang menghubungkan titik A ke B ditemukan dengan mengurangkan koordinat titik A dari titik B ($\vec{AB} = B-A$).
+                    <b>Pembuktian:</b> $\vec{AB} = (2-1, 1-0, -1-(-2)) = (1, 1, 1)$. Dalam notasi kolom, ini adalah $\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$. Pernyataan <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 2: Panjang vektor $\vec{AC}$ adalah 3.</b><br>
+                    <b>Teori:</b> Panjang (magnitudo) vektor $\vec{v}=(x,y,z)$ adalah $|\vec{v}|=\sqrt{x^2+y^2+z^2}$.
+                    <b>Pembuktian:</b> Pertama, cari vektor $\vec{AC} = C-A = (2-1, 0-0, -3-(-2)) = (1, 0, -1)$.
+                    Panjangnya: $|\vec{AC}| = \sqrt{1^2 + 0^2 + (-1)^2} = \sqrt{1+0+1} = \sqrt{2}$.
+                    Karena panjangnya $\sqrt{2}$, bukan 3, pernyataan ini <b>SALAH</b>.</p>
+
+                    <p><b>Pernyataan 3: Vektor satuan dari $\vec{AB}$ adalah $\frac{1}{\sqrt{3}}(\mathbf{i} + \mathbf{j} + \mathbf{k})$.</b><br>
+                    <b>Teori:</b> Vektor satuan adalah vektor yang panjangnya 1 unit, ditemukan dengan membagi vektor asli dengan panjangnya ($\hat{v} = \vec{v}/|\vec{v}|$).
+                    <b>Pembuktian:</b> Dari pernyataan 1, $\vec{AB}=(1,1,1)$. Panjangnya $|\vec{AB}|=\sqrt{1^2+1^2+1^2}=\sqrt{3}$.
+                    Vektor satuannya adalah $\frac{\vec{AB}}{|\vec{AB}|} = \frac{(1,1,1)}{\sqrt{3}} = (\frac{1}{\sqrt{3}}, \frac{1}{\sqrt{3}}, \frac{1}{\sqrt{3}}) = \frac{1}{\sqrt{3}}(1,1,1) = \frac{1}{\sqrt{3}}(\mathbf{i} + \mathbf{j} + \mathbf{k})$. Pernyataan <b>BENAR</b>.</p>
+                    
+                    <p><b>Pernyataan 5 dan 4: $\vec{AB} \cdot \vec{AC} = 0$ dan Titik A, B, dan C membentuk segitiga siku-siku.</b><br>
+                    <b>Teori:</b> Jika perkalian titik (dot product) antara dua vektor adalah nol, maka kedua vektor tersebut saling tegak lurus (ortogonal), membentuk sudut $90^\circ$. Segitiga yang memiliki sudut $90^\circ$ adalah segitiga siku-siku.
+                    <b>Pembuktian Pernyataan 5:</b> Kita hitung $\vec{AB} \cdot \vec{AC}$.
+                    $\vec{AB} \cdot \vec{AC} = (1,1,1) \cdot (1,0,-1) = (1)(1)+(1)(0)+(1)(-1) = 1+0-1=0$.
+                    Pernyataan 5 <b>BENAR</b>.
+                    <b>Pembuktian Pernyataan 4:</b> Karena $\vec{AB} \cdot \vec{AC} = 0$, maka vektor $\vec{AB}$ tegak lurus dengan vektor $\vec{AC}$. Ini berarti sudut BAC pada segitiga ABC adalah $90^\circ$. Oleh karena itu, segitiga ABC adalah segitiga siku-siku (di A). Pernyataan 4 <b>BENAR</b>.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 13 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $(x-2)^2 + (y+3)^2 = 25$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Persamaan Standar Lingkaran</b>: Persamaan lingkaran dengan pusat di titik $(h, k)$ dan jari-jari $r$ adalah $(x-h)^2 + (y-k)^2 = r^2$.</li>
+                        <li><b>Jari-jari dan Garis Singgung</b>: Jika sebuah lingkaran menyinggung sebuah garis, maka jari-jari ($r$) lingkaran tersebut sama dengan jarak tegak lurus dari titik pusat lingkaran ke garis singgung tersebut.</li>
+                        <li><b>Rumus Jarak Titik ke Garis</b>: Jarak dari sebuah titik $(x_0, y_0)$ ke sebuah garis dengan persamaan $Ax + By + C = 0$ dihitung menggunakan rumus: $$d = \frac{|Ax_0 + By_0 + C|}{\sqrt{A^2 + B^2}}$$</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Identifikasi Pusat Lingkaran dan Persamaan Garis.</b><br>
+                    Dari soal, kita tahu:
+                    - Pusat lingkaran $(h, k)$ adalah $(2, -3)$. Jadi, $h=2$ dan $k=-3$.
+                    - Garis singgung memiliki persamaan $3x - 4y + 7 = 0$. Dari sini, kita bisa identifikasi koefisiennya: $A=3$, $B=-4$, dan $C=7$.</p>
+                    
+                    <p><b>Langkah 2: Hitung Jari-jari (r) Menggunakan Rumus Jarak.</b><br>
+                    Karena lingkaran menyinggung garis, jari-jarinya ($r$) adalah jarak dari pusat $(2, -3)$ ke garis $3x - 4y + 7 = 0$. Kita gunakan rumus jarak dengan $x_0=2$ dan $y_0=-3$.
+                    $r = \frac{|(3)(2) + (-4)(-3) + 7|}{\sqrt{(3)^2 + (-4)^2}}$<br>
+                    $r = \frac{|6 + 12 + 7|}{\sqrt{9 + 16}}$<br>
+                    $r = \frac{|25|}{\sqrt{25}} = \frac{25}{5} = 5$.
+                    Jadi, kita temukan jari-jari lingkaran adalah 5.</p>
+                    
+                    <p><b>Langkah 3: Susun Persamaan Lingkaran.</b><br>
+                    Sekarang kita punya semua komponen yang dibutuhkan:
+                    - Pusat $(h, k) = (2, -3)$
+                    - Jari-jari $r = 5$
+                    Kita masukkan nilai-nilai ini ke dalam persamaan standar lingkaran:
+                    $(x-h)^2 + (y-k)^2 = r^2$<br>
+                    $(x-2)^2 + (y-(-3))^2 = (5)^2$<br>
+                    $(x-2)^2 + (y+3)^2 = 25$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 14 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $3x - 4y = 25$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <ul>
+                        <li><b>Gradien Garis</b>: Untuk garis dengan persamaan $Ax+By+C=0$, gradiennya ($m$) adalah $m = -A/B$. Garis-garis yang sejajar memiliki gradien yang sama.</li>
+                        <li><b>Persamaan Garis Singgung Lingkaran Berpusat di (0,0)</b>: Persamaan garis singgung pada lingkaran $x^2 + y^2 = r^2$ dengan gradien $m$ yang diketahui dapat ditemukan menggunakan rumus: $$y = mx \pm r\sqrt{m^2+1}$$ Tanda $\pm$ menunjukkan bahwa selalu ada dua garis singgung yang sejajar dengan gradien yang sama.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Identifikasi Informasi Lingkaran.</b><br>
+                    Persamaan lingkaran adalah $x^2 + y^2 = 25$. Ini adalah bentuk standar lingkaran yang berpusat di $(0,0)$ dengan $r^2=25$. Jadi, jari-jarinya adalah $r=\sqrt{25}=5$.</p>
+
+                    <p><b>Langkah 2: Tentukan Gradien (m) Garis Singgung.</b><br>
+                    Garis singgung harus sejajar dengan garis $3x - 4y - 1 = 0$. Garis yang sejajar memiliki gradien yang sama. Mari kita cari gradien garis ini:
+                    $-4y = -3x + 1 \implies y = \frac{3}{4}x - \frac{1}{4}$.
+                    Gradiennya adalah koefisien $x$, yaitu $m = \frac{3}{4}$.</p>
+                    
+                    <p><b>Langkah 3: Gunakan Rumus Persamaan Garis Singgung.</b><br>
+                    Kita sudah punya semua yang dibutuhkan:
+                    - $m = \frac{3}{4}$
+                    - $r = 5$
+                    Kita masukkan ke dalam rumus $y = mx \pm r\sqrt{m^2+1}$:
+                    $y = \frac{3}{4}x \pm 5\sqrt{(\frac{3}{4})^2+1}$<br>
+                    $y = \frac{3}{4}x \pm 5\sqrt{\frac{9}{16}+1}$<br>
+                    $y = \frac{3}{4}x \pm 5\sqrt{\frac{9}{16}+\frac{16}{16}}$<br>
+                    $y = \frac{3}{4}x \pm 5\sqrt{\frac{25}{16}}$<br>
+                    $y = \frac{3}{4}x \pm 5(\frac{5}{4})$<br>
+                    $y = \frac{3}{4}x \pm \frac{25}{4}$.</p>
+                    
+                    <p><b>Langkah 4: Ubah Persamaan ke Bentuk Umum dan Cocokkan dengan Pilihan.</b><br>
+                    Untuk menghilangkan pecahan, kita kalikan seluruh persamaan dengan 4:
+                    $4y = 3x \pm 25$.<br>
+                    Ini memberikan kita dua kemungkinan persamaan garis singgung:
+                    1) $4y = 3x + 25 \implies 3x - 4y = -25$
+                    2) $4y = 3x - 25 \implies 3x - 4y = 25$
+                    Dari dua kemungkinan ini, yang ada di pilihan jawaban adalah $3x - 4y = 25$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 15 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Benar, Salah.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Posisi sebuah garis terhadap lingkaran dapat ditentukan dengan membandingkan jarak ($d$) dari pusat lingkaran ke garis tersebut dengan panjang jari-jari ($r$) lingkaran.</p>
+                    <ul>
+                        <li>Jika $d < r$: Garis <b>memotong</b> lingkaran di dua titik berbeda.</li>
+                        <li>Jika $d = r$: Garis <b>menyinggung</b> lingkaran tepat di satu titik.</li>
+                        <li>Jika $d > r$: Garis <b>tidak memotong</b> atau menyinggung lingkaran.</li>
+                    </ul>
+                    Rumus jarak dari pusat $(h,k)$ ke garis $Ax+By+C=0$ adalah $d = \frac{|Ah+Bk+C|}{\sqrt{A^2+B^2}}$.
+                    
+                    <p><b>Analisis Lingkaran:</b><br>
+                    Lingkaran $L \equiv (x-1)^2 + (y-2)^2 = 4$.
+                    - Pusat $(h,k) = (1,2)$.
+                    - Jari-jari $r^2=4 \implies r=2$.</p>
+
+                    <div class="pembahasan-title">Analisis Setiap Pernyataan</div>
+                    <p><b>Pernyataan 1: Garis $y=x+3$ memotong lingkaran di dua titik.</b><br>
+                    Ubah persamaan garis menjadi $x-y+3=0$. (A=1, B=-1, C=3).
+                    Hitung jarak $d$ dari pusat (1,2) ke garis:
+                    $d = \frac{|1(1) - 1(2) + 3|}{\sqrt{1^2 + (-1)^2}} = \frac{|1-2+3|}{\sqrt{2}} = \frac{2}{\sqrt{2}} = \sqrt{2}$.
+                    Nilai $d = \sqrt{2} \approx 1,414$. Jari-jari $r=2$.
+                    Karena $d < r$, garis tersebut memotong lingkaran. Pernyataan <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 2: Garis $x=3$ menyinggung lingkaran.</b><br>
+                    Ubah persamaan garis menjadi $x-3=0$. (A=1, B=0, C=-3).
+                    Hitung jarak $d$ dari pusat (1,2) ke garis:
+                    $d = \frac{|1(1) + 0(2) - 3|}{\sqrt{1^2 + 0^2}} = \frac{|1-3|}{\sqrt{1}} = \frac{|-2|}{1} = 2$.
+                    Karena $d = r = 2$, garis tersebut menyinggung lingkaran. Pernyataan <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 3: Garis $y=4$ menyinggung lingkaran.</b><br>
+                    Ubah persamaan garis menjadi $y-4=0$. (A=0, B=1, C=-4).
+                    Hitung jarak $d$ dari pusat (1,2) ke garis:
+                    $d = \frac{|0(1) + 1(2) - 4|}{\sqrt{0^2 + 1^2}} = \frac{|2-4|}{\sqrt{1}} = \frac{|-2|}{1} = 2$.
+                    Karena $d = r = 2$, garis tersebut menyinggung lingkaran. Pernyataan <b>BENAR</b>.</p>
+
+                    <p><b>Pernyataan 4: Jarak dari pusat lingkaran ke garis $y=5$ lebih kecil dari jari-jari.</b><br>
+                    Ubah persamaan garis menjadi $y-5=0$. (A=0, B=1, C=-5).
+                    Hitung jarak $d$ dari pusat (1,2) ke garis:
+                    $d = \frac{|0(1) + 1(2) - 5|}{\sqrt{0^2 + 1^2}} = \frac{|2-5|}{\sqrt{1}} = \frac{|-3|}{1} = 3$.
+                    Jaraknya adalah 3, sementara jari-jari adalah 2. Jadi, $d > r$. Pernyataan mengatakan jaraknya lebih kecil, maka pernyataan ini <b>SALAH</b>.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 16 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: E. $x - 3y + 5 = 0$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ketika sebuah objek geometri (seperti titik atau garis) ditransformasikan oleh sebuah matriks, kita mencari hubungan antara koordinat awal $(x,y)$ dan koordinat bayangan $(x', y')$.</p>
+                    <ul>
+                        <li><b>Transformasi Titik</b>: Hubungannya adalah $\begin{pmatrix} x' \\ y' \end{pmatrix} = T \begin{pmatrix} x \\ y \end{pmatrix}$.</li>
+                        <li><b>Mencari Persamaan Bayangan</b>: Untuk menemukan persamaan bayangan sebuah garis, strateginya adalah kebalikannya. Kita perlu menyatakan $(x,y)$ dalam bentuk $(x', y')$. Ini dapat dilakukan dengan menggunakan invers dari matriks transformasi: $$\begin{pmatrix} x \\ y \end{pmatrix} = T^{-1} \begin{pmatrix} x' \\ y' \end{pmatrix}$$ Setelah mendapatkan ekspresi untuk $x$ dan $y$ dalam variabel $x'$ dan $y'$, kita substitusikan ke persamaan garis awal.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Cari Invers dari Matriks Transformasi ($T^{-1}$).</b><br>
+                    Matriks transformasi adalah $T = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$.
+                    - Determinan: $\det(T) = (2)(1) - (1)(1) = 2 - 1 = 1$.
+                    - Invers: $T^{-1} = \frac{1}{\det(T)}\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix} = \frac{1}{1}\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}$.</p>
+                    
+                    <p><b>Langkah 2: Nyatakan $(x, y)$ dalam $(x', y')$.</b><br>
+                    Kita gunakan hubungan $\begin{pmatrix} x \\ y \end{pmatrix} = T^{-1} \begin{pmatrix} x' \\ y' \end{pmatrix}$.
+                    $\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix} \begin{pmatrix} x' \\ y' \end{pmatrix}$.
+                    Dari perkalian matriks ini, kita dapatkan dua persamaan:
+                    - $x = (1)x' + (-1)y' \implies x = x' - y'$
+                    - $y = (-1)x' + (2)y' \implies y = -x' + 2y'$</p>
+                    
+                    <p><b>Langkah 3: Substitusikan $x$ dan $y$ ke dalam Persamaan Garis Awal.</b><br>
+                    Persamaan garis awal adalah $-x - 2y + 5 = 0$.
+                    Kita ganti $x$ dengan $(x'-y')$ dan $y$ dengan $(-x'+2y')$.
+                    $-(x' - y') - 2(-x' + 2y') + 5 = 0$.</p>
+                    
+                    <p><b>Langkah 4: Sederhanakan Persamaan untuk Mendapatkan Persamaan Bayangan.</b><br>
+                    $-x' + y' - 2(-x') - 2(2y') + 5 = 0$
+                    $-x' + y' + 2x' - 4y' + 5 = 0$
+                    $(-x' + 2x') + (y' - 4y') + 5 = 0$
+                    $x' - 3y' + 5 = 0$.
+                    Ini adalah persamaan bayangannya. Dalam notasi standar, kita hilangkan aksennya menjadi $x - 3y + 5 = 0$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 17 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. 24</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Transformasi linear menggunakan matriks akan mengubah ukuran dan bentuk bangun geometri. Ada sebuah teorema yang sangat berguna untuk menghubungkan luas bangun awal dengan luas bayangannya:</p>
+                    <p style="text-align:center; font-weight:bold;">$L_{bayangan} = |\det(M)| \times L_{awal}$</p>
+                    <ul>
+                        <li>$L_{bayangan}$: Luas bangun setelah ditransformasi.</li>
+                        <li>$L_{awal}$: Luas bangun sebelum ditransformasi.</li>
+                        <li>$|\det(M)|$: Nilai mutlak dari determinan matriks transformasi $M$. Determinan ini berfungsi sebagai "faktor skala" untuk luas.</li>
+                    </ul>
+                    Untuk menghitung luas segitiga, kita bisa menggunakan rumus dasar $\frac{1}{2} \times alas \times tinggi$.
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Hitung Luas Segitiga Awal ($L_{awal}$).</b><br>
+                    Titik sudut segitiga adalah A(1, 1), B(5, 1), dan C(3, 4).
+                    - Perhatikan titik A dan B. Keduanya memiliki koordinat y yang sama (y=1). Ini berarti ruas garis AB adalah sebuah garis horizontal. Kita bisa menggunakannya sebagai alas segitiga.
+                    - Panjang alas (jarak antara A dan B) = $|x_B - x_A| = |5 - 1| = 4$ satuan.
+                    - Tinggi segitiga adalah jarak tegak lurus dari titik C ke garis alas AB. Karena alasnya horizontal di y=1, tingginya adalah selisih koordinat y antara C dan alas: $|y_C - y_{alas}| = |4 - 1| = 3$ satuan.
+                    - Luas awal: $L_{awal} = \frac{1}{2} \times alas \times tinggi = \frac{1}{2} \times 4 \times 3 = 6$ satuan luas.</p>
+                    
+                    <p><b>Langkah 2: Hitung Determinan Matriks Transformasi ($\det(M)$).</b><br>
+                    Matriks transformasi adalah $M = \begin{pmatrix} 3 & 1 \\ 2 & 2 \end{pmatrix}$.
+                    $\det(M) = (3)(2) - (1)(2) = 6 - 2 = 4$.</p>
+                    
+                    <p><b>Langkah 3: Hitung Luas Bayangan Segitiga ($L_{bayangan}$).</b><br>
+                    Kita gunakan rumus transformasi luas:
+                    $L_{bayangan} = |\det(M)| \times L_{awal}$
+                    $L_{bayangan} = |4| \times 6$
+                    $L_{bayangan} = 4 \times 6 = 24$ satuan luas.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 18 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. 4</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p><b>Limit Fungsi</b>: Konsep limit adalah tentang nilai yang "didekati" oleh suatu fungsi ketika inputnya mendekati suatu nilai tertentu.
+                    <br><b>Bentuk Tak Tentu $\frac{0}{0}$</b>: Jika kita langsung mensubstitusikan nilai yang didekati $x$ ke dalam fungsi dan hasilnya adalah $\frac{0}{0}$, ini disebut bentuk tak tentu. Ini bukan berarti limitnya tidak ada, melainkan kita harus menggunakan metode lain untuk menemukannya. Untuk limit fungsi aljabar, metode yang paling umum adalah <b>faktorisasi</b>.
+                    <br><b>Faktorisasi</b>: Tujuannya adalah untuk menemukan faktor yang sama di pembilang dan penyebut (yang menjadi penyebab bentuk $\frac{0}{0}$), lalu mencoretnya. Setelah itu, kita bisa mensubstitusikan nilainya kembali.
+                    <br><b>Rumus Pemfaktoran Penting</b>:
+                    <ul>
+                        <li>Selisih Kubik: $a^3 - b^3 = (a-b)(a^2+ab+b^2)$</li>
+                        <li>Kuadratik: $ax^2+bx+c$ dicari dua bilangan yang jika dikali hasilnya $ac$ dan jika dijumlah hasilnya $b$.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Uji Substitusi Langsung.</b><br>
+                    Kita coba masukkan $x=2$ ke dalam fungsi:
+                    $\frac{(2)^3 - 8}{(2)^2 - 2 - 2} = \frac{8 - 8}{4 - 2 - 2} = \frac{0}{0}$.
+                    Karena hasilnya adalah bentuk tak tentu, kita harus menggunakan faktorisasi.</p>
+                    
+                    <p><b>Langkah 2: Faktorkan Pembilang.</b><br>
+                    Pembilangnya adalah $x^3 - 8$, yang bisa ditulis sebagai $x^3 - 2^3$. Ini adalah bentuk selisih kubik ($a^3-b^3$) dengan $a=x$ dan $b=2$.
+                    Menggunakan rumus, kita dapatkan:
+                    $x^3 - 8 = (x-2)(x^2 + (x)(2) + 2^2) = (x-2)(x^2+2x+4)$.</p>
+                    
+                    <p><b>Langkah 3: Faktorkan Penyebut.</b><br>
+                    Penyebutnya adalah $x^2 - x - 2$. Kita cari dua bilangan yang jika dikali hasilnya -2 dan jika dijumlah hasilnya -1. Bilangan tersebut adalah -2 dan 1.
+                    Jadi, $x^2 - x - 2 = (x-2)(x+1)$.</p>
+                    
+                    <p><b>Langkah 4: Tulis Ulang Limit dan Coret Faktor yang Sama.</b><br>
+                    Sekarang limitnya menjadi:
+                    $$\displaystyle \lim_{x \to 2} \frac{(x-2)(x^2+2x+4)}{(x-2)(x+1)}$$
+                    Faktor $(x-2)$ adalah penyebab bentuk $\frac{0}{0}$. Kita bisa mencoretnya:
+                    $$\displaystyle \lim_{x \to 2} \frac{x^2+2x+4}{x+1}$$</p>
+                    
+                    <p><b>Langkah 5: Substitusikan Nilai $x$ ke Fungsi yang Sudah Disederhanakan.</b><br>
+                    $\frac{(2)^2+2(2)+4}{(2)+1} = \frac{4+4+4}{3} = \frac{12}{3} = 4$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 19 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $\frac{1}{4}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ketika menghadapi limit yang menghasilkan bentuk tak tentu $\frac{0}{0}$ dan melibatkan bentuk akar kuadrat, metode yang paling efektif adalah <b>mengalikan dengan bentuk sekawan</b>.</p>
+                    <ul>
+                        <li><b>Bentuk Sekawan</b>: Jika kita punya ekspresi $(\sqrt{a} - \sqrt{b})$, maka sekawannya adalah $(\sqrt{a} + \sqrt{b})$, dan sebaliknya.</li>
+                        <li><b>Tujuan</b>: Perkalian dengan bentuk sekawan memanfaatkan sifat aljabar $(p-q)(p+q) = p^2-q^2$. Dalam kasus akar, $(\sqrt{a}-\sqrt{b})(\sqrt{a}+\sqrt{b}) = (\sqrt{a})^2 - (\sqrt{b})^2 = a-b$. Ini akan menghilangkan bentuk akar yang rumit di pembilang (atau penyebut).</li>
+                        <li><b>Aturan</b>: Untuk menjaga nilai pecahan tetap sama, kita harus mengalikan pembilang dan penyebut dengan bentuk sekawan yang sama.</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Uji Substitusi Langsung.</b><br>
+                    Masukkan $x=0$ ke dalam fungsi:
+                    $\frac{\sqrt{16+0} - \sqrt{16-0}}{0} = \frac{\sqrt{16} - \sqrt{16}}{0} = \frac{4-4}{0} = \frac{0}{0}$.
+                    Ini adalah bentuk tak tentu, jadi kita gunakan metode lain.</p>
+                    
+                    <p><b>Langkah 2: Tentukan Bentuk Sekawan dan Kalikan.</b><br>
+                    Bentuk akar ada di pembilang: $\sqrt{16+x} - \sqrt{16-x}$.
+                    Bentuk sekawannya adalah $\sqrt{16+x} + \sqrt{16-x}$.
+                    Kita kalikan pembilang dan penyebut dengan bentuk sekawan ini:
+                    $$\displaystyle \lim_{x \to 0} \frac{\sqrt{16+x} - \sqrt{16-x}}{x} \cdot \frac{\sqrt{16+x} + \sqrt{16-x}}{\sqrt{16+x} + \sqrt{16-x}}$$</p>
+                    
+                    <p><b>Langkah 3: Sederhanakan Pembilang.</b><br>
+                    Gunakan sifat $(p-q)(p+q)=p^2-q^2$ pada pembilang:
+                    Pembilang = $(\sqrt{16+x})^2 - (\sqrt{16-x})^2 = (16+x) - (16-x) = 16+x-16+x = 2x$.
+                    Sekarang limitnya menjadi:
+                    $$\displaystyle \lim_{x \to 0} \frac{2x}{x(\sqrt{16+x} + \sqrt{16-x})}$$</p>
+                    
+                    <p><b>Langkah 4: Coret Faktor Penyebab Nol.</b><br>
+                    Faktor $x$ di pembilang dan penyebut adalah penyebab bentuk $\frac{0}{0}$. Kita bisa mencoretnya:
+                    $$\displaystyle \lim_{x \to 0} \frac{2}{\sqrt{16+x} + \sqrt{16-x}}$$</p>
+                    
+                    <p><b>Langkah 5: Substitusikan Nilai $x$ ke Fungsi yang Sudah Disederhanakan.</b><br>
+                    Sekarang kita bisa memasukkan $x=0$ dengan aman:
+                    $\frac{2}{\sqrt{16+0} + \sqrt{16-0}} = \frac{2}{\sqrt{16} + \sqrt{16}} = \frac{2}{4+4} = \frac{2}{8} = \frac{1}{4}$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 20 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. 2</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Untuk menyelesaikan limit trigonometri menuju nol, ada beberapa identitas dan sifat dasar yang sangat penting:</p>
+                    <ul>
+                        <li><b>Identitas Sudut Ganda untuk Kosinus</b>: Salah satu bentuknya adalah $\cos(2A) = 1 - 2\sin^2(A)$. Dengan mengatur ulang, kita mendapatkan identitas yang sangat berguna untuk limit: $$1 - \cos(2A) = 2\sin^2(A)$$ Jika kita punya $1-\cos(kx)$, maka ini sama dengan $2\sin^2(\frac{kx}{2})$.</li>
+                        <li><b>Sifat Limit Dasar Trigonometri</b>: Ketika $x$ mendekati nol, berlaku:
+                        $$\displaystyle \lim_{x \to 0} \frac{\sin(ax)}{bx} = \frac{a}{b} \quad \text{dan} \quad \displaystyle \lim_{x \to 0} \frac{\tan(ax)}{bx} = \frac{a}{b}$$
+                        Sifat ini juga berlaku untuk kombinasi sinus dan tangen:
+                        $$\displaystyle \lim_{x \to 0} \frac{\sin(ax)}{\tan(bx)} = \frac{a}{b}$$</li>
+                    </ul>
+                    <div class="pembahasan-title">Langkah-langkah Pembahasan</div>
+                    <p><b>Langkah 1: Uji Substitusi Langsung.</b><br>
+                    Masukkan $x=0$: $\frac{1 - \cos(0)}{0 \cdot \tan(0)} = \frac{1-1}{0 \cdot 0} = \frac{0}{0}$.
+                    Ini adalah bentuk tak tentu, jadi kita perlu manipulasi aljabar.</p>
+                    
+                    <p><b>Langkah 2: Terapkan Identitas Trigonometri pada Pembilang.</b><br>
+                    Pembilangnya adalah $1 - \cos(6x)$. Menggunakan identitas $1 - \cos(2A) = 2\sin^2(A)$ dengan $2A=6x$, maka $A=3x$.
+                    Jadi, $1 - \cos(6x) = 2\sin^2(3x)$.
+                    Limitnya sekarang menjadi:
+                    $$\displaystyle \lim_{x \to 0} \frac{2\sin^2(3x)}{x \tan(9x)}$$</p>
+                    
+                    <p><b>Langkah 3: Uraikan dan Kelompokkan Sesuai Sifat Limit Dasar.</b><br>
+                    Kita bisa menguraikan $\sin^2(3x)$ menjadi $\sin(3x) \cdot \sin(3x)$ dan mengatur ulang pecahannya agar sesuai dengan bentuk sifat limit dasar.
+                    $$\displaystyle \lim_{x \to 0} 2 \cdot \frac{\sin(3x)}{x} \cdot \frac{\sin(3x)}{\tan(9x)}$$
+                    Sekarang kita punya tiga bagian yang limitnya bisa kita hitung secara terpisah.</p>
+
+                    <p><b>Langkah 4: Hitung Limit dari Setiap Bagian.</b><br>
+                    Berdasarkan sifat limit dasar:
+                    - $\displaystyle \lim_{x \to 0} \frac{\sin(3x)}{x} = \frac{3}{1} = 3$
+                    - $\displaystyle \lim_{x \to 0} \frac{\sin(3x)}{\tan(9x)} = \frac{3}{9} = \frac{1}{3}$
+                    
+                    Nilai limit totalnya adalah hasil perkalian dari limit setiap bagian:
+                    $2 \times \left( \lim_{x \to 0} \frac{\sin(3x)}{x} \right) \times \left( \lim_{x \to 0} \frac{\sin(3x)}{\tan(9x)} \right)$
+                    $= 2 \times 3 \times \frac{1}{3}$
+                    $= 2$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+</body>
+</html>
+
+
+
+
