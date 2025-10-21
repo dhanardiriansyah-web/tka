@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL TKA MATEMATIKA 2</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #f0c06e;
+        --header-title-color: #f0c06e;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .cover-page {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .cover-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28pt;
+        font-weight: 900;
+        color: var(--header-title-color);
+        line-height: 1.3;
+        margin: 20px 0;
+      }
+      .cover-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16pt;
+        color: var(--secondary-text);
+        font-weight: 700;
+      }
+      .cover-logo {
+        max-width: 200px;
+        margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 10px 2.5cm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        line-height: 1.2;
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: var(--primary-text);
+      }
+       .header-logo {
+        max-height: 45px;
+      }
+      .content-wrapper {
+        width: 100%;
+        flex-grow: 1;
+      }
+      .manual-flex-layout {
+        display: flex;
+        gap: 15mm;
+        align-items: flex-start;
+      }
+      .manual-flex-layout .kolom {
+        flex: 1;
+        width: 50%;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        margin-bottom: 20px;
+        break-inside: avoid;
+        text-align: justify;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 18px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        text-indent: -20px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .soal-kategori {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        margin-top: 10px;
+        font-size: 9pt;
+      }
+      .soal-kategori th, .soal-kategori td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+      }
+      .soal-kategori th { background-color: #f2f2f2; }
+      .soal-kategori th:not(:first-child) { text-align: center; width: 80px; }
+      .soal-kategori td:not(:first-child) { text-align: center; }
+       .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 9pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th { background-color: #f2f2f2; }
+      .wacana-box, .soal-gambar-deskripsi {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ccc;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .footer-logo {
+         max-height: 30px;
+      }
+      .pembahasan-wrapper {
+        text-align: justify;
+        border: 1px solid #eee;
+        padding: 20px;
+        background-color: #fafafa;
+        border-radius: 5px;
+      }
+      .pembahasan-title {
+        font-weight: bold;
+        font-size: 11pt;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        border-left: 4px solid var(--header-title-color);
+        padding-left: 10px;
+      }
+      .pembahasan-wrapper .jawaban-box {
+        background-color: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      @media print {
+        @page { size: A4; margin: 0; }
+        body { background-color: white; margin: 0; }
+        .page { width: 100%; min-height: 29.7cm; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        .page-header { display: block; margin: -1.8cm -2.5cm 20px -2.5cm; position: relative; }
+        .header-top-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">BANK SOAL<br>TKA MATEMATIKA 2</h1>
+        <p class="cover-subtitle">Latihan Soal Aplikasi dan Penalaran</p>
+    </section>
+
+    <!-- HALAMAN 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA</div>
+                    <div class="header-title-sub"><strong>Latihan Soal Aplikasi & Penalaran</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            Sebidang tanah berbentuk persegi panjang memiliki panjang $(\sqrt{75} + \sqrt{27})$ meter dan lebar $(\sqrt{48} - \sqrt{12})$ meter. Jika di atas tanah tersebut dibangun sebuah rumah berbentuk persegi dengan panjang sisi $\sqrt{12}$ meter, luas sisa tanah yang tidak dibangun adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$12 \ m^2$</li>
+                                <li data-option="B">$24 \ m^2$</li>
+                                <li data-option="C">$36 \ m^2$</li>
+                                <li data-option="D">$48 \ m^2$</li>
+                                <li data-option="E">$60 \ m^2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            Diberikan $p = 27$ dan $q = 32$. Manakah dari pernyataan berikut yang bernilai benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$p^{2/3} < q^{3/5}$</span></div>
+                                <div><input type="checkbox"/><span>$(p \cdot q)^{0} = 1$</span></div>
+                                <div><input type="checkbox"/><span>$q^{1/5} - p^{1/3} = -1$</span></div>
+                                <div><input type="checkbox"/><span>$p^{-1/3} = \frac{1}{3}$</span></div>
+                                <div><input type="checkbox"/><span>$q^{4/5} = 2p^{1/3}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            Diberikan $a$ dan $b$ adalah bilangan irasional, dan $r$ adalah bilangan rasional bukan nol. Tentukan apakah hasil operasi berikut Selalu Irasional atau Bisa Rasional.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Operasi</th><th>Selalu Irasional</th><th>Bisa Rasional</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$a+r$</td><td></td><td></td></tr>
+                                    <tr><td>$a \times b$</td><td></td><td></td></tr>
+                                    <tr><td>$a^2$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{a}{b}$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            Di sebuah toko, harga 2 buku tulis, 1 pulpen, dan 3 pensil adalah Rp17.000,00. Harga 1 buku tulis, 2 pulpen, dan 1 pensil adalah Rp12.000,00. Harga 3 buku tulis, 1 pulpen, dan 1 pensil adalah Rp17.000,00. Jika Ani membeli 1 buku tulis, 1 pulpen, dan 1 pensil, maka ia harus membayar sebesar...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp7.000,00</li>
+                                <li data-option="B">Rp8.000,00</li>
+                                <li data-option="C">Rp9.000,00</li>
+                                <li data-option="D">Rp10.000,00</li>
+                                <li data-option="E">Rp11.000,00</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 2 -->
+    <section class="page">
+        <header class="page-header">
+             <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA</div>
+                    <div class="header-title-sub"><strong>Latihan Soal Aplikasi & Penalaran</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                           Seorang penjahit akan membuat 2 model pakaian. Model I memerlukan 1 m kain polos dan 1,5 m kain bergaris. Model II memerlukan 2 m kain polos dan 0,5 m kain bergaris. Penjahit hanya memiliki 20 m kain polos dan 15 m kain bergaris. Jika keuntungan dari model I adalah Rp15.000,00 dan model II adalah Rp10.000,00, keuntungan maksimum yang bisa didapat adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp120.000,00</li>
+                                <li data-option="B">Rp180.000,00</li>
+                                <li data-option="C">Rp140.000,00</li>
+                                <li data-option="D">Rp150.000,00</li>
+                                <li data-option="E">Rp160.000,00</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            Suatu pabrik kertas berbahan dasar kayu memproduksi kertas melalui dua tahap. Tahap I menggunakan mesin I yang menghasilkan bahan kertas setengah jadi mengikuti fungsi $f(x)=2x-1$. Tahap II menggunakan mesin II yang menghasilkan kertas jadi mengikuti fungsi $g(x)=x^2+3$. Jika $x$ merupakan banyak bahan dasar kayu dalam satuan ton, dan tersedia 5 ton kayu, kertas yang dihasilkan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">81 ton</li>
+                                <li data-option="B">82 ton</li>
+                                <li data-option="C">83 ton</li>
+                                <li data-option="D">84 ton</li>
+                                <li data-option="E">85 ton</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            Diberikan fungsi $f(x)=\frac{2x+3}{x-5}$ dan $g(x)=3x-1$. Pernyataan manakah yang benar mengenai komposisi dan invers fungsi-fungsi tersebut? <b>(bisa pilih lebih dari satu jawaban)</b>
+                             <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Domain dari $f(x)$ adalah semua bilangan real kecuali 5.</span></div>
+                                <div><input type="checkbox"/><span>$f^{-1}(x) = \frac{5x+3}{x-2}$</span></div>
+                                <div><input type="checkbox"/><span>$(g \circ f)(6) = 42$</span></div>
+                                <div><input type="checkbox"/><span>Invers dari $g(x)$ adalah $g^{-1}(x) = \frac{x+1}{3}$</span></div>
+                                <div><input type="checkbox"/><span>Range dari $f(x)$ adalah semua bilangan real kecuali 2.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            Diketahui fungsi $f(x)=x^2+4x+c$. Berapakah nilai dari $f(5)$? <br>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.<br>
+                            (1) Titik puncak grafik fungsi $f$ adalah $(-2, -1)$.<br>
+                            (2) Grafik fungsi $f$ memotong sumbu-y di titik $(0,3)$.
+                             <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                                <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+     <!-- HALAMAN 3 -->
+    <section class="page">
+        <header class="page-header">
+             <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA</div>
+                    <div class="header-title-sub"><strong>Latihan Soal Aplikasi & Penalaran</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            Sebuah bola dijatuhkan dari ketinggian 10 meter. Setiap kali memantul, bola mencapai ketinggian $\frac{3}{4}$ dari ketinggian sebelumnya. Total panjang lintasan yang ditempuh bola sampai berhenti adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">30 meter</li>
+                                <li data-option="B">40 meter</li>
+                                <li data-option="C">50 meter</li>
+                                <li data-option="D">60 meter</li>
+                                <li data-option="E">70 meter</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            Seorang karyawan mendapat gaji awal Rp4.000.000,00 per bulan. Setiap tahun, gajinya naik sebesar Rp250.000,00 per bulan. Jumlah total pendapatan karyawan tersebut selama 10 tahun pertama bekerja adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp592.500.000,00</li>
+                                <li data-option="B">Rp615.000.000,00</li>
+                                <li data-option="C">Rp622.500.000,00</li>
+                                <li data-option="D">Rp630.000.000,00</li>
+                                <li data-option="E">Rp645.000.000,00</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            Diberikan kubus ABCD.EFGH dengan panjang rusuk 8 cm. Titik P adalah titik tengah rusuk EH. Jarak dari titik P ke garis diagonal AG adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$2\sqrt{6}$ cm</li>
+                                <li data-option="B">$4\sqrt{2}$ cm</li>
+                                <li data-option="C">$4\sqrt{3}$ cm</li>
+                                <li data-option="D">$4\sqrt{6}$ cm</li>
+                                <li data-option="E">$6\sqrt{2}$ cm</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            Perhatikan dua segitiga sebangun ABC dan PQR.
+                            <div class="soal-gambar-deskripsi">
+                            Deskripsi Gambar: Terdapat dua segitiga siku-siku, ABC dan PQR. Segitiga ABC siku-siku di B dengan sisi AB = 6 cm dan BC = 8 cm. Segitiga PQR siku-siku di Q dengan sisi PQ = 9 cm. Sudut A sama dengan sudut P.
+                            </div>
+                            Tentukan kesesuaian pernyataan berikut berdasarkan data di atas.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Sesuai</th><th>Tidak Sesuai</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Panjang sisi AC adalah 10 cm.</td><td></td><td></td></tr>
+                                    <tr><td>Panjang sisi QR adalah 12 cm.</td><td></td><td></td></tr>
+                                    <tr><td>Luas segitiga PQR adalah 108 cm$^2$.</td><td></td><td></td></tr>
+                                    <tr><td>Keliling segitiga ABC adalah 24 cm.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 4 -->
+    <section class="page">
+        <header class="page-header">
+             <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA</div>
+                    <div class="header-title-sub"><strong>Latihan Soal Aplikasi & Penalaran</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                             Titik $P(-3, 5)$ dicerminkan terhadap garis $y=-x$, kemudian dilanjutkan dengan rotasi sejauh $90^\circ$ berlawanan arah jarum jam dengan pusat $O(0,0)$. Koordinat bayangan akhir titik P adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$(3, -5)$</li>
+                                <li data-option="B">$(-3, -5)$</li>
+                                <li data-option="C">$(3, 5)$</li>
+                                <li data-option="D">$(-5, -3)$</li>
+                                <li data-option="E">$(5, 3)$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            Sebuah kapal berlayar dari pelabuhan A ke arah timur sejauh 40 km menuju pelabuhan B. Kemudian, kapal berbelok sehingga arah barunya membentuk sudut $120^\circ$ dengan arah semula (ke arah utara), dan berlayar sejauh 30 km menuju pelabuhan C. Jarak terdekat dari pelabuhan A ke pelabuhan C adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$10\sqrt{13}$ km</li>
+                                <li data-option="B">$10\sqrt{19}$ km</li>
+                                <li data-option="C">$10\sqrt{21}$ km</li>
+                                <li data-option="D">$10\sqrt{37}$ km</li>
+                                <li data-option="E">$10\sqrt{43}$ km</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                           Jika $\tan \alpha = p$ untuk $\alpha$ di kuadran III, maka nilai dari $\sin(180^\circ + \alpha) + \cos(180^\circ - \alpha)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-\frac{p+1}{\sqrt{p^2+1}}$</li>
+                                <li data-option="B">$\frac{p-1}{\sqrt{p^2+1}}$</li>
+                                <li data-option="C">$\frac{1-p}{\sqrt{p^2+1}}$</li>
+                                <li data-option="D">$\frac{p+1}{\sqrt{p^2+1}}$</li>
+                                <li data-option="E">0</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            Rata-rata nilai ulangan dari 39 siswa adalah 75. Jika nilai seorang siswa bernama Budi digabungkan, rata-ratanya menjadi 75,5. Nilai ulangan Budi adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">80</li>
+                                <li data-option="B">85</li>
+                                <li data-option="C">90</li>
+                                <li data-option="D">95</li>
+                                <li data-option="E">100</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- HALAMAN 5 -->
+    <section class="page">
+        <header class="page-header">
+             <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">BANK SOAL TKA MATEMATIKA</div>
+                    <div class="header-title-sub"><strong>Latihan Soal Aplikasi & Penalaran</strong></div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="manual-flex-layout">
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                             Perhatikan tabel distribusi frekuensi berikut.
+                             <table class="tabel-kuantitas">
+                                 <tr><th>Nilai</th><td>41-50</td><td>51-60</td><td>61-70</td><td>71-80</td><td>81-90</td></tr>
+                                 <tr><th>Frekuensi</th><td>4</td><td>6</td><td>10</td><td>12</td><td>8</td></tr>
+                             </table>
+                             Manakah pernyataan yang benar mengenai data tersebut? <b>(bisa pilih lebih dari satu jawaban)</b>
+                             <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Letak kuartil bawah berada di kelas 51-60.</span></div>
+                                <div><input type="checkbox"/><span>Modus dari data tersebut lebih besar dari 70.</span></div>
+                                <div><input type="checkbox"/><span>Nilai median adalah 69,5.</span></div>
+                                <div><input type="checkbox"/><span>Jangkauan data dapat diperkirakan sebesar 49.</span></div>
+                                <div><input type="checkbox"/><span>Total frekuensi data adalah 40.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            Rata-rata usia sekelompok orang yang terdiri dari guru dan dosen adalah 40 tahun. Berapakah perbandingan banyaknya guru dan dosen? <br>
+                            Putuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.<br>
+                            (1) Rata-rata usia guru adalah 35 tahun.<br>
+                            (2) Rata-rata usia dosen adalah 50 tahun.
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                                <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            Dari 6 orang pria dan 5 orang wanita akan dibentuk sebuah tim beranggotakan 4 orang. Jika tim tersebut harus memiliki paling sedikit 2 orang wanita, banyaknya cara membentuk tim adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">150</li>
+                                <li data-option="B">215</li>
+                                <li data-option="C">250</li>
+                                <li data-option="D">295</li>
+                                <li data-option="E">320</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                           Dua buah dadu (merah dan biru) dilempar bersamaan. Peluang munculnya mata dadu merah bernilai genap atau jumlah mata kedua dadu sama dengan 8 adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{1}{2}$</li>
+                                <li data-option="B">$\frac{5}{9}$</li>
+                                <li data-option="C">$\frac{23}{36}$</li>
+                                <li data-option="D">$\frac{20}{36}$</li>
+                                <li data-option="E">$\frac{11}{18}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Sampul Pembahasan -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">KUNCI JAWABAN<br>& PEMBAHASAN</h1>
+        <p class="cover-subtitle">BANK SOAL TKA MATEMATIKA 2</p>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 1 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $36 \ m^2$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini menggunakan konsep operasi bentuk akar dan luas bangun datar. Sifat-sifat akar yang digunakan: $\sqrt{a \times b} = \sqrt{a} \times \sqrt{b}$ dan $m\sqrt{c} \pm n\sqrt{c} = (m \pm n)\sqrt{c}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Sederhanakan ukuran panjang dan lebar tanah.</b><br>
+                    Panjang = $(\sqrt{75} + \sqrt{27}) = (\sqrt{25 \cdot 3} + \sqrt{9 \cdot 3}) = (5\sqrt{3} + 3\sqrt{3}) = 8\sqrt{3}$ m.<br>
+                    Lebar = $(\sqrt{48} - \sqrt{12}) = (\sqrt{16 \cdot 3} - \sqrt{4 \cdot 3}) = (4\sqrt{3} - 2\sqrt{3}) = 2\sqrt{3}$ m.</p>
+                    <p><b>Langkah 2: Hitung luas tanah.</b><br>
+                    Luas tanah = Panjang $\times$ Lebar = $(8\sqrt{3}) \times (2\sqrt{3}) = 16 \times 3 = 48 \ m^2$.</p>
+                    <p><b>Langkah 3: Sederhanakan sisi rumah dan hitung luasnya.</b><br>
+                    Panjang sisi rumah = $\sqrt{12} = \sqrt{4 \cdot 3} = 2\sqrt{3}$ m.
+                    Luas rumah = Sisi $\times$ Sisi = $(2\sqrt{3})^2 = 4 \times 3 = 12 \ m^2$.</p>
+                     <p><b>Langkah 4: Hitung sisa tanah.</b><br>
+                    Sisa tanah = Luas tanah - Luas rumah = $48 - 12 = 36 \ m^2$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 2 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Pernyataan 2, 3, dan 4 benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Konsep yang diuji adalah sifat-sifat eksponen (pangkat), terutama pangkat pecahan $a^{m/n} = (\sqrt[n]{a})^m$ dan pangkat negatif $a^{-n} = \frac{1}{a^n}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita cek setiap pernyataan dengan $p=27=3^3$ dan $q=32=2^5$.<br>
+                    <b>(1) $p^{2/3} < q^{3/5}$</b> $\implies (3^3)^{2/3} < (2^5)^{3/5} \implies 3^2 < 2^3 \implies 9 < 8$. Pernyataan ini <b>(Salah)</b>.<br>
+                    <b>(2) $(p \cdot q)^{0} = 1$</b>. Setiap bilangan (selain 0) yang dipangkatkan 0 hasilnya 1. <b>(Benar)</b><br>
+                    <b>(3) $q^{1/5} - p^{1/3}$</b> $= (2^5)^{1/5} - (3^3)^{1/3} = 2 - 3 = -1$. <b>(Benar)</b><br>
+                    <b>(4) $p^{-1/3} = (3^3)^{-1/3} = 3^{-1} = \frac{1}{3}$.</b> <b>(Benar)</b><br>
+                    <b>(5) $q^{4/5} = 2p^{1/3}$</b> $\implies (2^5)^{4/5} = 2(3^3)^{1/3} \implies 2^4 = 2(3) \implies 16 = 6$. Pernyataan ini <b>(Salah)</b>.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 3 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Selalu Irasional, Bisa Rasional, Bisa Rasional, Bisa Rasional.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Bilangan irasional adalah bilangan yang tidak dapat dinyatakan sebagai pecahan $\frac{p}{q}$. Operasi antara bilangan irasional dengan rasional memiliki sifat tertentu, sementara operasi antar bilangan irasional hasilnya tidak menentu.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                     <p><b>(1) $a+r$: Selalu Irasional.</b><br>
+                     Penjumlahan bilangan irasional dengan bilangan rasional akan selalu menghasilkan bilangan irasional.</p>
+                     <p><b>(2) $a \times b$: Bisa Rasional.</b><br>
+                     Contoh: Jika $a=\sqrt{2}$ dan $b=\sqrt{2}$, maka $a \times b = 2$ (rasional). Namun, jika $a=\sqrt{2}$ dan $b=\sqrt{3}$, maka $a \times b=\sqrt{6}$ (irasional).</p>
+                     <p><b>(3) $a^2$: Bisa Rasional.</b><br>
+                     Contoh: Jika $a=\sqrt{2}$, maka $a^2=2$ (rasional). Namun, jika $a=\sqrt[4]{2}$, maka $a^2=\sqrt{2}$ (irasional).</p>
+                     <p><b>(4) $\frac{a}{b}$: Bisa Rasional.</b><br>
+                     Contoh: Jika $a=2\sqrt{2}$ dan $b=\sqrt{2}$, maka $\frac{a}{b}=2$ (rasional). Namun, jika $a=\sqrt{3}$ dan $b=\sqrt{2}$, maka $\frac{a}{b}=\sqrt{\frac{3}{2}}$ (irasional).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 4 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. Rp9.000,00</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah Sistem Persamaan Linear Tiga Variabel (SPLTV) yang dapat diselesaikan dengan metode eliminasi, substitusi, atau gabungan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Misal buku=$b$, pulpen=$p$, pensil=$s$.<br>
+                    (1) $2b + p + 3s = 17000$<br>
+                    (2) $b + 2p + s = 12000$<br>
+                    (3) $3b + p + s = 17000$<br>
+                    <b>Langkah 1: Eliminasi $p$ dari (1) dan (3).</b><br>
+                    (3) - (1): $(3b-2b) + (p-p) + (s-3s) = 17000-17000 \implies b - 2s = 0 \implies b = 2s$.<br>
+                    <b>Langkah 2: Eliminasi $p$ dari (2) dan (3).</b><br>
+                    Kalikan (3) dengan 2: $6b + 2p + 2s = 34000$.<br>
+                    $(6b+2p+2s) - (b+2p+s) = 34000-12000 \implies 5b + s = 22000$.<br>
+                    <b>Langkah 3: Substitusi.</b><br>
+                    Substitusi $b=2s$ ke $5b+s=22000$.<br>
+                    $5(2s) + s = 22000 \implies 10s+s=22000 \implies 11s = 22000 \implies s=2000$.<br>
+                    Maka $b=2s = 2(2000) = 4000$.<br>
+                    Substitusi $b$ dan $s$ ke (3): $3(4000)+p+2000=17000 \implies 12000+p+2000=17000 \implies p=3000$.<br>
+                    <b>Langkah 4: Hitung total.</b><br>
+                    $b+p+s = 4000+3000+2000 = 9000$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 5 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. Rp180.000,00</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini diselesaikan dengan program linear. Langkahnya: membuat model matematika (fungsi kendala dan tujuan), menentukan daerah penyelesaian, mencari titik pojok, dan menguji titik pojok pada fungsi tujuan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Misal Model I=$x$, Model II=$y$.<br>
+                    <b>Fungsi Kendala:</b><br>
+                    Kain Polos: $x + 2y \le 20$<br>
+                    Kain Garis: $1.5x + 0.5y \le 15 \implies 3x + y \le 30$<br>
+                    $x \ge 0, y \ge 0$<br>
+                    <b>Fungsi Tujuan:</b> Maksimumkan $Z = 15000x + 10000y$.<br>
+                    <b>Titik Pojok Daerah Penyelesaian:</b><br>
+                    1. (0,0) $\rightarrow Z = 0$.<br>
+                    2. Perpotongan $x+2y=20$ dengan sumbu y ($x=0$) $\rightarrow y=10$. Titik (0,10) $\rightarrow Z = 100.000$.<br>
+                    3. Perpotongan $3x+y=30$ dengan sumbu x ($y=0$) $\rightarrow x=10$. Titik (10,0) $\rightarrow Z = 150.000$.<br>
+                    4. Perpotongan $x+2y=20$ dan $3x+y=30$. Dari $y=30-3x$, substitusi: $x+2(30-3x)=20 \implies x+60-6x=20 \implies 5x=40 \implies x=8$. Maka $y=30-3(8)=6$. Titik (8,6) $\rightarrow Z = 15000(8)+10000(6) = 120.000+60.000=180.000$.<br>
+                    Nilai maksimum adalah Rp180.000,00.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 6 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. 84 ton</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah aplikasi dari fungsi komposisi $(g \circ f)(x) = g(f(x))$. Artinya, hasil dari proses pertama ($f(x)$) menjadi input untuk proses kedua ($g(x)$).</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Hitung hasil tahap I.</b><br>
+                    Bahan dasar kayu $x=5$ ton. Masukkan ke fungsi mesin I: $f(x)=2x-1$.<br>
+                    $f(5) = 2(5)-1 = 10-1 = 9$ ton bahan setengah jadi.<br>
+                    <b>Langkah 2: Hitung hasil tahap II.</b><br>
+                    Hasil dari tahap I (9 ton) menjadi input untuk mesin II: $g(x)=x^2+3$.<br>
+                    $g(9) = 9^2+3 = 81+3=84$ ton kertas jadi.<br>
+                    Jadi, kertas yang dihasilkan adalah 84 ton.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 7 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Pernyataan 1, 2, 4, dan 5 benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini menguji pemahaman domain, range, invers, dan komposisi fungsi.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>(1) Domain $f(x)$</b>: Penyebut tidak boleh nol. $x-5 \neq 0 \implies x \neq 5$. <b>(Benar)</b><br>
+                    <b>(2) Invers $f(x)$</b>: Untuk $f(x)=\frac{ax+b}{cx+d}$, inversnya $f^{-1}(x)=\frac{-dx+b}{cx-a}$.
+                    $f(x)=\frac{2x+3}{1x-5} \implies f^{-1}(x)=\frac{-(-5)x+3}{1x-2}=\frac{5x+3}{x-2}$. <b>(Benar)</b><br>
+                    <b>(3) $(g \circ f)(6)$</b>: Hitung $f(6) = \frac{2(6)+3}{6-5} = \frac{15}{1}=15$. Kemudian $g(15)=3(15)-1=44$. Pernyataan mengatakan hasilnya 42, maka <b>(Salah)</b>.<br>
+                    <b>(4) Invers $g(x)$</b>: $y=3x-1 \implies y+1=3x \implies x=\frac{y+1}{3}$. Jadi $g^{-1}(x)=\frac{x+1}{3}$. <b>(Benar)</b><br>
+                    <b>(5) Range $f(x)$</b>: Adalah domain dari $f^{-1}(x)$. Dari (2), domain $f^{-1}(x)$ adalah $x \neq 2$. <b>(Benar)</b></p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 8 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah analisis kecukupan data. Pertanyaan bisa dijawab jika kita bisa menemukan nilai $c$ secara unik.
+                    Rumus puncak fungsi kuadrat $ax^2+bx+c$: $(x_p, y_p) = (-\frac{b}{2a}, f(-\frac{b}{2a}))$.
+                    Titik potong sumbu-y adalah $(0,c)$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita perlu mencari nilai $c$ untuk bisa menghitung $f(5)=5^2+4(5)+c = 45+c$.<br>
+                    <b>Analisis Pernyataan (1) SAJA</b>: Puncak $(-2, -1)$.
+                    Sumbu simetri, $x_p = -\frac{b}{2a} = -\frac{4}{2(1)}=-2$. Ini sesuai dengan data.
+                    Nilai puncak, $y_p=f(x_p)=f(-2)=(-2)^2+4(-2)+c = 4-8+c=c-4$.
+                    Diketahui $y_p=-1$, maka $c-4=-1 \implies c=3$. Karena $c$ ditemukan, $f(5)$ bisa dihitung. <b>(Cukup)</b>.<br>
+                    <b>Analisis Pernyataan (2) SAJA</b>: Memotong sumbu-y di $(0,3)$.
+                    Artinya, $f(0)=3$.
+                    $f(0)=0^2+4(0)+c=c$. Maka $c=3$. Karena $c$ ditemukan, $f(5)$ bisa dihitung. <b>(Cukup)</b>.<br>
+                    Karena masing-masing pernyataan cukup, jawabannya D.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 9 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: E. 70 meter</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Masalah ini adalah aplikasi dari deret geometri tak hingga. Lintasan bola terdiri dari lintasan turun dan lintasan naik. Rumus deret geometri tak hingga: $S_\infty = \frac{a}{1-r}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Lintasan Turun:</b> $10, 10(\frac{3}{4}), 10(\frac{3}{4})^2, \dots$
+                    Ini adalah deret geometri tak hingga dengan $a=10$ dan $r=\frac{3}{4}$.
+                    $S_{turun} = \frac{10}{1-\frac{3}{4}} = \frac{10}{\frac{1}{4}} = 40$ meter.<br>
+                    <b>Lintasan Naik:</b> $10(\frac{3}{4}), 10(\frac{3}{4})^2, \dots$ (dimulai dari pantulan pertama).
+                    Ini adalah deret geometri tak hingga dengan $a=10(\frac{3}{4})=7.5$ dan $r=\frac{3}{4}$.
+                    $S_{naik} = \frac{7.5}{1-\frac{3}{4}} = \frac{7.5}{\frac{1}{4}} = 30$ meter.<br>
+                    <b>Total Lintasan</b> = $S_{turun} + S_{naik} = 40 + 30 = 70$ meter.<br>
+                    <b>Cara Cepat:</b> Untuk soal bola jatuh, Lintasan Total = $H \times \frac{b+a}{b-a}$ untuk rasio $r=\frac{a}{b}$.
+                    Lintasan = $10 \times \frac{4+3}{4-3} = 10 \times 7 = 70$ meter.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 10 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. Rp615.000.000,00</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah aplikasi deret aritmetika, di mana kita menghitung total pendapatan per tahun.
+                    Rumus jumlah $n$ suku pertama: $S_n = \frac{n}{2}(2a + (n-1)b)$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Hitung pendapatan per tahun.</b><br>
+                    Gaji awal per bulan = 4.000.000. Kenaikan per bulan = 250.000.<br>
+                    Pendapatan tahun ke-1 ($a$): $12 \times 4.000.000 = 48.000.000$.<br>
+                    Gaji tahun ke-2 per bulan = 4.250.000.
+                    Pendapatan tahun ke-2: $12 \times 4.250.000 = 51.000.000$.<br>
+                    Beda kenaikan pendapatan per tahun ($b$): $51.000.000 - 48.000.000 = 3.000.000$.<br>
+                    <b>Langkah 2: Hitung total pendapatan 10 tahun ($S_{10}$).</b><br>
+                    $n=10, a=48.000.000, b=3.000.000$.<br>
+                    $S_{10} = \frac{10}{2} (2(48.000.000) + (10-1)3.000.000)$<br>
+                    $S_{10} = 5 (96.000.000 + 9 \times 3.000.000)$<br>
+                    $S_{10} = 5 (96.000.000 + 27.000.000) = 5 (123.000.000) = 615.000.000$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 11 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $4\sqrt{2}$ cm</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini mencari jarak titik ke garis dalam ruang (dimensi tiga). Strateginya adalah membuat segitiga bantu, lalu mencari tinggi segitiga tersebut yang merupakan jarak yang dicari.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Buat segitiga APG.</b><br>
+                    Kita akan mencari jarak dari P ke garis AG. Kita hitung panjang semua sisi segitiga APG.<br>
+                    <b>Langkah 2: Hitung panjang sisi-sisi.</b><br>
+                    - $AG$ = diagonal ruang kubus = $s\sqrt{3} = 8\sqrt{3}$ cm.<br>
+                    - $AP$: lihat $\triangle AEP$ (siku-siku di E). $AE=8, EP = \frac{1}{2}EH = 4$. $AP = \sqrt{8^2+4^2} = \sqrt{64+16}=\sqrt{80}=4\sqrt{5}$ cm.<br>
+                    - $PG$: lihat $\triangle PGH$ (siku-siku di H). $PH=4, HG=8$. $PG = \sqrt{4^2+8^2} = \sqrt{16+64}=\sqrt{80}=4\sqrt{5}$ cm.<br>
+                    <b>Langkah 3: Hitung jarak P ke AG.</b><br>
+                    Karena $AP=PG$, $\triangle APG$ adalah segitiga sama kaki. Jarak dari P ke AG adalah garis tinggi dari P ke alas AG. Misal titik proyeksinya adalah Q, maka Q adalah titik tengah AG.<br>
+                    $AQ = \frac{1}{2}AG = \frac{1}{2}(8\sqrt{3}) = 4\sqrt{3}$ cm.<br>
+                    Perhatikan $\triangle AQP$ (siku-siku di Q). Jarak $PQ = \sqrt{AP^2 - AQ^2} = \sqrt{(4\sqrt{5})^2 - (4\sqrt{3})^2} = \sqrt{80-48} = \sqrt{32} = 4\sqrt{2}$ cm.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 12 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Sesuai, Sesuai, Tidak Sesuai, Sesuai.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Konsep kesebangunan segitiga menyatakan bahwa perbandingan sisi-sisi yang bersesuaian adalah sama.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>(1) Panjang sisi AC</b>: Gunakan Pythagoras pada $\triangle ABC$. $AC = \sqrt{AB^2+BC^2} = \sqrt{6^2+8^2} = \sqrt{36+64}=\sqrt{100}=10$ cm. <b>(Sesuai)</b><br>
+                    <b>(2) Panjang sisi QR</b>: Karena sebangun, $\frac{AB}{PQ} = \frac{BC}{QR} \implies \frac{6}{9} = \frac{8}{QR} \implies \frac{2}{3}=\frac{8}{QR} \implies 2 \cdot QR = 24 \implies QR = 12$ cm. <b>(Sesuai)</b><br>
+                    <b>(3) Luas segitiga PQR</b>: Luas = $\frac{1}{2} \times alas \times tinggi = \frac{1}{2} \times PQ \times QR = \frac{1}{2} \times 9 \times 12 = 54$ cm$^2$. Pernyataan mengatakan 108 cm$^2$. <b>(Tidak Sesuai)</b><br>
+                    <b>(4) Keliling segitiga ABC</b>: Keliling = $AB+BC+AC = 6+8+10 = 24$ cm. <b>(Sesuai)</b></p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 13 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $(-3, -5)$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Rumus transformasi geometri:<br>
+                    - Pencerminan terhadap $y=-x$: $(x,y) \rightarrow (-y, -x)$.<br>
+                    - Rotasi $90^\circ$ berlawanan arah jarum jam pusat O: $(x,y) \rightarrow (-y, x)$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Pencerminan.</b><br>
+                    Titik awal $P(-3, 5)$. Dicerminkan terhadap $y=-x$.<br>
+                    $P'(-5, -(-3)) = P'(-5, 3)$.<br>
+                    <b>Langkah 2: Rotasi.</b><br>
+                    Titik $P'(-5, 3)$ dirotasi $90^\circ$ berlawanan arah jarum jam.<br>
+                    $P''(-3, -5)$.<br>
+                    Koordinat bayangan akhir adalah $(-3, -5)$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 14 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $10\sqrt{13}$ km</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini membentuk sebuah segitiga sembarang dan diselesaikan dengan <b>Aturan Cosinus</b>: $c^2 = a^2+b^2 - 2ab \cos C$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Tentukan unsur segitiga ABC.</b><br>
+                    - Sisi $AB = 40$ km.<br>
+                    - Sisi $BC = 30$ km.<br>
+                    - "Arah baru membentuk sudut $120^\circ$ dengan arah semula" berarti sudut beloknya $120^\circ$. Sudut $\angle ABC$ di dalam segitiga adalah $180^\circ - 120^\circ = 60^\circ$.<br>
+                    <b>Langkah 2: Gunakan Aturan Cosinus untuk mencari AC.</b><br>
+                    $AC^2 = AB^2 + BC^2 - 2(AB)(BC)\cos(60^\circ)$<br>
+                    $AC^2 = 40^2 + 30^2 - 2(40)(30)(\frac{1}{2})$<br>
+                    $AC^2 = 1600 + 900 - 1200$<br>
+                    $AC^2 = 2500 - 1200 = 1300$<br>
+                    $AC = \sqrt{1300} = \sqrt{100 \times 13} = 10\sqrt{13}$ km.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 15 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $\frac{p+1}{\sqrt{p^2+1}}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Menggunakan sudut berelasi dan definisi trigonometri pada segitiga siku-siku. Di Kuadran III, tan positif, sin dan cos negatif.
+                    Relasi: $\sin(180^\circ+\alpha)=-\sin\alpha$, $\cos(180^\circ-\alpha)=-\cos\alpha$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Buat segitiga bantu.</b><br>
+                    $\tan\alpha=p=\frac{p}{1}$. Sisi depan=$p$, sisi samping=1. Sisi miring $m=\sqrt{p^2+1^2}=\sqrt{p^2+1}$.<br>
+                    <b>Langkah 2: Tentukan nilai $\sin\alpha$ dan $\cos\alpha$ di Kuadran III.</b><br>
+                    $\sin\alpha = -\frac{depan}{miring} = -\frac{p}{\sqrt{p^2+1}}$<br>
+                    $\cos\alpha = -\frac{samping}{miring} = -\frac{1}{\sqrt{p^2+1}}$<br>
+                    <b>Langkah 3: Sederhanakan ekspresi.</b><br>
+                    $\sin(180^\circ+\alpha) = -\sin\alpha$<br>
+                    $\cos(180^\circ-\alpha) = -\cos\alpha$<br>
+                    Maka, $\sin(180^\circ+\alpha)+\cos(180^\circ-\alpha) = -\sin\alpha - \cos\alpha$.<br>
+                    $= -(-\frac{p}{\sqrt{p^2+1}}) - (-\frac{1}{\sqrt{p^2+1}})$<br>
+                    $= \frac{p}{\sqrt{p^2+1}} + \frac{1}{\sqrt{p^2+1}} = \frac{p+1}{\sqrt{p^2+1}}$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 16 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. 95</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Rata-rata = (Jumlah semua nilai) / (Banyaknya data). Maka, Jumlah semua nilai = Rata-rata $\times$ Banyaknya data.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Hitung jumlah nilai awal.</b><br>
+                    Jumlah nilai 39 siswa = $39 \times 75 = 2925$.<br>
+                    <b>Langkah 2: Hitung jumlah nilai setelah Budi bergabung.</b><br>
+                    Jumlah siswa menjadi 40, rata-rata menjadi 75,5.<br>
+                    Jumlah nilai 40 siswa = $40 \times 75,5 = 3020$.<br>
+                    <b>Langkah 3: Cari nilai Budi.</b><br>
+                    Nilai Budi = (Jumlah nilai 40 siswa) - (Jumlah nilai 39 siswa) = $3020 - 2925 = 95$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 17 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Pernyataan 1, 2, 4, dan 5 benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Analisis data kelompok: Kuartil Bawah ($Q_1$), Median ($Q_2$), Modus, Jangkauan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>(5) Total frekuensi</b> $N=4+6+10+12+8=40$. <b>(Benar)</b><br>
+                    <b>(1) Kuartil bawah ($Q_1$)</b>: Letak di data ke $\frac{1}{4}N = \frac{40}{4}=10$. Fk: 4, 10. Data ke-10 adalah data terakhir di kelas 51-60. Jadi kelas $Q_1$ adalah 51-60. <b>(Benar)</b><br>
+                    <b>(2) Modus</b>: Kelas dengan frekuensi tertinggi adalah 71-80 (f=12). Maka nilai modus pasti berada di antara 70.5 dan 80.5, sehingga lebih besar dari 70. <b>(Benar)</b><br>
+                    <b>(3) Median ($Q_2$)</b>: Letak di data ke $\frac{1}{2}N = 20$. Fk: 4, 10, 20. Data ke-20 adalah data terakhir di kelas 61-70. Kelas Median: 61-70. $Me = T_b + (\frac{\frac{1}{2}N - Fk_{sblm}}{f_{me}})p = 60.5 + (\frac{20-10}{10})10 = 60.5+10=70.5$. Pernyataan mengatakan 69,5. <b>(Salah)</b><br>
+                    <b>(4) Jangkauan</b>: Nilai data terbesar - nilai data terkecil. Dapat diperkirakan dari $90-41=49$. <b>(Benar)</b></p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 18 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Rata-rata gabungan: $\bar{x}_{gab} = \frac{n_1\bar{x}_1 + n_2\bar{x}_2}{n_1+n_2}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Misal banyak guru=$g$, banyak dosen=$d$. Rata-rata usia guru=$\bar{x}_g$, rata-rata usia dosen=$\bar{x}_d$.
+                    Diketahui $\bar{x}_{gab}=40$. Kita ingin mencari perbandingan $g:d$.<br>
+                    <b>Pernyataan (1) SAJA:</b> $\bar{x}_g=35$. Persamaan menjadi $\frac{g(35)+d(\bar{x}_d)}{g+d}=40$. Kita masih memiliki dua variabel yang tidak diketahui ($d$ dan $\bar{x}_d$ relatif terhadap $g$), sehingga tidak cukup.<br>
+                    <b>Pernyataan (2) SAJA:</b> $\bar{x}_d=50$. Persamaan menjadi $\frac{g(\bar{x}_g)+d(50)}{g+d}=40$. Kita masih memiliki dua variabel yang tidak diketahui ($g$ dan $\bar{x}_g$ relatif terhadap $d$), sehingga tidak cukup.<br>
+                    <b>Pernyataan (1) dan (2) BERSAMA-SAMA:</b> $\bar{x}_g=35$ dan $\bar{x}_d=50$.<br>
+                    $\frac{g(35)+d(50)}{g+d}=40 \implies 35g+50d = 40(g+d) \implies 35g+50d = 40g+40d \implies 10d=5g \implies \frac{g}{d}=\frac{10}{5}=\frac{2}{1}$. Perbandingan dapat ditemukan. Cukup.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 19 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. 215</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Menggunakan kombinasi, $C(n,k) = \frac{n!}{k!(n-k)!}$, karena urutan pemilihan tidak penting. "Paling sedikit 2 wanita" berarti bisa 2 wanita, 3 wanita, atau 4 wanita.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Total: 6 Pria (P) dan 5 Wanita (W). Pilih 4 orang.<br>
+                    <b>Kasus 1: 2 Wanita dan 2 Pria</b><br>
+                    Banyak cara = $C(5,2) \times C(6,2) = \frac{5 \times 4}{2 \times 1} \times \frac{6 \times 5}{2 \times 1} = 10 \times 15 = 150$.<br>
+                    <b>Kasus 2: 3 Wanita dan 1 Pria</b><br>
+                    Banyak cara = $C(5,3) \times C(6,1) = 10 \times 6 = 60$.<br>
+                    <b>Kasus 3: 4 Wanita dan 0 Pria</b><br>
+                    Banyak cara = $C(5,4) \times C(6,0) = 5 \times 1 = 5$.<br>
+                    <b>Total Cara</b> = Jumlah semua kasus = $150 + 60 + 5 = 215$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 20 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $\frac{5}{9}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Peluang gabungan dua kejadian yang tidak saling lepas (bisa terjadi bersamaan) dihitung dengan rumus: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Ruang sampel pelemparan dua dadu adalah $n(S) = 6 \times 6 = 36$.<br>
+                    <b>Kejadian A: Dadu merah bernilai genap.</b><br>
+                    Angka merah genap {2, 4, 6}. Angka biru bebas {1, 2, 3, 4, 5, 6}.
+                    Banyaknya kejadian A adalah $n(A) = 3 \times 6 = 18$. Maka $P(A)=\frac{18}{36}$.<br>
+                    <b>Kejadian B: Jumlah mata kedua dadu sama dengan 8.</b><br>
+                    Pasangan yang mungkin: {(2,6), (3,5), (4,4), (5,3), (6,2)}.
+                    Banyaknya kejadian B adalah $n(B)=5$. Maka $P(B)=\frac{5}{36}$.<br>
+                    <b>Kejadian $A \cap B$: Irisan (dadu merah genap DAN jumlah 8).</b><br>
+                    Dari pasangan kejadian B, kita pilih yang mata dadu merahnya (angka pertama) genap: {(2,6), (4,4), (6,2)}.
+                    Banyaknya kejadian irisan adalah $n(A \cap B) = 3$. Maka $P(A \cap B) = \frac{3}{36}$.<br>
+                    <b>Peluang Gabungan (A atau B)</b><br>
+                    $P(A \cup B) = P(A)+P(B)-P(A \cap B) = \frac{18}{36}+\frac{5}{36}-\frac{3}{36} = \frac{20}{36} = \frac{5}{9}$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Mau belajar untuk persiapan TKA? Hubungi Math Specialist 081381374712</span></footer>
+    </section>
+
+</body>
+</html>
+
