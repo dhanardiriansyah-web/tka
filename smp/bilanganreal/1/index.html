@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal TKA SMP - Bilangan Real</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        /* Warna diubah menjadi biru yang ramah siswa */
+        --header-top-bg: #4A90E2; /* Biru */
+        --header-title-color: #4A90E2; /* Biru */
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .cover-page {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .cover-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28pt;
+        font-weight: 900;
+        color: var(--header-title-color);
+        line-height: 1.3;
+        margin: 20px 0;
+      }
+      .cover-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16pt;
+        color: var(--secondary-text);
+        font-weight: 700;
+      }
+      .cover-logo {
+        max-width: 200px;
+        margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 10px 2.5cm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        line-height: 1.2;
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white; /* Diubah agar kontras dengan background biru */
+      }
+        .header-logo {
+        max-height: 45px;
+      }
+      .content-wrapper {
+        width: 100%;
+        flex-grow: 1;
+      }
+      .manual-flex-layout {
+        display: flex;
+        gap: 15mm;
+        align-items: flex-start;
+      }
+      .manual-flex-layout .kolom {
+        flex: 1;
+        width: 50%;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        margin-bottom: 20px;
+        break-inside: avoid;
+        text-align: justify;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 18px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        text-indent: -20px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .soal-kategori {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        margin-top: 10px;
+        font-size: 9pt;
+      }
+      .soal-kategori th, .soal-kategori td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+      }
+      .soal-kategori th { background-color: #f2f2f2; }
+      .soal-kategori th:not(:first-child) { text-align: center; width: 80px; }
+      .soal-kategori td:not(:first-child) { text-align: center; }
+        .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 9pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th { background-color: #f2f2f2; }
+      .wacana-box, .soal-gambar-deskripsi {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ccc;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color); /* Disesuaikan dengan warna baru */
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .footer-logo {
+         max-height: 30px;
+      }
+      .pembahasan-wrapper {
+        text-align: justify;
+        border: 1px solid #eee;
+        padding: 20px;
+        background-color: #fafafa;
+        border-radius: 5px;
+      }
+      .pembahasan-title {
+        font-weight: bold;
+        font-size: 11pt;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        border-left: 4px solid var(--header-title-color);
+        padding-left: 10px;
+      }
+      .pembahasan-wrapper .jawaban-box {
+        background-color: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      @media print {
+        @page { size: A4; margin: 0; }
+        body { background-color: white; margin: 0; }
+        .page { width: 100%; min-height: 29.7cm; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        .page-header { display: block; margin: -1.8cm -2.5cm 20px -2.5cm; position: relative; }
+        .header-top-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">BANK SOAL<br>TKA SMP</h1>
+        <p class="cover-subtitle">Topik: Bilangan Real</p>
+    </section>
+
+    <!-- HALAMAN 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Bilangan Real</strong> (Level Pengetahuan & Pemahaman)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Manakah di antara bilangan berikut yang merupakan bilangan irasional?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\sqrt{25}$</li>
+                                <li data-option="B">$\frac{22}{7}$</li>
+                                <li data-option="C">$0,333...$</li>
+                                <li data-option="D">$\sqrt{8}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Faktorisasi prima dari 420 adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$2 \times 3 \times 5 \times 7$</li>
+                                <li data-option="B">$2^2 \times 3 \times 5 \times 7$</li>
+                                <li data-option="C">$2 \times 3^2 \times 5 \times 7$</li>
+                                <li data-option="D">$2^2 \times 3 \times 5^2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Hasil dari $(-15) + (-12) \times 3 : (-4)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-24$</li>
+                                <li data-option="B">$-6$</li>
+                                <li data-option="C">$20,25$</li>
+                                <li data-option="D">$24$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Bentuk notasi ilmiah dari bilangan 0,0000508 adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$5,08 \times 10^{-5}$</li>
+                                <li data-option="B">$5,08 \times 10^{-6}$</li>
+                                <li data-option="C">$50,8 \times 10^{-6}$</li>
+                                <li data-option="D">$5,08 \times 10^5$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Bank Soal TKA SMP - Bilangan Real (Halaman 1)</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Bilangan Real</strong> (Level Pengetahuan & Aplikasi)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Manakah pernyataan perbandingan di bawah ini yang bernilai benar? <b>(jawaban benar lebih dari satu)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$\frac{3}{5} > 0,65$</span></div>
+                                <div><input type="checkbox"/><span>$0,125 = \frac{1}{8}$</span></div>
+                                <div><input type="checkbox"/><span>$\sqrt{2} > 1,41$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{2}{3} < 0,67$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Hasil dari $3\frac{1}{4} - 2\frac{1}{2} + 1\frac{3}{5}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$2\frac{7}{20}$</li>
+                                <li data-option="B">$2\frac{3}{20}$</li>
+                                <li data-option="C">$1\frac{7}{20}$</li>
+                                <li data-option="D">$1\frac{3}{20}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Hasil dari $3\sqrt{12} + \sqrt{75} - 2\sqrt{27}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$5\sqrt{3}$</li>
+                                <li data-option="B">$6\sqrt{3}$</li>
+                                <li data-option="C">$17\sqrt{3}$</li>
+                                <li data-option="D">$2\sqrt{3}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Estimasi terdekat dari nilai $\sqrt{50}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">5,1</li>
+                                <li data-option="B">6,8</li>
+                                <li data-option="C">7,1</li>
+                                <li data-option="D">7,9</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Bank Soal TKA SMP - Bilangan Real (Halaman 2)</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Bilangan Real</strong> (Level Aplikasi)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Rasio uang Ali dan Budi adalah 3:5. Jika jumlah uang mereka Rp 72.000,00, selisih uang mereka adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp 9.000,00</li>
+                                <li data-option="B">Rp 18.000,00</li>
+                                <li data-option="C">Rp 27.000,00</li>
+                                <li data-option="D">Rp 45.000,00</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Sebuah mobil memerlukan 6 liter bensin untuk menempuh jarak 72 km. Jika mobil tersebut akan menempuh jarak 108 km, bensin yang diperlukan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">7 liter</li>
+                                <li data-option="B">8 liter</li>
+                                <li data-option="C">9 liter</li>
+                                <li data-option="D">10 liter</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Suatu pekerjaan dapat diselesaikan oleh 12 orang dalam 15 hari. Jika pekerjaan itu ingin diselesaikan dalam 10 hari, tambahan pekerja yang dibutuhkan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">6 orang</li>
+                                <li data-option="B">8 orang</li>
+                                <li data-option="C">18 orang</li>
+                                <li data-option="D">30 orang</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Hasil dari $(2^3)^2 \times 2^{-4}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$2^2$</li>
+                                <li data-option="B">$2^1$</li>
+                                <li data-option="C">$2^{-1}$</li>
+                                <li data-option="D">$2^{10}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Bank Soal TKA SMP - Bilangan Real (Halaman 3)</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Bilangan Real</strong> (Level Aplikasi & Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Diberikan $a = -3$ dan $b = 2$. Tentukan Benar atau Salah untuk setiap pernyataan berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$a^2 > b^2$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{1}{a} > \frac{1}{b}$</td><td></td><td></td></tr>
+                                    <tr><td>$a \times b = b \times a$</td><td></td><td></td></tr>
+                                    <tr><td>$a - b = b - a$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Perbandingan kecepatan A dan B adalah 2:3. Keduanya berlari di lintasan yang sama. Ketika A telah menempuh jarak $\sqrt{288}$ km, jarak yang telah ditempuh B adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\sqrt{300}$ km</li>
+                                <li data-option="B">$\sqrt{450}$ km</li>
+                                <li data-option="C">$\sqrt{648}$ km</li>
+                                <li data-option="D">$\sqrt{128}$ km</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Sebuah bakteri membelah diri menjadi 2 setiap 10 menit. Jika pada pukul 08.00 terdapat $1,5 \times 10^3$ bakteri, estimasi jumlah bakteri pada pukul 09.00 adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$1,92 \times 10^5$</li>
+                                <li data-option="B">$9,6 \times 10^4$</li>
+                                <li data-option="C">$1,5 \times 10^5$</li>
+                                <li data-option="D">$4,8 \times 10^4$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Diberikan $a = \sqrt{2}$ dan $b = \sqrt{8}$. Manakah pernyataan berikut yang akan menghasilkan bilangan rasional? <b>(jawaban benar lebih dari satu)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$a + b$</span></div>
+                                <div><input type="checkbox"/><span>$b - a$</span></div>
+                                <div><input type="checkbox"/><span>$a \times b$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{b}{a}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Bank Soal TKA SMP - Bilangan Real (Halaman 4)</span>
+        </footer>
+    </section>
+    
+    <!-- HALAMAN 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Bilangan Real</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Tinjau situasi berikut dan tentukan apakah termasuk Perbandingan Senilai atau Perbandingan Berbalik Nilai.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Situasi</th><th>Senilai</th><th>Berbalik Nilai</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Jumlah bensin dan jarak tempuh.</td><td></td><td></td></tr>
+                                    <tr><td>Kecepatan rata-rata dan waktu tempuh untuk jarak tetap.</td><td></td><td></td></tr>
+                                    <tr><td>Jumlah pekerja dan waktu penyelesaian proyek.</td><td></td><td></td></tr>
+                                    <tr><td>Jumlah barang yang dibeli dan total harga.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            <div class="wacana-box">
+                                <b>Wacana:</b> Untuk membuat 60 kue, seorang koki memerlukan 1,5 kg terigu dan 0,9 kg gula. Rasio terigu dan gula selalu tetap.
+                            </div>
+                            Koki tersebut mendapat pesanan dalam jumlah besar. Karena kehabisan gula, ia hanya menggunakan 3,5 kg gula. Agar rasio bahan tetap, terigu yang harus ia gunakan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">5,83 kg</li>
+                                <li data-option="B">6,0 kg</li>
+                                <li data-option="C">6,25 kg</li>
+                                <li data-option="D">2,1 kg</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Nilai dari $\frac{8^{1/3} + 27^{2/3}}{5^2 - (16)^{1/2}}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{11}{21}$</li>
+                                <li data-option="B">$\frac{11}{29}$</li>
+                                <li data-option="C">$\frac{9}{21}$</li>
+                                <li data-option="D">$\frac{10}{21}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                             (Level: Penalaran) <br>
+                             <div class="wacana-box">
+                                <b>Wacana:</b> Skala sebuah peta adalah 1 : 2.500.000. Jarak kota A dan B di peta adalah 4,8 cm.
+                            </div>
+                            Andi berkendara dari kota A ke B dengan kecepatan rata-rata 80 km/jam. Jika ia berangkat pukul 07.00, ia akan tiba pukul...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">08.30</li>
+                                <li data-option="B">08.45</li>
+                                <li data-option="C">08.50</li>
+                                <li data-option="D">09.00</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Bank Soal TKA SMP - Bilangan Real (Halaman 5)</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Sampul Pembahasan -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">KUNCI JAWABAN<br>& PEMBAHASAN</h1>
+        <p class="cover-subtitle">BANK SOAL TKA SMP</p>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 1 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $\sqrt{8}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Bilangan rasional adalah bilangan yang dapat dinyatakan sebagai $\frac{p}{q}$, di mana $p$ dan $q$ adalah bilangan bulat dan $q \neq 0$. Bilangan irasional tidak dapat dinyatakan dalam bentuk tersebut (misalnya, bentuk akar yang tidak bulat atau desimal tak berulang dan tak berhenti).</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>A. $\sqrt{25} = 5 = \frac{5}{1}$ (Rasional)<br>
+                       B. $\frac{22}{7}$ (Sudah dalam bentuk $\frac{p}{q}$, Rasional)<br>
+                       C. $0,333... = \frac{1}{3}$ (Rasional)<br>
+                       D. $\sqrt{8} = 2\sqrt{2}$. Karena $\sqrt{2}$ adalah irasional, maka $2\sqrt{2}$ juga irasional. Nilainya $2,8284...$ (desimal tak berhenti dan tak berulang).
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $2^2 \times 3 \times 5 \times 7$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Faktorisasi prima adalah menguraikan sebuah bilangan menjadi perkalian bilangan-bilangan prima.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita dapat menggunakan pohon faktor:<br>
+                       $420 = 10 \times 42$<br>
+                       $420 = (2 \times 5) \times (6 \times 7)$<br>
+                       $420 = (2 \times 5) \times (2 \times 3 \times 7)$<br>
+                       Jika diurutkan: $420 = 2 \times 2 \times 3 \times 5 \times 7 = 2^2 \times 3 \times 5 \times 7$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 1)</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 2 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $-6$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Menggunakan aturan operasi hitung campuran (KaBaTaKu: Kali, Bagi, Tambah, Kurang). Perkalian dan pembagian didahulukan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>$(-15) + [(-12) \times 3 : (-4)]$<br>
+                       Dahulukan perkalian: $(-12) \times 3 = -36$.<br>
+                       Lanjutkan pembagian: $(-36) : (-4) = 9$.<br>
+                       Terakhir penjumlahan: $(-15) + 9 = -6$.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $5,08 \times 10^{-5}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Notasi ilmiah (bentuk baku) ditulis sebagai $a \times 10^n$, di mana $1 \le a < 10$ dan $n$ adalah bilangan bulat. Jika bilangan aslinya $< 1$ (desimal), maka $n$ negatif.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Geser koma ke kanan hingga di belakang angka tak nol pertama (angka 5).<br>
+                       $0,0000508$<br>
+                       Koma bergeser 5 kali ke kanan. Maka $a=5,08$ dan $n=-5$.<br>
+                       Bentuknya menjadi $5,08 \times 10^{-5}$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 2)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 3 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (B), (C), dan (D).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Membandingkan nilai bilangan dalam bentuk pecahan, desimal, dan akar.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>A. $\frac{3}{5} = 0,6$. Pernyataan $0,6 > 0,65$ adalah <b>(Salah)</b>.<br>
+                       B. $\frac{1}{8} = 1 \div 8 = 0,125$. Pernyataan $0,125 = 0,125$ adalah <b>(Benar)</b>.<br>
+                       C. $\sqrt{2} \approx 1,4142...$. Pernyataan $1,4142... > 1,41$ adalah <b>(Benar)</b>.<br>
+                       D. $\frac{2}{3} = 0,666...$. Pernyataan $0,666... < 0,67$ adalah <b>(Benar)</b>.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $2\frac{7}{20}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Operasi penjumlahan dan pengurangan pecahan campuran. Samakan penyebut (KPK) terlebih dahulu.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>KPK dari 4, 2, dan 5 adalah 20.<br>
+                       $3\frac{1}{4} = 3\frac{5}{20}$<br>
+                       $2\frac{1}{2} = 2\frac{10}{20}$<br>
+                       $1\frac{3}{5} = 1\frac{12}{20}$<br>
+                       Hasil = $(3 - 2 + 1) + (\frac{5 - 10 + 12}{20})$<br>
+                       Hasil = $2 + \frac{7}{20} = 2\frac{7}{20}$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 3)</span></footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 4 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $5\sqrt{3}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Operasi bentuk akar. Sederhanakan akar ke bentuk $m\sqrt{c}$ dan jumlahkan/kurangkan suku yang sejenis.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>$3\sqrt{12} = 3 \times \sqrt{4 \times 3} = 3 \times 2\sqrt{3} = 6\sqrt{3}$<br>
+                       $\sqrt{75} = \sqrt{25 \times 3} = 5\sqrt{3}$<br>
+                       $2\sqrt{27} = 2 \times \sqrt{9 \times 3} = 2 \times 3\sqrt{3} = 6\sqrt{3}$<br>
+                       Hasil = $6\sqrt{3} + 5\sqrt{3} - 6\sqrt{3} = 5\sqrt{3}$.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. 7,1</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Estimasi nilai akar kuadrat dengan mencari bilangan kuadrat terdekat.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita tahu $\sqrt{49} = 7$ dan $\sqrt{64} = 8$.<br>
+                       Nilai 50 sangat dekat dengan 49 (hanya selisih 1) dan jauh dari 64. Maka, nilai $\sqrt{50}$ pasti sedikit lebih besar dari 7. Di antara pilihan, 7,1 adalah estimasi yang paling masuk akal.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 4)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 5 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. Rp 18.000,00</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Konsep rasio (perbandingan). Jika rasio $A:B = m:n$, maka $A = \frac{m}{m+n} \times \text{Total}$ dan Selisih = $\frac{|m-n|}{m+n} \times \text{Total}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Rasio Ali : Budi = 3 : 5. Jumlah rasio = $3+5=8$. Selisih rasio = $5-3=2$.<br>
+                       Jumlah uang = Rp 72.000,00.<br>
+                       Selisih uang = $\frac{\text{Selisih Rasio}}{\text{Jumlah Rasio}} \times \text{Jumlah Uang}$<br>
+                       Selisih uang = $\frac{2}{8} \times 72.000 = \frac{1}{4} \times 72.000 = 18.000$.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. 9 liter</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Perbandingan senilai. Semakin jauh jarak, semakin banyak bensin yang dibutuhkan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Metode 1: Cari konsumsi per km.<br>
+                       $72 \text{ km} \div 6 \text{ liter} = 12 \text{ km/liter}$.<br>
+                       Bensin untuk 108 km = $108 \text{ km} \div 12 \text{ km/liter} = 9 \text{ liter}$.<br>
+                       Metode 2: Perbandingan senilai.<br>
+                       $\frac{B_1}{J_1} = \frac{B_2}{J_2} \implies \frac{6}{72} = \frac{B_2}{108}$<br>
+                       $B_2 = \frac{6 \times 108}{72} = \frac{648}{72} = 9 \text{ liter}$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 5)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 6 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. 6 orang</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Perbandingan berbalik nilai. Semakin cepat waktu (hari berkurang), semakin banyak pekerja yang dibutuhkan. $P_1 \times H_1 = P_2 \times H_2$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>$P_1 = 12$ orang, $H_1 = 15$ hari.<br>
+                       $P_2 = ?$ orang, $H_2 = 10$ hari.<br>
+                       $12 \times 15 = P_2 \times 10$<br>
+                       $180 = 10 \times P_2 \implies P_2 = 18$ orang.<br>
+                       Jumlah total pekerja yang dibutuhkan adalah 18 orang.
+                       Tambahan pekerja = $P_2 - P_1 = 18 - 12 = 6$ orang.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $2^2$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Sifat-sifat bilangan berpangkat (eksponen):<br>
+                       1. $(a^m)^n = a^{m \times n}$<br>
+                       2. $a^m \times a^n = a^{m+n}$</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>$(2^3)^2 \times 2^{-4} = 2^{3 \times 2} \times 2^{-4}$<br>
+                       $= 2^6 \times 2^{-4}$<br>
+                       $= 2^{6 + (-4)} = 2^{6-4} = 2^2$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 6)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 7 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Salah, Benar, Salah.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Sifat-sifat operasi bilangan bulat, termasuk perbandingan, sifat komutatif.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>1. $a^2 > b^2 \implies (-3)^2 > 2^2 \implies 9 > 4$. <b>(Benar)</b><br>
+                       2. $\frac{1}{a} > \frac{1}{b} \implies \frac{1}{-3} > \frac{1}{2} \implies -\frac{1}{3} > \frac{1}{2}$. Bilangan negatif tidak mungkin lebih besar dari positif. <b>(Salah)</b><br>
+                       3. $a \times b = b \times a \implies (-3) \times 2 = 2 \times (-3) \implies -6 = -6$. Ini adalah sifat komutatif perkalian. <b>(Benar)</b><br>
+                       4. $a - b = b - a \implies (-3) - 2 = 2 - (-3) \implies -5 = 5$. <b>(Salah)</b>
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $\sqrt{648}$ km</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Perbandingan senilai pada kecepatan dan jarak (jika waktu sama). Jarak $A$ : Jarak $B$ = Kecepatan $A$ : Kecepatan $B$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Jarak A = $\sqrt{288} = \sqrt{144 \times 2} = 12\sqrt{2}$ km.<br>
+                       Rasio Jarak $A$ : Jarak $B$ = 2 : 3.<br>
+                       $\frac{\text{Jarak A}}{\text{Jarak B}} = \frac{2}{3} \implies \frac{12\sqrt{2}}{\text{Jarak B}} = \frac{2}{3}$<br>
+                       $2 \times \text{Jarak B} = 3 \times 12\sqrt{2}$<br>
+                       $2 \times \text{Jarak B} = 36\sqrt{2}$<br>
+                       Jarak B = $18\sqrt{2}$ km.<br>
+                       Untuk mengubah ke bentuk $\sqrt{x}$: $18\sqrt{2} = \sqrt{18^2 \times 2} = \sqrt{324 \times 2} = \sqrt{648}$ km.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 7)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 8 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $9,6 \times 10^4$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Pertumbuhan eksponensial dengan rumus $J_n = J_0 \times r^n$, di mana $J_n$ jumlah akhir, $J_0$ jumlah awal, $r$ rasio (2), dan $n$ jumlah periode pembelahan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Waktu total = 08.00 s.d. 09.00 = 1 jam = 60 menit.<br>
+                       Periode pembelahan = 10 menit.<br>
+                       Jumlah pembelahan ($n$) = $60 \div 10 = 6$ kali.<br>
+                       Jumlah awal ($J_0$) = $1,5 \times 10^3$.<br>
+                       Jumlah akhir = $J_0 \times 2^n = (1,5 \times 10^3) \times 2^6$<br>
+                       $= (1,5 \times 10^3) \times 64$<br>
+                       $= (1,5 \times 64) \times 10^3 = 96 \times 10^3$<br>
+                       Ubah ke notasi ilmiah: $9,6 \times 10^1 \times 10^3 = 9,6 \times 10^4$.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (C) dan (D).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Bilangan rasional adalah hasil operasi yang tidak lagi mengandung bentuk akar yang tidak bisa disederhanakan.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Sederhanakan dulu: $a=\sqrt{2}$ dan $b=\sqrt{8}=2\sqrt{2}$.<br>
+                       A. $a+b = \sqrt{2} + 2\sqrt{2} = 3\sqrt{2}$ (Irasional)<br>
+                       B. $b-a = 2\sqrt{2} - \sqrt{2} = \sqrt{2}$ (Irasional)<br>
+                       C. $a \times b = \sqrt{2} \times \sqrt{8} = \sqrt{16} = 4$ (Rasional)<br>
+                       D. $\frac{b}{a} = \frac{\sqrt{8}}{\sqrt{2}} = \sqrt{\frac{8}{2}} = \sqrt{4} = 2$ (Rasional)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 8)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 9 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Senilai, Berbalik Nilai, Berbalik Nilai, Senilai.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p><b>Perbandingan Senilai:</b> Jika satu variabel bertambah, variabel lain ikut bertambah (misal: barang & harga).<br>
+                       <b>Perbandingan Berbalik Nilai:</b> Jika satu variabel bertambah, variabel lain berkurang (misal: kecepatan & waktu).</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>1. Makin banyak bensin, makin jauh jarak. <b>(Senilai)</b><br>
+                       2. Makin cepat, makin singkat waktu. <b>(Berbalik Nilai)</b><br>
+                       3. Makin banyak pekerja, makin singkat waktu. <b>(Berbalik Nilai)</b><br>
+                       4. Makin banyak barang, makin mahal harga. <b>(Senilai)</b>
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. 5,83 kg</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah perbandingan senilai berdasarkan rasio bahan. Jumlah kue (250) adalah pengecoh, karena yang ditanyakan adalah penyesuaian bahan agar rasio tetap.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Rasio Terigu (T) : Gula (G) = $1,5 : 0,9$.<br>
+                       Sederhanakan rasio: $1,5 : 0,9 = 15 : 9 = 5 : 3$.<br>
+                       Rasio $\frac{T}{G} = \frac{5}{3}$.<br>
+                       Diketahui Gula yang dipakai (G) = 3,5 kg.<br>
+                       $\frac{T}{3,5} = \frac{5}{3}$<br>
+                       $3 \times T = 5 \times 3,5$<br>
+                       $3T = 17,5$<br>
+                       $T = \frac{17,5}{3} \approx 5,833...$ kg.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 9)</span></footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 10 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $\frac{11}{21}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Sifat pangkat pecahan: $a^{m/n} = (\sqrt[n]{a})^m$. Dan $a^{1/2} = \sqrt{a}$.</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Pembilang (atas):</b><br>
+                       $8^{1/3} = \sqrt[3]{8} = 2$<br>
+                       $27^{2/3} = (\sqrt[3]{27})^2 = (3)^2 = 9$<br>
+                       Jumlah = $2 + 9 = 11$.<br>
+                       <b>Penyebut (bawah):</b><br>
+                       $5^2 = 25$<br>
+                       $(16)^{1/2} = \sqrt{16} = 4$<br>
+                       Jumlah = $25 - 4 = 21$.<br>
+                       <b>Hasil:</b> $\frac{11}{21}$.
+                    </p>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. 08.30</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Kombinasi antara Skala Peta dan Kecepatan.<br>
+                       1. Jarak Sebenarnya (JS) = Jarak Peta (JP) $\times$ Skala<br>
+                       2. Waktu = Jarak $\div$ Kecepatan</p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Hitung Jarak Sebenarnya.</b><br>
+                       JS = $4,8 \text{ cm} \times 2.500.000 = 12.000.000$ cm.<br>
+                       <b>Langkah 2: Konversi ke km.</b><br>
+                       $1 \text{ km} = 100.000 \text{ cm}$.<br>
+                       JS = $12.000.000 \div 100.000 = 120$ km.<br>
+                       <b>Langkah 3: Hitung Waktu Tempuh.</b><br>
+                       Waktu = Jarak $\div$ Kecepatan = $120 \text{ km} \div 80 \text{ km/jam} = 1,5$ jam.<br>
+                       $1,5 \text{ jam} = 1$ jam 30 menit.<br>
+                       <b>Langkah 4: Hitung waktu tiba.</b><br>
+                       Tiba = Berangkat + Waktu Tempuh<br>
+                       Tiba = $07.00 + 01.30 = 08.30$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" /><span>Kunci Jawaban & Pembahasan (Halaman 10)</span></footer>
+    </section>
+
+</body>
+</html>
