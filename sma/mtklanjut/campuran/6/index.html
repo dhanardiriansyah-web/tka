@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal - TKA Matematika Lanjut</title>
+    
+    <!-- Konfigurasi MathJax -->
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            packages: {'[+]': ['pmatrix']} // Menambahkan paket pmatrix
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+    <!-- CSS Internal -->
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #64b6ac; /* Warna header dari contoh */
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #004d40;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* To contain pseudo-elements */
+      }
+       .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--header-title-color);
+        }
+        .cover-page .title {
+            font-size: 32pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--header-title-color);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .cover-page .subtitle {
+            font-size: 16pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+         .cover-page img {
+            max-width: 200px;
+            margin-bottom: 40px;
+        }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      /* Watermark */
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0; /* No watermark on cover page */
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #b0b0b0;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: justify;
+      }
+      .soal-gambar {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: flex-start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header {
+          display: block;
+          margin: -1.8cm -2.5cm 20px -2.5cm;
+          position: relative;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>TKA MATEMATIKA LANJUT</h1>
+            <p class="subtitle">Latihan Soal Berbasis Wacana UTBK-SNPMB</p>
+        </div>
+    </section>
+
+    <!-- Halaman 1: Wacana 1 (Soal 1 & 2) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 1: Desain Logo Digital</h3>
+            <div class="wacana-box">
+                <p>Sebuah perusahaan desain grafis sedang merancang logo baru. Logo awal berbentuk segitiga dengan titik-titik sudut $A(2, 1)$, $B(5, 1)$, dan $C(3, 4)$. Untuk mendapatkan variasi desain, desainer tersebut menerapkan dua transformasi matriks secara berurutan.</p>
+                <p>Transformasi pertama ($T_1$) adalah dilatasi (pembesaran) dengan pusat $(0,0)$ dan faktor skala 2, yang diwakili oleh matriks $M_1 = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$.</p>
+                <p>Transformasi kedua ($T_2$) adalah rotasi 90 derajat berlawanan arah jarum jam terhadap pusat $(0,0)$, yang diwakili oleh matriks $M_2 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$.</p>
+                <p>Komposisi transformasi $T = T_2 \circ T_1$ berarti $T_1$ diterapkan terlebih dahulu, kemudian $T_2$.</p>
+            </div>
+                        
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">1.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Titik $A(2, 1)$ ditransformasikan oleh $T = T_2 \circ T_1$. Koordinat bayangan titik $A$, yaitu $A''$, adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$(4, 2)$</li>
+                            <li data-option="B">$(-2, 4)$</li>
+                            <li data-option="C">$(2, -4)$</li>
+                            <li data-option="D">$(-4, 2)$</li>
+                            <li data-option="E">$(4, -2)$</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">2.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Persamaan garis yang melalui titik $A(2, 1)$ dan $B(5, 1)$ adalah $y = 1$. Jika garis ini ditransformasikan oleh $T_1$ (dilatasi skala 2), persamaan bayangannya adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$y = 1$</li>
+                            <li data-option="B">$y = 2$</li>
+                            <li data-option="C">$y = 4$</li>
+                            <li data-option="D">$x = 2$</li>
+                            <li data-option="E">$x = 4$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 2: Lanjutan Wacana 1 (Soal 3 & 4) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 1</h3>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">3.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Luas segitiga $ABC$ adalah 4.5 satuan luas. Setelah ditransformasi oleh $T = T_2 \circ T_1$, luas segitiga $A''B''C''$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4.5 satuan luas</li>
+                            <li data-option="B">9 satuan luas</li>
+                            <li data-option="C">18 satuan luas</li>
+                            <li data-option="D">27 satuan luas</li>
+                            <li data-option="E">36 satuan luas</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">4.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Sebuah titik $P''(x'', y'')$ adalah hasil transformasi $T = T_2 \circ T_1$ dari titik $P(x, y)$. Untuk mengembalikan titik $P''$ ke posisi semula $P$, diperlukan matriks transformasi invers $(T^{-1})$. Matriks $(T_2 \circ T_1)^{-1}$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\begin{pmatrix} 0 & 1/2 \\ -1/2 & 0 \end{pmatrix}$</li>
+                            <li data-option="B">$\begin{pmatrix} 0 & -1/2 \\ 1/2 & 0 \end{pmatrix}$</li>
+                            <li data-option="C">$\begin{pmatrix} 1/2 & 0 \\ 0 & -1/2 \end{pmatrix}$</li>
+                            <li data-option="D">$\begin{pmatrix} 2 & -1 \\ 1 & 2 \end{pmatrix}$</li>
+                            <li data-option="E">$\begin{pmatrix} 0 & 2 \\ -2 & 0 \end{pmatrix}$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 3: Wacana 2 (Soal 5 & 6) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 2: Analisis Biaya Produksi</h3>
+            <div class="wacana-box">
+                <p>Sebuah pabrik menganalisis biaya produksi $C(x)$ dan pendapatan $R(x)$ (dalam juta rupiah) untuk memproduksi $x$ ribu unit barang.</p>
+                <p>Fungsi biaya total diidentifikasi sebagai polinomial orde 4:
+                $C(x) = x^4 - 3x^3 + 3x^2 + 10x - 8$</p>
+                <p>Fungsi pendapatan diidentifikasi sebagai polinomial orde 3:
+                $R(x) = x^3 + 5x^2 - 4x + 12$</p>
+                <p>Fungsi keuntungan $P(x)$ didapat dari $P(x) = R(x) - C(x)$. Perusahaan hanya akan untung jika $P(x) > 0$.</p>
+            </div>
+                        
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">5.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Fungsi keuntungan $P(x)$ perusahaan tersebut adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$P(x) = -x^4 + 4x^3 + 2x^2 - 14x + 20$</li>
+                            <li data-option="B">$P(x) = -x^4 - 2x^3 - 2x^2 - 6x - 20$</li>
+                            <li data-option="C">$P(x) = x^4 - 4x^3 - 2x^2 + 14x - 20$</li>
+                            <li data-option="D">$P(x) = x^4 - 2x^3 + 8x^2 + 6x + 4$</li>
+                            <li data-option="E">$P(x) = -x^4 + 4x^3 + 2x^2 + 14x + 20$</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">6.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Manajemen menemukan bahwa $(x-1)$ adalah salah satu faktor dari fungsi biaya $C(x)$. Ini berarti biaya akan nol (secara teoretis) jika memproduksi 1000 unit. Faktor linear lain dari $C(x)$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$(x+1)$</li>
+                            <li data-option="B">$(x-2)$</li>
+                            <li data-option="C">$(x+2)$</li>
+                            <li data-option="D">$(x-4)$</li>
+                            <li data-option="E">$(x+4)$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 4: Lanjutan Wacana 2 (Soal 7 & 8) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 2</h3>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">7.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Jika polinomial biaya $C(x)$ dibagi oleh $(x+1)$, sisa pembagian (yang mewakili biaya tetap yang tidak terduga) adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">-1</li>
+                            <li data-option="B">0</li>
+                            <li data-option="C">7</li>
+                            <li data-option="D">9</li>
+                            <li data-option="E">13</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">8.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Analisis Pernyataan</div>
+                        Seorang analis menggunakan fungsi lain untuk memodelkan lintasan $h(t)$ dalam meter, $t$ dalam detik. Model A (polinom): $h_A(t) = -t^2 + 8t$. Model B (eksponensial): $h_B(t) = 2^t$.
+                        <p>Berdasarkan kedua fungsi tersebut, tentukan apakah pernyataan berikut BENAR atau SALAH.</p>
+                        <table class="tabel-kuantitas">
+                          <tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr>
+                          <tr><td>1. Domain alami untuk $h_A(t)$ dan $h_B(t)$ (secara matematis) adalah semua bilangan real.</td><td></td><td></td></tr>
+                          <tr><td>2. Grafik $h_A(t)$ adalah parabola yang terbuka ke bawah.</td><td></td><td></td></tr>
+                          <tr><td>3. Grafik $h_B(t)$ memotong sumbu-y di $y=1$.</td><td></td><td></td></tr>
+                          <tr><td>4. $h_A(t)$ dan $h_B(t)$ berpotongan saat $t=2$.</td><td></td><td></td></tr>
+                        </table>
+                        <p style="font-size: 8pt; font-style: italic; text-align: left;">(Catatan: Pilihan jawaban untuk soal ini biasanya A (1, 2, 3 benar), B (1, 3 benar), C (2, 4 benar), D (4 saja benar), E (Semua benar) atau format centang Benar/Salah)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 5: Wacana 3 (Soal 9 & 10) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 3: Navigasi dan Jangkauan Sinyal</h3>
+            <div class="wacana-box">
+                <p>Sebuah drone (A) dan sebuah robot (B) bergerak di bidang Kartesius (2D). Posisi awal drone A adalah $\vec{a}_0 = (1, 2)$ dan posisi awal robot B adalah $\vec{b}_0 = (9, 8)$.</p>
+                <p>Drone A bergerak dengan vektor kecepatan konstan $\vec{v}_A = 2\vec{i} + 3\vec{j}$ per detik.
+                Robot B bergerak dengan vektor kecepatan konstan $\vec{v}_B = -\vec{i} + \vec{j}$ per detik.</p>
+                <p>Sebuah menara pemancar sinyal (P) terletak di titik $(5, 5)$. Pemancar ini memiliki jangkauan sinyal berbentuk lingkaran yang radiusnya $r=5$.</p>
+            </div>
+                        
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">9.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Posisi drone A setelah 2 detik ($t=2$) adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$(3, 5)$</li>
+                            <li data-option="B">$(4, 6)$</li>
+                            <li data-option="C">$(5, 8)$</li>
+                            <li data-option="D">$(5, 7)$</li>
+                            <li data-option="E">$(6, 8)$</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">10.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Vektor posisi yang menghubungkan drone A dengan robot B pada saat $t=0$ (vektor $\vec{A_0B_0}$) adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$8\vec{i} + 6\vec{j}$</li>
+                            <li data-option="B">$10\vec{i} + 10\vec{j}$</li>
+                            <li data-option="C">$-8\vec{i} - 6\vec{j}$</li>
+                            <li data-option="D">$6\vec{i} + 8\vec{j}$</li>
+                            <li data-option="E">$8\vec{i} - 6\vec{j}$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 6: Lanjutan Wacana 3 (Soal 11 & 12) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 3</h3>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">11.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Persamaan lingkaran yang merepresentasikan jangkauan sinyal menara P di $(5, 5)$ dengan radius 5 adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$x^2 + y^2 = 25$</li>
+                            <li data-option="B">$(x-5)^2 + (y-5)^2 = 5$</li>
+                            <li data-option="C">$(x+5)^2 + (y+5)^2 = 25$</li>
+                            <li data-option="D">$(x-5)^2 + (y-5)^2 = 25$</li>
+                            <li data-option="E">$x^2 + y^2 - 10x - 10y + 5 = 0$</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">12.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Robot B bergerak pada $t=0$ dari $(9, 8)$ dengan $\vec{v}_B = -\vec{i} + \vec{j}$. Persamaan garis lintasan robot B adalah $y = -x + 17$. Garis ini memotong lingkaran jangkauan sinyal di dua titik. Salah satu garis singgung lingkaran sinyal yang sejajar dengan lintasan robot B adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$y = -x + 10$</li>
+                            <li data-option="B">$y = -x + 5 + 5\sqrt{2}$</li>
+                            <li data-option="C">$y = x + 10$</li>
+                            <li data-option="D">$y = x + 5\sqrt{2}$</li>
+                            <li data-option="E">$y = -x + 15$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 7: Wacana 4 (Soal 13 & 14) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 4: Laju Reaksi Kimia</h3>
+            <div class="wacana-box">
+                <p>Dalam sebuah eksperimen, konsentrasi $C$ (dalam mol/L) dari suatu zat pada waktu $t$ (dalam detik) dipelajari.</p>
+                <p>Saat $t$ mendekati 2 detik, konsentrasi suatu zat mengikuti model fungsi $C(t) = \frac{2t^2 - 8}{t-2}$.</p>
+                <p>Di awal reaksi ($t$ mendekati 0), laju perubahan sudut $\theta$ (radian) dari alat pengukur terkait dengan waktu $t$ oleh fungsi $F(t) = \frac{\tan(3t)}{\sin(5t)}$.</p>
+            </div>
+                        
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">13.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Konsentrasi zat $C(t)$ saat $t$ mendekati 2 detik adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">0</li>
+                            <li data-option="B">2</li>
+                            <li data-option="C">4</li>
+                            <li data-option="D">8</li>
+                            <li data-option="E">Tak terdefinisi</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">14.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Nilai dari $\lim_{t \to 0} F(t) = \lim_{t \to 0} \frac{\tan(3t)}{\sin(5t)}$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1</li>
+                            <li data-option="B">0</li>
+                            <li data-option="C">3/5</li>
+                            <li data-option="D">5/3</li>
+                            <li data-option="E">Tak terdefinisi</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 8: Lanjutan Wacana 4 (Soal 15 & 16) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 4</h3>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">15.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Diberikan fungsi $C(t) = \frac{2t^2 - 8}{t-2}$. Domain (daerah asal) agar fungsi $C(t)$ terdefinisi adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\{ t \mid t \in \mathbb{R} \}$</li>
+                            <li data-option="B">$\{ t \mid t \in \mathbb{R}, t \neq 0 \}$</li>
+                            <li data-option="C">$\{ t \mid t \in \mathbb{R}, t \neq 2 \}$</li>
+                            <li data-option="D">$\{ t \mid t \in \mathbb{R}, t > 2 \}$</li>
+                            <li data-option="E">$\{ t \mid t \in \mathbb{R}, t \neq -2 \}$</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">16.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Grafik fungsi $y = C(t)$ (dari soal 15) adalah sebuah garis lurus yang memiliki diskontinuitas (lubang). Koordinat lubang tersebut adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$(2, 8)$</li>
+                            <li data-option="B">$(2, 4)$</li>
+                            <li data-option="C">$(-2, 0)$</li>
+                            <li data-option="D">$(2, 0)$</li>
+                            <li data-option="E">$(-2, 8)$</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 9: Wacana 5 (Soal 17 & 18) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 5: Sistem Persamaan Tiga Komoditas</h3>
+            <div class="wacana-box">
+                <p>Seorang analis pasar menggunakan sistem persamaan linear (SPL) untuk menentukan harga (dalam ribu rupiah) dari tiga komoditas: Kopi (x), Teh (y), dan Gula (z).</p>
+                <p>$x + 2y + z = 15$</p>
+                <p>$2x + y + z = 12$</p>
+                <p>$x + y + 2z = 17$</p>
+                <p>Sistem ini dapat ditulis dalam bentuk matriks $A \cdot X = B$, dimana $A = \begin{pmatrix} 1 & 2 & 1 \\ 2 & 1 & 1 \\ 1 & 1 & 2 \end{pmatrix}$, $X = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$, dan $B = \begin{pmatrix} 15 \\ 12 \\ 17 \end{pmatrix}$.</p>
+            </div>
+                        
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">17.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Determinan dari matriks koefisien $A$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">-4</li>
+                            <li data-option="B">-2</li>
+                            <li data-option="C">0</li>
+                            <li data-option="D">2</li>
+                            <li data-option="E">4</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">18.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Dengan menggunakan metode Aturan Cramer atau Invers Matriks, nilai $y$ (harga Teh) yang memenuhi sistem tersebut adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">2</li>
+                            <li data-option="B">3</li>
+                            <li data-option="C">4</li>
+                            <li data-option="D">5</li>
+                            <li data-option="E">6</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 10: Lanjutan Wacana 5 (Soal 19 & 20) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal TKA Matematika Lanjut</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan TKA Matematika Lanjut</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 5</h3>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">19.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa</div>
+                        Jika harga komoditas dimodelkan oleh sisa pembagian polinomial $P(x) = x^4 + ax^3 - 7x^2 + 5x + 10$. Jika $P(x)$ dibagi $(x-1)$ bersisa 5, dan jika $P(x)$ dibagi $(x+1)$ bersisa 1, maka nilai $a$ adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">-5</li>
+                            <li data-option="B">-4</li>
+                            <li data-option="C">-3</li>
+                            <li data-option="D">2</li>
+                            <li data-option="E">4</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">20.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks</div>
+                        Diketahui polinomial $Q(x) = x^3 - 4x^2 + x + 6$. Manakah dari berikut ini yang merupakan faktor dari $Q(x)$?
+                        <div class="pernyataan-list">
+                            <div class="pernyataan-item">
+                                <span class="pernyataan-nomor">(1)</span>
+                                <span class="pernyataan-teks">$(x - 2)$</span>
+                            </div>
+                            <div class="pernyataan-item">
+                                <span class="pernyataan-nomor">(2)</span>
+                                <span class="pernyataan-teks">$(x + 1)$</span>
+                            </div>
+                            <div class="pernyataan-item">
+                                <span class="pernyataan-nomor">(3)</span>
+                                <span class="pernyataan-teks">$(x - 3)$</span>
+                            </div>
+                            <div class="pernyataan-item">
+                                <span class="pernyataan-nomor">(4)</span>
+                                <span class="pernyataan-teks">$(x + 2)$</span>
+                            </div>
+                        </div>
+                        <br>
+                        Pilihan Jawaban:
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">(1), (2), dan (3)</li>
+                            <li data-option="B">(1) dan (3)</li>
+                            <li data-option="C">(2) dan (4)</li>
+                            <li data-option="D">(4) saja</li>
+                            <li data-option="E">Semua pilihan benar</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+</body>
+</html>
+
