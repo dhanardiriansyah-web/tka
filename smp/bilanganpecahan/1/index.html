@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal TKA SMP - Pecahan</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        /* Warna diubah menjadi biru yang ramah siswa */
+        --header-top-bg: #4A90E2; /* Biru */
+        --header-title-color: #4A90E2; /* Biru */
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .cover-page {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .cover-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28pt;
+        font-weight: 900;
+        color: var(--header-title-color);
+        line-height: 1.3;
+        margin: 20px 0;
+      }
+      .cover-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16pt;
+        color: var(--secondary-text);
+        font-weight: 700;
+      }
+      .cover-logo {
+        max-width: 200px;
+        margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 10px 2.5cm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        line-height: 1.2;
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white; /* Diubah agar kontras dengan background biru */
+      }
+      .header-logo {
+        max-height: 45px;
+      }
+      .content-wrapper {
+        width: 100%;
+        flex-grow: 1;
+      }
+      .manual-flex-layout {
+        display: flex;
+        gap: 15mm;
+        align-items: flex-start;
+      }
+      .manual-flex-layout .kolom {
+        flex: 1;
+        width: 50%;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        margin-bottom: 20px;
+        break-inside: avoid;
+        text-align: justify;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 18px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        text-indent: -20px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .soal-kategori {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        margin-top: 10px;
+        font-size: 9pt;
+      }
+      .soal-kategori th, .soal-kategori td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+      }
+      .soal-kategori th { background-color: #f2f2f2; }
+      .soal-kategori th:not(:first-child) { text-align: center; width: 80px; }
+      .soal-kategori td:not(:first-child) { text-align: center; }
+      .wacana-box, .soal-gambar-deskripsi {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ccc;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 9pt; /* Ukuran font footer diubah agar lebih terbaca */
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color); /* Disesuaikan dengan warna baru */
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Mengatur rata kiri */
+        gap: 15px;
+      }
+      .footer-logo {
+         max-height: 30px;
+      }
+      .pembahasan-wrapper {
+        text-align: justify;
+        border: 1px solid #eee;
+        padding: 20px;
+        background-color: #fafafa;
+        border-radius: 5px;
+        margin-bottom: 20px; /* Memberi jarak antar pembahasan */
+      }
+      .pembahasan-title {
+        font-weight: bold;
+        font-size: 11pt;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        border-left: 4px solid var(--header-title-color);
+        padding-left: 10px;
+      }
+      .pembahasan-wrapper .jawaban-box {
+        background-color: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      @media print {
+        @page { size: A4; margin: 0; }
+        body { background-color: white; margin: 0; }
+        .page { width: 100%; min-height: 29.7cm; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        .page-header { display: block; margin: -1.8cm -2.5cm 20px -2.5cm; position: relative; }
+        .header-top-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">BANK SOAL<br>TKA SMP</h1>
+        <p class="cover-subtitle">Topik: Pecahan</p>
+    </section>
+
+    <!-- HALAMAN 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Pengetahuan & Pemahaman)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <p><strong>TIPE 1: Pilihan Ganda Biasa</strong><br>Pilihlah satu jawaban yang paling tepat.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Hasil dari $\frac{\frac{5}{6}+\frac{1}{3}}{\frac{5}{6}-\frac{1}{3}}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$1\frac{5}{6}$</li>
+                                <li data-option="B">$1\frac{3}{4}$</li>
+                                <li data-option="C">$2\frac{1}{3}$</li>
+                                <li data-option="D">$2\frac{5}{9}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Hasil dari $2\frac{2}{3}:1\frac{2}{3}-4\frac{1}{5}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-3\frac{1}{4}$</li>
+                                <li data-option="B">$-2\frac{3}{5}$</li>
+                                <li data-option="C">$5\frac{4}{5}$</li>
+                                <li data-option="D">$8\frac{11}{45}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Hasil dari $4\frac{2}{3}:1\frac{1}{6}-2\frac{1}{3}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$1\frac{1}{3}$</li>
+                                <li data-option="B">$1\frac{2}{3}$</li>
+                                <li data-option="C">$2\frac{1}{3}$</li>
+                                <li data-option="D">$2\frac{2}{3}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Hasil dari $\frac{\frac{2}{3}+\frac{4}{5}}{\frac{2}{3}-\frac{4}{5}}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$11$</li>
+                                <li data-option="B">$1$</li>
+                                <li data-option="C">$-1$</li>
+                                <li data-option="D">$-11$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Aplikasi)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 1: Pilihan Ganda Biasa</strong><br>Pilihlah satu jawaban yang paling tepat.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Pada kegiatan sosial menerima sumbangan terigu beratnya $21\frac{3}{4}$ kg dan $23\frac{1}{4}$ kg untuk dibagikan pada warga. Jika setiap warga menerima $2\frac{1}{2}$ kg, banyak warga yang menerima sumbangan terigu tersebut adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$21$ orang</li>
+                                <li data-option="B">$20$ orang</li>
+                                <li data-option="C">$18$ orang</li>
+                                <li data-option="D">$15$ orang</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Anita memiliki pita sepanjang $15\frac{1}{2}$ m, kemudian ia membeli lagi pita sepanjang $2\frac{2}{3}$ m. Anita menggunakan pita miliknya sepanjang $9\frac{1}{4}$ m untuk membuat bunga. Panjang pita Anita yang tersisa adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$8\frac{5}{12}$ m</li>
+                                <li data-option="B">$8\frac{7}{12}$ m</li>
+                                <li data-option="C">$8\frac{9}{12}$ m</li>
+                                <li data-option="D">$8\frac{11}{12}$ m</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Ibu membeli $40$ kg gula pasir. Gula itu akan dijual eceran dengan dibungkus plastik masing-masing beratnya $\frac{1}{4}$ kg. Banyak kantong plastik berisi gula yang diperlukan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$10$ kantong</li>
+                                <li data-option="B">$80$ kantong</li>
+                                <li data-option="C">$120$ kantong</li>
+                                <li data-option="D">$160$ kantong</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Ina membagikan $12$ kg kopi kepada beberapa orang. Jika tiap orang mendapat $\frac{1}{4}$ kg kopi, maka banyak orang yang menerima kopi adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$3$ orang</li>
+                                <li data-option="B">$16$ orang</li>
+                                <li data-option="C">$24$ orang</li>
+                                <li data-option="D">$48$ orang</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Aplikasi)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 1: Pilihan Ganda Biasa</strong><br>Pilihlah satu jawaban yang paling tepat.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Pak Anton memiliki lahan seluas $1\frac{1}{4}$ hektar, kemudian ia membeli tanah lagi seluas $4\frac{1}{6}$ hektar. Lahan tersebut akan dibagi untuk ditanam berbagai tanaman. Jika luas masing-masing lahan tanaman $1\frac{1}{12}$ hektar, maka banyak jenis tanaman yang dapat ditanam adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$3$ jenis</li>
+                                <li data-option="B">$4$ jenis</li>
+                                <li data-option="C">$5$ jenis</li>
+                                <li data-option="D">$6$ jenis</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Hasil dari $\frac{1}{4} \times 0,25 + \frac{1}{2} \div 50\%$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$2$</li>
+                                <li data-option="B">$1\frac{1}{2}$</li>
+                                <li data-option="C">$1\frac{1}{4}$</li>
+                                <li data-option="D">$1\frac{1}{16}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                             Harga setengah kilogram cabe rawit pada hari ini adalah $\text{Rp}35.000,00$. Jika hari ini Ibu membeli cabe rawit seberat $2\frac{1}{4}$ kilogram, total harga yang harus dibayar Ibu adalah....
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\text{Rp}175.000,00$</li>
+                                <li data-option="B">$\text{Rp}157.500,00$</li>
+                                <li data-option="C">$\text{Rp}140.000,00$</li>
+                                <li data-option="D">$\text{Rp}87.500,00$</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Jika kebalikan dari $\frac{3}{10}$ adalah $(\frac{1}{x}+1)$. Maka nilai dari $x$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{7}{3}$</li>
+                                <li data-option="B">$\frac{3}{13}$</li>
+                                <li data-option="C">$\frac{3}{7}$</li>
+                                <li data-option="D">$\frac{5}{3}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- HALAMAN 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <p><strong>TIPE 1: Pilihan Ganda Biasa</strong><br>Pilihlah satu jawaban yang paling tepat.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Nilai dari $(1-\frac{1}{2})(1-\frac{1}{3})(1-\frac{1}{4}) \cdots (1-\frac{1}{2016})$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{1}{2011}$</li>
+                                <li data-option="B">$\frac{1}{2013}$</li>
+                                <li data-option="C">$\frac{1}{2015}$</li>
+                                <li data-option="D">$\frac{1}{2016}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Jika $n=0,11111...$ maka nilai dari $n+\frac{1}{n}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$8\frac{1}{8}$</li>
+                                <li data-option="B">$9\frac{1}{9}$</li>
+                                <li data-option="C">$10\frac{1}{10}$</li>
+                                <li data-option="D">$11\frac{1}{11}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Pak Budi memiliki $\frac{4}{5}$ hektar lahan. $\frac{1}{3}$ dari lahan tersebut ditanami jagung, dan sisanya ditanami singkong. Luas lahan yang ditanami singkong adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{8}{15}$ hektar</li>
+                                <li data-option="B">$\frac{7}{15}$ hektar</li>
+                                <li data-option="C">$\frac{4}{15}$ hektar</li>
+                                <li data-option="D">$\frac{2}{5}$ hektar</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 2: Pilihan Ganda Kompleks (Jawaban Lebih Dari Satu)</strong><br>Pilihlah semua jawaban yang benar.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Diberikan bilangan $0,6 ; 55\% ; \frac{2}{3} ; 0,54$. Manakah pernyataan perbandingan yang benar mengenai bilangan-bilangan tersebut? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$0,54$ adalah bilangan terkecil.</span></div>
+                                <div><input type="checkbox"/><span>$\frac{2}{3}$ adalah bilangan terbesar.</span></div>
+                                <div><input type="checkbox"/><span>$0,6 > 55\%$</span></div>
+                                <div><input type="checkbox"/><span>$55\% > \frac{2}{3}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Diberikan bilangan $0,45 ; 0,85 ; \frac{7}{8} ; 78\%$. Manakah pernyataan perbandingan yang benar mengenai bilangan-bilangan tersebut? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$\frac{7}{8}$ adalah bilangan terbesar.</span></div>
+                                <div><input type="checkbox"/><span>$0,85 < 78\%$</span></div>
+                                <div><input type="checkbox"/><span>$78\% < 0,85$</span></div>
+                                <div><input type="checkbox"/><span>Urutan naik: $0,45 ; 78\% ; 0,85 ; \frac{7}{8}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Bilangan mana sajakah di bawah ini yang nilainya lebih besar dari $\frac{3}{4}$? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$0,8$</span></div>
+                                <div><input type="checkbox"/><span>$70\%$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{5}{6}$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{7}{10}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Manakah hasil operasi berikut yang bernilai $\frac{1}{2}$? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$\frac{3}{4} \times \frac{2}{3}$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{5}{8} : \frac{4}{5}$</span></div>
+                                <div><input type="checkbox"/><span>$0,25 + 0,25$</span></div>
+                                <div><input type="checkbox"/><span>$1,5 - \frac{3}{4}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 6 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 2: Pilihan Ganda Kompleks (Jawaban Lebih Dari Satu)</strong><br>Pilihlah semua jawaban yang benar.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Ibu memiliki $2\frac{1}{2}$ liter minyak goreng. Kemudian, $0,75$ liter digunakan untuk memasak. Ibu membeli lagi $1\frac{1}{4}$ liter. Manakah pernyataan berikut yang benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Minyak awal ibu adalah $2,5$ liter.</span></div>
+                                <div><input type="checkbox"/><span>Minyak sisa setelah memasak adalah $1,75$ liter.</span></div>
+                                <div><input type="checkbox"/><span>Minyak yang dibeli lagi adalah $1,5$ liter.</span></div>
+                                <div><input type="checkbox"/><span>Jumlah minyak ibu sekarang adalah $3$ liter.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">21.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Jika $\frac{1}{a}+\frac{1}{b}+\frac{1}{c}= \frac{1}{8}$ dimana $a, b, c$ adalah bilangan bulat positif. Manakah pernyataan yang mungkin benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Nilai $a, b, c$ bisa jadi 10, 50, dan 200.</span></div>
+                                <div><input type="checkbox"/><span>Nilai $a, b, c$ bisa jadi 24, 24, dan 24.</span></div>
+                                <div><input type="checkbox"/><span>Nilai $a+b+c$ bisa jadi 72.</span></div>
+                                <div><input type="checkbox"/><span>Nilai $a+b+c$ bisa jadi 260.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">22.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Manakah pecahan yang senilai dengan $0,4$? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$40\%$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{4}{10}$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{2}{5}$</span></div>
+                                <div><input type="checkbox"/><span>$\frac{1}{4}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            Seorang petani memiliki $\frac{3}{4}$ dari total lahan desa. Ia menanami $\frac{2}{3}$ dari lahan miliknya dengan padi. Manakah kesimpulan yang benar? <b>(bisa pilih lebih dari satu jawaban)</b>
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Lahan yang ditanami padi adalah $\frac{1}{2}$ dari total lahan desa.</span></div>
+                                <div><input type="checkbox"/><span>Lahan milik petani adalah $75\%$ dari total lahan desa.</span></div>
+                                <div><input type="checkbox"/><span>Sisa lahan milik petani (yang tidak ditanami padi) adalah $\frac{1}{4}$ dari total lahan desa.</span></div>
+                                <div><input type="checkbox"/><span>Lahan yang ditanami padi adalah $\frac{2}{3}$ dari total lahan desa.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 7 (KATEGORI 1) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 3: Pilihan Ganda Kompleks (Kategori)</strong><br>Tentukan Benar atau Salah untuk setiap pernyataan berikut.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Tentukan Benar atau Salah untuk setiap operasi hitung berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$\frac{1}{2} + \frac{1}{4} = \frac{3}{4}$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{3}{4} - \frac{1}{2} = \frac{1}{8}$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{5}{6} \times \frac{3}{5} = \frac{1}{2}$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{2}{3} : \frac{1}{3} = 2$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Tentukan Benar atau Salah untuk setiap perbandingan nilai berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$0,5 > 30\%$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{1}{3} = 0,33$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{3}{5} < \frac{2}{3}$</td><td></td><td></td></tr>
+                                    <tr><td>$1\frac{1}{4} = 1,25$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 8 (KATEGORI 2) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 3: Pilihan Ganda Kompleks (Kategori)</strong><br>Tentukan Benar atau Salah untuk setiap pernyataan berikut.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">26.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Diberikan $x = \frac{2}{5}$, $y = 0,5$, dan $z = 30\%$. Tentukan Benar atau Salah.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$x > z$</td><td></td><td></td></tr>
+                                    <tr><td>$y > x$</td><td></td><td></td></tr>
+                                    <tr><td>$z > y$</td><td></td><td></td></tr>
+                                    <tr><td>$x+y = 0,9$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">27.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                             Seorang pelari telah menempuh $\frac{3}{4}$ lintasan. Jarak total satu putaran lintasan adalah 1200 m. Tentukan Benar atau Salah.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Pelari tersebut telah menempuh jarak 900 m.</td><td></td><td></td></tr>
+                                    <tr><td>Sisa lintasan yang belum ditempuh adalah 400 m.</td><td></td><td></td></tr>
+                                    <tr><td>Pecahan sisa lintasan adalah $\frac{1}{4}$.</td><td></td><td></td></tr>
+                                    <tr><td>Pelari telah menempuh $75\%$ lintasan.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 9 (KATEGORI 3) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 3: Pilihan Ganda Kompleks (Kategori)</strong><br>Tentukan Benar atau Salah untuk setiap pernyataan berikut.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">28.</div>
+                        <div class="soal-konten">
+                            (Level: Penalaran) <br>
+                            Stok beras di toko adalah $50$ kg. Hari Senin terjual $\frac{1}{5}$ bagian. Hari Selasa terjual $\frac{1}{4}$ bagian *dari sisa*. Tentukan Benar atau Salah.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Beras yang terjual Hari Senin adalah 10 kg.</td><td></td><td></td></tr>
+                                    <tr><td>Sisa beras di akhir Hari Senin adalah 40 kg.</td><td></td><td></td></tr>
+                                    <tr><td>Beras yang terjual Hari Selasa adalah 10 kg.</td><td></td><td></td></tr>
+                                    <tr><td>Sisa beras di toko sekarang adalah 30 kg.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">29.</div>
+                        <div class="soal-konten">
+                            (Level: Pengetahuan) <br>
+                            Tentukan Benar atau Salah untuk konversi bentuk pecahan berikut.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>$0,65 = \frac{13}{20}$</td><td></td><td></td></tr>
+                                    <tr><td>$\frac{3}{8} = 37,5\%$</td><td></td><td></td></tr>
+                                    <tr><td>$2\frac{1}{5} = 2,2$</td><td></td><td></td></tr>
+                                    <tr><td>$12\% = \frac{12}{10}$</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN 10 (KATEGORI 4) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">LATIHAN SOAL TKA SMP</div>
+                    <div class="header-title-sub"><strong>Topik: Pecahan</strong> (Level Penalaran)</div>
+                </div>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="header-logo" />
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <p><strong>TIPE 3: Pilihan Ganda Kompleks (Kategori)</strong><br>Tentukan Benar atau Salah untuk setiap pernyataan berikut.</p>
+            <div class="manual-flex-layout">
+                <div class="kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">30.</div>
+                        <div class="soal-konten">
+                            (Level: Aplikasi) <br>
+                            <div class="wacana-box">
+                                <b>Wacana:</b> Gaji Pak Doni Rp 4.000.000 per bulan. $\frac{1}{4}$ bagian digunakan untuk transportasi, $\frac{2}{5}$ bagian untuk kebutuhan makan, dan $\frac{1}{10}$ bagian ditabung.
+                            </div>
+                            Tentukan Benar atau Salah pernyataan berikut berdasarkan wacana.
+                            <table class="soal-kategori">
+                                <thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Biaya transportasi adalah Rp 1.000.000.</td><td></td><td></td></tr>
+                                    <tr><td>Biaya makan adalah Rp 1.600.000.</td><td></td><td></td></tr>
+                                    <tr><td>Uang yang ditabung adalah Rp 400.000.</td><td></td><td></td></tr>
+                                    <tr><td>Sisa gaji untuk kebutuhan lain adalah Rp 1.200.000.</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kolom">
+                    <!-- Kolom kanan kosong -->
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Sampul Pembahasan -->
+    <section class="page cover-page">
+        <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="cover-logo">
+        <h1 class="cover-title">KUNCI JAWABAN<br>& PEMBAHASAN</h1>
+        <p class="cover-subtitle">BANK SOAL TKA SMP - PECAHAN</p>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 1 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $2\frac{1}{3}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah operasi pembagian pecahan, yang sering disebut "pecahan bertingkat". Bentuk $\frac{A}{B}$ sama artinya dengan $A : B$.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Penjumlahan/Pengurangan Pecahan:</b> Kita harus menyamakan penyebutnya terlebih dahulu. Caranya adalah dengan mencari KPK (Kelipatan Persekutuan Terkecil) dari penyebut-penyebut tersebut.</li>
+                        <li><b>Pembagian Pecahan:</b> Membagi dengan pecahan sama dengan mengalikan dengan kebalikan pecahan tersebut. $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$.</li>
+                        <li><b>Mengubah Pecahan Biasa ke Campuran:</b> Jika pembilang lebih besar dari penyebut (misal $\frac{7}{3}$), bagi pembilang dengan penyebut. $7 \div 3 = 2$ dengan sisa $1$. Hasilnya ditulis $2\frac{1}{3}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $\frac{\frac{5}{6}+\frac{1}{3}}{\frac{5}{6}-\frac{1}{3}}$</p>
+                    <p>Kita selesaikan satu per satu, mulai dari bagian atas (pembilang).</p>
+                    <p><b>Langkah 1: Menyelesaikan bagian Pembilang (Atas)</b><br>
+                    $\frac{5}{6}+\frac{1}{3}$
+                    <ul>
+                        <li>Penyebutnya adalah 6 dan 3. KPK dari 6 dan 3 adalah 6.</li>
+                        <li>Pecahan $\frac{5}{6}$ sudah memiliki penyebut 6, jadi tetap.</li>
+                        <li>Pecahan $\frac{1}{3}$ harus diubah menjadi per 6. Caranya: $6 \div 3 = 2$. Maka, kalikan pembilang dan penyebut dengan 2: $\frac{1 \times 2}{3 \times 2} = \frac{2}{6}$.</li>
+                        <li>Sekarang kita jumlahkan: $\frac{5}{6} + \frac{2}{6} = \frac{5+2}{6} = \frac{7}{6}$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Menyelesaikan bagian Penyebut (Bawah)</b><br>
+                    $\frac{5}{6}-\frac{1}{3}$
+                    <ul>
+                        <li>Penyebutnya juga 6 dan 3. Kita sudah tahu $\frac{1}{3} = \frac{2}{6}$.</li>
+                        <li>Sekarang kita kurangkan: $\frac{5}{6} - \frac{2}{6} = \frac{5-2}{6} = \frac{3}{6}$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Menggabungkan Hasil Langkah 1 dan 2</b><br>
+                    Soal sekarang menjadi: $\frac{\frac{7}{6}}{\frac{3}{6}}$
+                    <ul>
+                        <li>Ini sama dengan $\frac{7}{6} : \frac{3}{6}$.</li>
+                        <li>Gunakan aturan pembagian pecahan: $\frac{7}{6} \times \frac{6}{3}$.</li>
+                        <li>Kita bisa mencoret angka 6 (atas dan bawah): $\frac{7 \times 1}{1 \times 3} = \frac{7}{3}$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Menyederhanakan Jawaban</b><br>
+                    Hasilnya adalah $\frac{7}{3}$. Ini adalah pecahan biasa dimana pembilang lebih besar dari penyebut. Kita ubah ke pecahan campuran.
+                    <ul>
+                        <li>$7 \div 3 = 2$ (karena $2 \times 3 = 6$).</li>
+                        <li>Sisa: $7 - 6 = 1$.</li>
+                        <li>Bentuk campurannya adalah $2\frac{1}{3}$.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 2 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $-2\frac{3}{5}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah operasi hitung campuran yang melibatkan pecahan campuran, pembagian, dan pengurangan.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Aturan Urutan Operasi (KaBaTaKu):</b> Operasi hitung harus dikerjakan dengan urutan: (1) Kali (Ka) dan Bagi (Ba), (2) Tambah (Ta) dan Kurang (Ku). Karena pembagian (:) ada sebelum pengurangan (-), maka pembagian harus dikerjakan terlebih dahulu.</li>
+                        <li><b>Mengubah Pecahan Campuran ke Pecahan Biasa:</b> Bentuk $A\frac{b}{c}$ diubah menjadi $\frac{(A \times c) + b}{c}$.</li>
+                        <li><b>Pembagian Pecahan:</b> $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$.</li>
+                        <li><b>Pengurangan Pecahan:</b> Penyebut harus disamakan.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $2\frac{2}{3}:1\frac{2}{3}-4\frac{1}{5}$</p>
+                    <p><b>Langkah 1: Mengubah semua pecahan campuran ke pecahan biasa</b>
+                    <ul>
+                        <li>$2\frac{2}{3} = \frac{(2 \times 3) + 2}{3} = \frac{6+2}{3} = \frac{8}{3}$</li>
+                        <li>$1\frac{2}{3} = \frac{(1 \times 3) + 2}{3} = \frac{3+2}{3} = \frac{5}{3}$</li>
+                        <li>$4\frac{1}{5} = \frac{(4 \times 5) + 1}{5} = \frac{20+1}{5} = \frac{21}{5}$</li>
+                    </ul>
+                    Soal sekarang menjadi: $\frac{8}{3} : \frac{5}{3} - \frac{21}{5}$
+                    </p>
+                    <p><b>Langkah 2: Mengerjakan operasi pembagian (sesuai aturan KaBaTaKu)</b><br>
+                    $\frac{8}{3} : \frac{5}{3}$
+                    <ul>
+                        <li>Ubah menjadi perkalian: $\frac{8}{3} \times \frac{3}{5}$</li>
+                        <li>Kalikan pembilang dengan pembilang, penyebut dengan penyebut: $\frac{8 \times 3}{3 \times 5} = \frac{24}{15}$.</li>
+                        <li>Kita bisa sederhanakan $\frac{24}{15}$ (bagi 3) menjadi $\frac{8}{5}$.<br>
+                        *(Atau bisa dicoret langsung: $\frac{8}{\cancel{3}} \times \frac{\cancel{3}}{5} = \frac{8}{5}$)*</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Mengerjakan operasi pengurangan</b><br>
+                    Hasil langkah 2 dikurangi sisa soal: $\frac{8}{5} - \frac{21}{5}$
+                    <ul>
+                        <li>Karena penyebutnya sudah sama (yaitu 5), kita bisa langsung kurangkan pembilangnya.</li>
+                        <li>$\frac{8 - 21}{5} = \frac{-13}{5}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Menyederhanakan Jawaban</b><br>
+                    Hasilnya adalah $\frac{-13}{5}$. Kita ubah ke pecahan campuran.
+                    <ul>
+                        <li>Tanda negatifnya kita simpan dulu. $13 \div 5 = 2$ (karena $2 \times 5 = 10$).</li>
+                        <li>Sisa: $13 - 10 = 3$.</li>
+                        <li>Bentuk campurannya adalah $2\frac{3}{5}$.</li>
+                        <li>Jangan lupa tanda negatifnya: $-2\frac{3}{5}$.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 3 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $1\frac{2}{3}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini mirip dengan soal nomor 2. Ini adalah operasi hitung campuran yang melibatkan pecahan campuran, pembagian, dan pengurangan.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Aturan Urutan Operasi (KaBaTaKu):</b> Kerjakan pembagian (:) terlebih dahulu, baru kemudian pengurangan (-).</li>
+                        <li><b>Mengubah Pecahan Campuran ke Pecahan Biasa:</b> $A\frac{b}{c} = \frac{(A \times c) + b}{c}$.</li>
+                        <li><b>Pembagian Pecahan:</b> $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$.</li>
+                        <li><b>Pengurangan Pecahan:</b> Penyebut harus disamakan.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $4\frac{2}{3}:1\frac{1}{6}-2\frac{1}{3}$</p>
+                    <p><b>Langkah 1: Mengubah semua pecahan campuran ke pecahan biasa</b>
+                    <ul>
+                        <li>$4\frac{2}{3} = \frac{(4 \times 3) + 2}{3} = \frac{12+2}{3} = \frac{14}{3}$</li>
+                        <li>$1\frac{1}{6} = \frac{(1 \times 6) + 1}{6} = \frac{6+1}{6} = \frac{7}{6}$</li>
+                        <li>$2\frac{1}{3} = \frac{(2 \times 3) + 1}{3} = \frac{6+1}{3} = \frac{7}{3}$</li>
+                    </ul>
+                    Soal sekarang menjadi: $\frac{14}{3} : \frac{7}{6} - \frac{7}{3}$
+                    </p>
+                    <p><b>Langkah 2: Mengerjakan operasi pembagian (sesuai aturan KaBaTaKu)</b><br>
+                    $\frac{14}{3} : \frac{7}{6}$
+                    <ul>
+                        <li>Ubah menjadi perkalian: $\frac{14}{3} \times \frac{6}{7}$</li>
+                        <li>Kalikan pembilang dengan pembilang, penyebut dengan penyebut: $\frac{14 \times 6}{3 \times 7} = \frac{84}{21}$.</li>
+                        <li>Sekarang kita sederhanakan: $84 \div 21 = 4$.</li>
+                        <li>*(Tips: Bisa disederhanakan dengan mencoret. $14$ bisa dibagi $7$ hasilnya $2$. $6$ bisa dibagi $3$ hasilnya $2$. Jadi $\frac{14}{3} \times \frac{6}{7} = \frac{2}{1} \times \frac{2}{1} = 4$)*</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Mengerjakan operasi pengurangan</b><br>
+                    Hasil langkah 2 dikurangi sisa soal: $4 - \frac{7}{3}$
+                    <ul>
+                        <li>Kita ubah 4 menjadi pecahan dengan penyebut 3. $4 = \frac{4 \times 3}{3} = \frac{12}{3}$.</li>
+                        <li>Sekarang kita kurangkan: $\frac{12}{3} - \frac{7}{3} = \frac{12-7}{3} = \frac{5}{3}$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Menyederhanakan Jawaban</b><br>
+                    Hasilnya adalah $\frac{5}{3}$. Kita ubah ke pecahan campuran.
+                    <ul>
+                        <li>$5 \div 3 = 1$ (karena $1 \times 3 = 3$).</li>
+                        <li>Sisa: $5 - 3 = 2$.</li>
+                        <li>Bentuk campurannya adalah $1\frac{2}{3}$.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 4 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $-11$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah operasi pembagian pecahan (pecahan bertingkat), mirip dengan Soal 1. Bentuk $\frac{A}{B}$ sama artinya dengan $A : B$.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Penjumlahan/Pengurangan Pecahan:</b> Kita harus menyamakan penyebutnya. KPK (Kelipatan Persekutuan Terkecil) dari 3 dan 5 adalah 15.</li>
+                        <li><b>Metode "Kali Silang":</b> Untuk $\frac{a}{b} + \frac{c}{d}$, cara cepatnya adalah $\frac{(a \times d) + (c \times b)}{b \times d}$.</li>
+                        <li><b>Pembagian Pecahan:</b> $\frac{a/b}{c/b} = \frac{a}{c}$. Jika penyebutnya sama, kita bisa langsung membagi pembilangnya.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $\frac{\frac{2}{3}+\frac{4}{5}}{\frac{2}{3}-\frac{4}{5}}$</p>
+                    <p>Kita akan gunakan metode "Kali Silang" untuk mempercepat perhitungan.</p>
+                    <p><b>Langkah 1: Menyelesaikan bagian Pembilang (Atas)</b><br>
+                    $\frac{2}{3}+\frac{4}{5}$
+                    <ul>
+                        <li>Gunakan metode kali silang: $\frac{(2 \times 5) + (4 \times 3)}{3 \times 5}$</li>
+                        <li>$= \frac{10 + 12}{15}$</li>
+                        <li>$= \frac{22}{15}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Menyelesaikan bagian Penyebut (Bawah)</b><br>
+                    $\frac{2}{3}-\frac{4}{5}$
+                    <ul>
+                        <li>Gunakan metode kali silang: $\frac{(2 \times 5) - (4 \times 3)}{3 \times 5}$</li>
+                        <li>$= \frac{10 - 12}{15}$</li>
+                        <li>$= \frac{-2}{15}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Menggabungkan Hasil Langkah 1 dan 2</b><br>
+                    Soal sekarang menjadi: $\frac{\frac{22}{15}}{\frac{-2}{15}}$
+                    <ul>
+                        <li>Karena kedua pecahan (atas dan bawah) memiliki penyebut yang sama (yaitu 15), kita bisa abaikan penyebutnya dan langsung bagi pembilangnya.</li>
+                        <li>$= \frac{22}{-2}$</li>
+                        <li>$= -11$</li>
+                    </ul>
+                    </p>
+                    <p><b>Alternatif Langkah 3 (jika tidak mencoret penyebut):</b><br>
+                    $\frac{22}{15} : \frac{-2}{15}$
+                    <ul>
+                        <li>Ubah ke perkalian: $\frac{22}{15} \times \frac{15}{-2}$</li>
+                        <li>Coret angka 15: $\frac{22}{1} \times \frac{1}{-2} = \frac{22}{-2} = -11$.</li>
+                    </ul>
+                    Hasilnya tetap sama.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 5 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $18$ orang</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pecahan. Konsep utamanya adalah pembagian. Untuk mengetahui berapa banyak "penerima", kita harus membagi "total barang" dengan "jatah per penerima".</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Penjumlahan Pecahan Campuran:</b> $A\frac{b}{c} + D\frac{e}{c} = (A+D) + (\frac{b+e}{c})$. Jika penyebutnya sama, kita bisa jumlahkan bilangan bulatnya dan jumlahkan pecahannya secara terpisah.</li>
+                        <li><b>Mengubah Pecahan Campuran ke Biasa:</b> $A\frac{b}{c} = \frac{(A \times c) + b}{c}$.</li>
+                        <li><b>Pembagian Pecahan:</b> $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Menghitung total terigu yang terkumpul</b><br>
+                    Total terigu = (Sumbangan 1) + (Sumbangan 2)<br>
+                    Total terigu = $21\frac{3}{4} + 23\frac{1}{4}$
+                    <ul>
+                        <li>Karena penyebut pecahannya sudah sama ($\frac{3}{4}$ dan $\frac{1}{4}$), kita bisa pisahkan penjumlahannya.</li>
+                        <li>Bilangan bulat: $21 + 23 = 44$.</li>
+                        <li>Pecahan: $\frac{3}{4} + \frac{1}{4} = \frac{3+1}{4} = \frac{4}{4} = 1$.</li>
+                        <li>Total = $44 + 1 = 45$ kg.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Menentukan jatah per warga</b><br>
+                    Soal menyatakan setiap warga menerima $2\frac{1}{2}$ kg.
+                    </p>
+                    <p><b>Langkah 3: Menghitung banyak warga</b><br>
+                    Banyak warga = (Total terigu) : (Jatah per warga)<br>
+                    Banyak warga = $45 : 2\frac{1}{2}$
+                    <ul>
+                        <li>Ubah $2\frac{1}{2}$ ke pecahan biasa: $2\frac{1}{2} = \frac{(2 \times 2) + 1}{2} = \frac{5}{2}$.</li>
+                        <li>Operasinya menjadi: $45 : \frac{5}{2}$.</li>
+                        <li>Ubah bilangan bulat 45 menjadi pecahan: $\frac{45}{1}$.</li>
+                        <li>Operasinya: $\frac{45}{1} : \frac{5}{2}$.</li>
+                        <li>Ubah pembagian menjadi perkalian terbalik: $\frac{45}{1} \times \frac{2}{5}$.</li>
+                        <li>Kalikan: $\frac{45 \times 2}{1 \times 5} = \frac{90}{5}$.</li>
+                        <li>Sederhanakan: $90 \div 5 = 18$.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, banyak warga yang menerima sumbangan terigu adalah 18 orang.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 6 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $8\frac{11}{12}$ m</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita operasi hitung campuran (penjumlahan dan pengurangan) pecahan campuran. "Membeli lagi" berarti ditambah (+). "Menggunakan" berarti dikurang (-).</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Operasi Pecahan Campuran:</b> Kita bisa mengerjakan dengan 2 cara:
+                            <ul>
+                                <li><b>Cara 1 (Dianjurkan):</b> Pisahkan bilangan bulat dan pecahannya. Kerjakan bilangan bulat, lalu kerjakan pecahannya, lalu gabungkan lagi.</li>
+                                <li><b>Cara 2:</b> Ubah semua ke pecahan biasa. Ini akan melibatkan angka besar, tapi hasilnya sama.</li>
+                            </ul>
+                        </li>
+                        <li><b>Menyamakan Penyebut:</b> Untuk menjumlahkan atau mengurangkan pecahan $\frac{1}{2}$, $\frac{2}{3}$, dan $\frac{1}{4}$, kita perlu KPK dari 2, 3, dan 4.</li>
+                        <li><b>Mencari KPK (2, 3, 4):</b>
+                            <ul>
+                                <li>Kelipatan 2: 2, 4, 6, 8, 10, <b>12</b>, ...</li>
+                                <li>Kelipatan 3: 3, 6, 9, <b>12</b>, 15, ...</li>
+                                <li>Kelipatan 4: 4, 8, <b>12</b>, 16, ...</li>
+                                <li>KPK-nya adalah 12.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: (Pita awal) + (Pita beli) - (Pita dipakai) = Sisa pita<br>
+                    $15\frac{1}{2} + 2\frac{2}{3} - 9\frac{1}{4}$</p>
+                    <p><b>Kita gunakan Cara 1 (Pemisahan Bilangan Bulat dan Pecahan):</b></p>
+                    <p><b>Langkah 1: Pisahkan bilangan bulat dan pecahan</b><br>
+                    $= (15 + 2 - 9) + (\frac{1}{2} + \frac{2}{3} - \frac{1}{4})$
+                    </p>
+                    <p><b>Langkah 2: Hitung bagian bilangan bulat</b><br>
+                    $15 + 2 = 17$<br>
+                    $17 - 9 = 8$
+                    </p>
+                    <p><b>Langkah 3: Hitung bagian pecahan dengan menyamakan penyebut (KPK = 12)</b><br>
+                    $(\frac{1}{2} + \frac{2}{3} - \frac{1}{4})$
+                    <ul>
+                        <li>$\frac{1}{2} = \frac{1 \times (12 \div 2)}{12} = \frac{1 \times 6}{12} = \frac{6}{12}$</li>
+                        <li>$\frac{2}{3} = \frac{2 \times (12 \div 3)}{12} = \frac{2 \times 4}{12} = \frac{8}{12}$</li>
+                        <li>$\frac{1}{4} = \frac{1 \times (12 \div 4)}{12} = \frac{1 \times 3}{12} = \frac{3}{12}$</li>
+                    </ul>
+                    Sekarang hitung operasinya:<br>
+                    $\frac{6}{12} + \frac{8}{12} - \frac{3}{12} = \frac{6 + 8 - 3}{12} = \frac{14 - 3}{12} = \frac{11}{12}$.
+                    </p>
+                    <p><b>Langkah 4: Gabungkan hasil Langkah 2 dan 3</b><br>
+                    Hasil Bilangan Bulat = $8$<br>
+                    Hasil Pecahan = $\frac{11}{12}$<br>
+                    Jawaban akhir = $8\frac{11}{12}$ m.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 7 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $160$ kantong</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pembagian pecahan. Konsepnya sama dengan soal nomor 5. Untuk mengetahui jumlah "kantong", kita harus membagi "total gula" dengan "isi per kantong".</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Memahami Soal Cerita:</b> "Dibungkus plastik masing-masing beratnya $\frac{1}{4}$ kg" berarti satu kantong plastik isinya $\frac{1}{4}$ kg. Ini adalah operasi pembagian.</li>
+                        <li><b>Pembagian dengan Pecahan:</b> Membagi suatu bilangan (misal $A$) dengan pecahan (misal $\frac{b}{c}$) sama dengan mengalikan bilangan itu ($A$) dengan kebalikan dari pecahan tersebut ($\frac{c}{b}$).</li>
+                        <li>$A : \frac{b}{c} = A \times \frac{c}{b}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Identifikasi data dari soal</b>
+                    <ul>
+                        <li>Total gula yang dibeli Ibu = $40$ kg.</li>
+                        <li>Berat gula per kantong plastik = $\frac{1}{4}$ kg.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Tentukan operasi matematikanya</b><br>
+                    Banyak kantong = (Total gula) : (Berat per kantong)<br>
+                    Banyak kantong = $40 : \frac{1}{4}$
+                    </p>
+                    <p><b>Langkah 3: Lakukan operasi pembagian pecahan</b>
+                    <ul>
+                        <li>Mengubah pembagian menjadi perkalian dengan kebalikan. Kebalikan dari $\frac{1}{4}$ adalah $\frac{4}{1}$.</li>
+                        <li>Operasinya menjadi: $40 \times \frac{4}{1}$</li>
+                        <li>$40 \times 4 = 160$.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, banyak kantong plastik yang diperlukan adalah 160 kantong.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 8 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $48$ orang</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pembagian pecahan, yang konsepnya sama persis dengan soal nomor 5 dan 7. Untuk mengetahui "jumlah orang", kita harus membagi "total kopi" dengan "jatah per orang".</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Memahami Soal Cerita:</b> "Tiap orang mendapat $\frac{1}{4}$ kg" berarti jatah 1 orang adalah $\frac{1}{4}$ kg. Ini adalah operasi pembagian.</li>
+                        <li><b>Pembagian dengan Pecahan:</b> $A : \frac{b}{c} = A \times \frac{c}{b}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Identifikasi data dari soal</b>
+                    <ul>
+                        <li>Total kopi yang dibagikan = $12$ kg.</li>
+                        <li>Jatah kopi per orang = $\frac{1}{4}$ kg.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Tentukan operasi matematikanya</b><br>
+                    Banyak orang = (Total kopi) : (Jatah per orang)<br>
+                    Banyak orang = $12 : \frac{1}{4}$
+                    </p>
+                    <p><b>Langkah 3: Lakukan operasi pembagian pecahan</b>
+                    <ul>
+                        <li>Mengubah pembagian menjadi perkalian dengan kebalikan. Kebalikan dari $\frac{1}{4}$ adalah $\frac{4}{1}$.</li>
+                        <li>Operasinya menjadi: $12 \times \frac{4}{1}$</li>
+                        <li>$12 \times 4 = 48$.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, banyak orang yang menerima kopi adalah 48 orang.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 9 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $5$ jenis</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pecahan yang menggabungkan penjumlahan dan pembagian.
+                    Langkah-langkahnya:
+                    1.  Cari total lahan Pak Anton dengan menjumlahkan lahan awal dan lahan yang dibeli.
+                    2.  Bagi total lahan tersebut dengan luas per jenis tanaman untuk menemukan berapa banyak jenis tanaman.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Penjumlahan Pecahan Campuran:</b> Pisahkan bilangan bulat dan pecahannya. Samakan penyebut pecahan (KPK dari 4 dan 6 adalah 12).</li>
+                        <li><b>Pembagian Pecahan Campuran:</b> Ubah kedua pecahan campuran (total lahan dan luas per tanaman) menjadi pecahan biasa, lalu lakukan operasi pembagian ($\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Menghitung total lahan Pak Anton</b><br>
+                    Total Lahan = $1\frac{1}{4} + 4\frac{1}{6}$
+                    <ul>
+                        <li>Pisahkan bilangan bulat dan pecahan: $(1 + 4) + (\frac{1}{4} + \frac{1}{6})$</li>
+                        <li>Bilangan bulat: $1 + 4 = 5$.</li>
+                        <li>Pecahan: $\frac{1}{4} + \frac{1}{6}$. KPK dari 4 dan 6 adalah 12.
+                            <ul>
+                                <li>$\frac{1}{4} = \frac{1 \times 3}{4 \times 3} = \frac{3}{12}$</li>
+                                <li>$\frac{1}{6} = \frac{1 \times 2}{6 \times 2} = \frac{2}{12}$</li>
+                            </ul>
+                        </li>
+                        <li>Jumlahkan pecahannya: $\frac{3}{12} + \frac{2}{12} = \frac{5}{12}$.</li>
+                        <li>Gabungkan: Total Lahan = $5\frac{5}{12}$ hektar.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Menghitung banyak jenis tanaman</b><br>
+                    Banyak Jenis = (Total Lahan) : (Luas per Tanaman)<br>
+                    Banyak Jenis = $5\frac{5}{12} : 1\frac{1}{12}$
+                    <ul>
+                        <li>Ubah kedua pecahan campuran ke pecahan biasa:
+                            <ul>
+                                <li>$5\frac{5}{12} = \frac{(5 \times 12) + 5}{12} = \frac{60+5}{12} = \frac{65}{12}$</li>
+                                <li>$1\frac{1}{12} = \frac{(1 \times 12) + 1}{12} = \frac{12+1}{12} = \frac{13}{12}$</li>
+                            </ul>
+                        </li>
+                        <li>Lakukan pembagian: $\frac{65}{12} : \frac{13}{12}$</li>
+                        <li>Ubah ke perkalian: $\frac{65}{12} \times \frac{12}{13}$</li>
+                        <li>Coret angka 12: $\frac{65}{1} \times \frac{1}{13} = \frac{65}{13}$</li>
+                        <li>Hitung $65 \div 13 = 5$.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, banyak jenis tanaman yang dapat ditanam adalah 5 jenis.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 10 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $1\frac{1}{16}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah operasi hitung campuran yang melibatkan berbagai bentuk bilangan: pecahan biasa ($\frac{1}{4}$), desimal ($0,25$), pecahan biasa lagi ($\frac{1}{2}$), dan persen ($50\%$).</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Konversi Bentuk:</b> Untuk menghitung, cara termudah adalah mengubah semua bilangan ke satu bentuk yang sama. Bentuk pecahan biasa seringkali paling mudah untuk dihitung.
+                            <ul>
+                                <li>$0,25$ (dua angka di belakang koma) = $\frac{25}{100}$. Disederhanakan (dibagi 25) = $\frac{1}{4}$.</li>
+                                <li>$50\%$ (persen artinya per seratus) = $\frac{50}{100}$. Disederhanakan (dibagi 50) = $\frac{1}{2}$.</li>
+                            </ul>
+                        </li>
+                        <li><b>Aturan Urutan Operasi (KaBaTaKu):</b> Kerjakan perkalian ($\times$) dan pembagian (:) terlebih dahulu, baru penjumlahan (+).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $\frac{1}{4} \times 0,25 + \frac{1}{2} \div 50\%$</p>
+                    <p><b>Langkah 1: Ubah semua ke pecahan biasa</b>
+                    <ul>
+                        <li>$0,25 = \frac{1}{4}$</li>
+                        <li>$50\% = \frac{1}{2}$</li>
+                    </ul>
+                    Soal sekarang menjadi: $(\frac{1}{4} \times \frac{1}{4}) + (\frac{1}{2} \div \frac{1}{2})$
+                    </p>
+                    <p><b>Langkah 2: Kerjakan operasi dalam kurung (sesuai KaBaTaKu)</b>
+                    <ul>
+                        <li><b>Bagian Perkalian:</b> $\frac{1}{4} \times \frac{1}{4} = \frac{1 \times 1}{4 \times 4} = \frac{1}{16}$</li>
+                        <li><b>Bagian Pembagian:</b> $\frac{1}{2} \div \frac{1}{2}$. (Sebuah bilangan dibagi dengan dirinya sendiri hasilnya adalah 1).
+                        <br><i>Atau dengan cara biasa:</i> $\frac{1}{2} \times \frac{2}{1} = \frac{2}{2} = 1$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Kerjakan operasi penjumlahan</b><br>
+                    Hasil Langkah 2 dijumlahkan: $\frac{1}{16} + 1$
+                    <ul>
+                        <li>Ini adalah penjumlahan bilangan pecahan dengan bilangan bulat.</li>
+                        <li>Hasilnya langsung digabung menjadi pecahan campuran: $1\frac{1}{16}$.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 11 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $\text{Rp}157.500,00$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pecahan, yang melibatkan konsep perbandingan senilai atau proporsi. Jika harga setengah kg diketahui, kita bisa mencari harga 1 kg, lalu mengalikannya dengan jumlah yang dibeli.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Mencari Harga Satuan (Harga 1 kg):</b> Jika harga $\frac{1}{2}$ kg adalah Y, maka harga $1$ kg adalah $2 \times Y$.</li>
+                        <li><b>Mengubah Pecahan Campuran ke Biasa:</b> $A\frac{b}{c} = \frac{(A \times c) + b}{c}$.</li>
+                        <li><b>Perkalian Pecahan dengan Bilangan Bulat:</b> $\frac{a}{b} \times C = \frac{a \times C}{b}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Mencari harga 1 kg cabe rawit</b>
+                    <ul>
+                        <li>Harga $\frac{1}{2}$ kg = Rp 35.000,00.</li>
+                        <li>Maka, harga $1$ kg = $2 \times$ (Harga $\frac{1}{2}$ kg)</li>
+                        <li>Harga $1$ kg = $2 \times 35.000 = 70.000$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Menghitung total harga yang harus dibayar</b><br>
+                    Ibu membeli $2\frac{1}{4}$ kg.
+                    <br>Total Harga = (Jumlah beli) $\times$ (Harga 1 kg)
+                    <br>Total Harga = $2\frac{1}{4} \times 70.000$
+                    </p>
+                    <p><b>Langkah 3: Melakukan operasi perkalian</b>
+                    <ul>
+                        <li>Ubah $2\frac{1}{4}$ ke pecahan biasa: $2\frac{1}{4} = \frac{(2 \times 4) + 1}{4} = \frac{9}{4}$.</li>
+                        <li>Operasinya menjadi: $\frac{9}{4} \times 70.000$</li>
+                        <li>$= \frac{9 \times 70.000}{4}$</li>
+                        <li>Kita bisa bagi $70.000$ dengan $4$ terlebih dahulu: $70.000 \div 4 = 17.500$.</li>
+                        <li>Sekarang kalikan: $9 \times 17.500 = 157.500$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Cara Alternatif (Distributif):</b>
+                    <ul>
+                        <li>$2\frac{1}{4} \times 70.000 = (2 + \frac{1}{4}) \times 70.000$</li>
+                        <li>$= (2 \times 70.000) + (\frac{1}{4} \times 70.000)$</li>
+                        <li>$= 140.000 + 17.500$</li>
+                        <li>$= 157.500$.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, total harga yang harus dibayar Ibu adalah Rp 157.500,00.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 12 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: C. $\frac{3}{7}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini menguji pemahaman tentang "kebalikan" suatu pecahan dan kemampuan menyelesaikan persamaan aljabar sederhana.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Kebalikan (Reciprocal):</b> Kebalikan dari suatu pecahan $\frac{a}{b}$ adalah $\frac{b}{a}$.</li>
+                        <li><b>Persamaan Aljabar:</b> Kita perlu mencari nilai $x$ dengan memindahkan angka-angka ke sisi lain dari tanda sama dengan (=).
+                            <ul>
+                                <li>Jika $A + B = C$, maka $A = C - B$. (Positif pindah jadi negatif)</li>
+                                <li>Jika $\frac{1}{x} = D$, maka $x = \frac{1}{D}$. (Posisi $x$ dan $D$ bisa ditukar)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Menentukan nilai "kebalikan dari $\frac{3}{10}$"</b>
+                    <ul>
+                        <li>Pecahannya adalah $\frac{3}{10}$.</li>
+                        <li>Kebalikannya adalah $\frac{10}{3}$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Membuat persamaan aljabar</b><br>
+                    Soal menyatakan bahwa "kebalikan dari $\frac{3}{10}$" *adalah* "$(\frac{1}{x}+1)$".
+                    <br>Tanda "adalah" bisa kita ganti dengan "=".
+                    <br>Maka persamaannya:
+                    <br>$\frac{10}{3} = \frac{1}{x} + 1$
+                    </p>
+                    <p><b>Langkah 3: Mencari nilai $\frac{1}{x}$</b>
+                    <ul>
+                        <li>Kita ingin $\frac{1}{x}$ sendirian. Pindahkan $1$ ke sisi kiri (menjadi $-1$).</li>
+                        <li>$\frac{10}{3} - 1 = \frac{1}{x}$</li>
+                        <li>Untuk menghitung $\frac{10}{3} - 1$, kita samakan penyebutnya. Angka $1$ adalah sama dengan $\frac{3}{3}$.</li>
+                        <li>$\frac{10}{3} - \frac{3}{3} = \frac{1}{x}$</li>
+                        <li>$\frac{10 - 3}{3} = \frac{1}{x}$</li>
+                        <li>$\frac{7}{3} = \frac{1}{x}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Mencari nilai $x$</b><br>
+                    Kita dapatkan $\frac{7}{3} = \frac{1}{x}$.
+                    <ul>
+                        <li>Ini berarti $x$ adalah kebalikan dari $\frac{7}{3}$.</li>
+                        <li>Maka, $x = \frac{3}{7}$.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 13 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: D. $\frac{1}{2016}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini adalah perkalian beruntun (deret) yang memiliki pola tersembunyi. Tanda $\cdots$ (ellipsis) menunjukkan bahwa polanya berlanjut sampai suku terakhir.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Mencari Pola:</b> Kita tidak perlu menghitung semua suku. Cukup hitung 3-4 suku pertama dan suku terakhir untuk melihat polanya.</li>
+                        <li><b>Penyederhanaan (Mencoret):</b> Dalam perkalian pecahan, pembilang dari satu suku bisa mencoret penyebut dari suku sebelumnya (atau sebaliknya). Ini disebut "deret teleskopik".</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Soal: $(1-\frac{1}{2})(1-\frac{1}{3})(1-\frac{1}{4}) \cdots (1-\frac{1}{2016})$</p>
+                    <p><b>Langkah 1: Sederhanakan beberapa suku pertama</b>
+                    <ul>
+                        <li>Suku 1: $1 - \frac{1}{2} = \frac{2}{2} - \frac{1}{2} = \frac{1}{2}$</li>
+                        <li>Suku 2: $1 - \frac{1}{3} = \frac{3}{3} - \frac{1}{3} = \frac{2}{3}$</li>
+                        <li>Suku 3: $1 - \frac{1}{4} = \frac{4}{4} - \frac{1}{4} = \frac{3}{4}$</li>
+                        <li>Suku 4 (jika ada): $1 - \frac{1}{5} = \frac{5}{5} - \frac{1}{5} = \frac{4}{5}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Sederhanakan suku terakhir</b>
+                    <ul>
+                        <li>Suku terakhir: $1 - \frac{1}{2016} = \frac{2016}{2016} - \frac{1}{2016} = \frac{2015}{2016}$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Tulis ulang perkaliannya dan temukan polanya</b><br>
+                    Perkaliannya sekarang menjadi:<br>
+                    $\frac{1}{2} \times \frac{2}{3} \times \frac{3}{4} \times \frac{4}{5} \times \cdots \times \frac{2015}{2016}$
+                    </p>
+                    <p>Perhatikan polanya:
+                    <ul>
+                        <li>Penyebut Suku 1 ($\mathbf{2}$) dicoret oleh Pembilang Suku 2 ($\mathbf{2}$).</li>
+                        <li>Penyebut Suku 2 ($\mathbf{3}$) dicoret oleh Pembilang Suku 3 ($\mathbf{3}$).</li>
+                        <li>Penyebut Suku 3 ($\mathbf{4}$) dicoret oleh Pembilang Suku 4 ($\mathbf{4}$).</li>
+                        <li>Pola ini akan berlanjut terus. Penyebut suku sebelumnya akan dicoret oleh pembilang suku sesudahnya.</li>
+                    </ul>
+                    $\frac{1}{\mathbf{2}} \times \frac{\mathbf{2}}{\mathbf{3}} \times \frac{\mathbf{3}}{\mathbf{4}} \times \frac{\mathbf{4}}{5} \times \cdots \times \frac{\mathbf{2015}}{2016}$
+                    </p>
+                    <p><b>Langkah 4: Tentukan suku yang tersisa</b>
+                    <ul>
+                        <li>Semua angka di tengah akan habis tercoret.</li>
+                        <li>Yang *tidak* bisa dicoret adalah:
+                            <ul>
+                                <li><b>Pembilang Suku Pertama</b> (angka $1$)</li>
+                                <li><b>Penyebut Suku Terakhir</b> (angka $2016$)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    Maka, hasil akhirnya adalah $\frac{1}{2016}$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 14 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: B. $9\frac{1}{9}$</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Soal ini menguji kemampuan mengubah bentuk desimal berulang menjadi pecahan biasa, dan konsep "kebalikan" pecahan.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Mengubah Desimal Berulang:</b> Ada cara cepat untuk desimal yang berulang tepat setelah koma.
+                            <ul>
+                                <li>Jika 1 angka berulang: $0,aaa... = \frac{a}{9}$. Contoh: $0,555... = \frac{5}{9}$.</li>
+                                <li>Jika 2 angka berulang: $0,ababab... = \frac{ab}{99}$. Contoh: $0,232323... = \frac{23}{99}$.</li>
+                            </ul>
+                        </li>
+                        <li><b>Kebalikan Pecahan:</b> Jika $n = \frac{a}{b}$, maka $\frac{1}{n}$ (kebalikan $n$) adalah $\frac{b}{a}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Mengubah $n = 0,11111...$ menjadi pecahan biasa</b>
+                    <ul>
+                        <li>Ini adalah pola $0,aaa...$ dimana $a=1$.</li>
+                        <li>Menggunakan cara cepat: $n = \frac{1}{9}$.</li>
+                    </ul>
+                    <i>(Cara Manual jika lupa cara cepat):</i>
+                    <pre>
+    Misal $n = 0,111...$
+Kalikan 10: $10n = 1,111...$
+Kurangkan:
+  $10n = 1,111...$
+   $n = 0,111...$
+------------------ (-)
+   $9n = 1$
+    $n = \frac{1}{9}$
+                    </pre>
+                    </p>
+                    <p><b>Langkah 2: Menentukan nilai $\frac{1}{n}$</b><br>
+                    <ul>
+                        <li>Kita sudah tahu $n = \frac{1}{9}$.</li>
+                        <li>$\frac{1}{n}$ adalah kebalikan dari $n$.</li>
+                        <li>Kebalikan dari $\frac{1}{9}$ adalah $\frac{9}{1}$, atau $9$.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Menghitung $n + \frac{1}{n}$</b>
+                    <ul>
+                        <li>$n = \frac{1}{9}$</li>
+                        <li>$\frac{1}{n} = 9$</li>
+                        <li>$n + \frac{1}{n} = \frac{1}{9} + 9$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Menulis hasil akhir</b><br>
+                    Penjumlahan bilangan bulat (9) dengan pecahan biasa ($\frac{1}{9}$) bisa langsung digabung menjadi pecahan campuran.
+                    <br>$9 + \frac{1}{9} = 9\frac{1}{9}$.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 15 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: A. $\frac{8}{15}$ hektar</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal cerita aplikasi pecahan. Kata kunci utamanya adalah "dari" dan "sisanya".</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Mencari Sisa (Pecahan):</b> Seluruh lahan dianggap sebagai $1$ bagian utuh. Jika $\frac{1}{3}$ bagian dipakai untuk jagung, maka "sisa" nya adalah $1 - \frac{1}{3}$.
+                            <ul>
+                                <li>$1 - \frac{1}{3} = \frac{3}{3} - \frac{1}{3} = \frac{2}{3}$.</li>
+                                <li>Jadi, $\frac{2}{3}$ bagian ditanami singkong.</li>
+                            </ul>
+                        </li>
+                        <li><b>Pecahan "dari" Suatu Nilai:</b> Jika ditanya $\frac{a}{b}$ "dari" $\frac{c}{d}$, artinya adalah operasi perkalian: $\frac{a}{b} \times \frac{c}{d}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Identifikasi data dari soal</b>
+                    <ul>
+                        <li>Total Lahan Pak Budi = $\frac{4}{5}$ hektar.</li>
+                        <li>Bagian untuk Jagung = $\frac{1}{3}$ *dari* lahan miliknya.</li>
+                        <li>Bagian untuk Singkong = Sisanya.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Mencari bagian lahan untuk singkong (dalam pecahan)</b><br>
+                    Total bagian lahan Pak Budi dianggap 1.
+                    <ul>
+                        <li>Bagian Singkong = $1 - \text{(Bagian Jagung)}$</li>
+                        <li>Bagian Singkong = $1 - \frac{1}{3} = \frac{3}{3} - \frac{1}{3} = \frac{2}{3}$.</li>
+                        <li>Ini artinya $\frac{2}{3}$ *dari* lahan milik Pak Budi ditanami singkong.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Menghitung luas lahan singkong (dalam hektar)</b><br>
+                    Luas Singkong = (Bagian Singkong) "dari" (Total Lahan)<br>
+                    Luas Singkong = $\frac{2}{3} \times \frac{4}{5}$
+                    <ul>
+                        <li>Kalikan pembilang dengan pembilang: $2 \times 4 = 8$.</li>
+                        <li>Kalikan penyebut dengan penyebut: $3 \times 5 = 15$.</li>
+                        <li>Hasilnya: $\frac{8}{15}$ hektar.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 16 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (B), dan (C).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK). Kita harus mengevaluasi (mengecek) setiap pernyataan satu per satu untuk menentukan mana yang benar.</p>
+                    <p><b>Konsep Utama:</b> Untuk membandingkan beberapa bilangan pecahan dengan bentuk berbeda (desimal, persen, pecahan biasa), cara termudah adalah mengubah semuanya ke satu bentuk yang seragam. Bentuk desimal adalah yang paling mudah untuk dibandingkan.</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li><b>Persen ke Desimal:</b> $X\% = \frac{X}{100}$. (Geser koma 2 kali ke kiri). $55\% = 0,55$.</li>
+                        <li><b>Pecahan Biasa ke Desimal:</b> Bagi pembilang dengan penyebut. $\frac{2}{3} = 2 \div 3 = 0,666...$ (desimal berulang).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Ubah semua bilangan ke bentuk desimal</b>
+                    <ul>
+                        <li>$0,6 \longrightarrow 0,600...$</li>
+                        <li>$55\% \longrightarrow 0,550...$</li>
+                        <li>$\frac{2}{3} \longrightarrow 0,666...$</li>
+                        <li>$0,54 \longrightarrow 0,540...$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Urutkan bilangan dari terkecil ke terbesar</b>
+                    <p>$0,540... < 0,550... < 0,600... < 0,666...$</p>
+                    <p>Atau dalam bentuk aslinya:<br>
+                    $0,54 < 55\% < 0,6 < \frac{2}{3}$</p>
+                    </p>
+                    <p><b>Langkah 3: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>(A) $0,54$ adalah bilangan terkecil.</b><br>
+                        Dari urutan di Langkah 2, ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) $\frac{2}{3}$ adalah bilangan terbesar.</b><br>
+                        Dari urutan di Langkah 2, ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(C) $0,6 > 55\%$</b><br>
+                        Ini sama dengan membandingkan $0,600... > 0,550...$. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(D) $55\% > \frac{2}{3}$</b><br>
+                        Ini sama dengan membandingkan $0,550... > 0,666...$. Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, pernyataan yang benar adalah (A), (B), dan (C).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 17 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (C), dan (D).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK). Sama seperti soal sebelumnya, kita harus mengubah semua bilangan ke bentuk desimal agar mudah dibandingkan.</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li><b>Pecahan Biasa ke Desimal:</b> $\frac{7}{8} = 7 \div 8$.
+                        <br>$7,0 \div 8 = 0, \ldots$
+                        <br>$70 \div 8 = 8$ (sisa 6) $\to 0,8...$
+                        <br>$60 \div 8 = 7$ (sisa 4) $\to 0,87...$
+                        <br>$40 \div 8 = 5$ (sisa 0) $\to 0,875$.
+                        <br>Jadi, $\frac{7}{8} = 0,875$.</li>
+                        <li><b>Persen ke Desimal:</b> $78\% = \frac{78}{100} = 0,78$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Ubah semua bilangan ke bentuk desimal</b>
+                    <ul>
+                        <li>$0,45 \longrightarrow 0,450$</li>
+                        <li>$0,85 \longrightarrow 0,850$</li>
+                        <li>$\frac{7}{8} \longrightarrow 0,875$</li>
+                        <li>$78\% \longrightarrow 0,780$</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Urutkan bilangan dari terkecil ke terbesar</b>
+                    <p>$0,450 < 0,780 < 0,850 < 0,875$</p>
+                    <p>Atau dalam bentuk aslinya:<br>
+                    $0,45 < 78\% < 0,85 < \frac{7}{8}$</p>
+                    </p>
+                    <p><b>Langkah 3: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>(A) $\frac{7}{8}$ adalah bilangan terbesar.</b><br>
+                        Dari urutan di Langkah 2, $0,875$ adalah yang terbesar. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) $0,85 < 78\%$</b><br>
+                        Ini sama dengan membandingkan $0,850 < 0,780$. Ini <b>SALAH</b>.</li>
+                        
+                        <li><b>(C) $78\% < 0,85$</b><br>
+                        Ini sama dengan membandingkan $0,780 < 0,850$. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(D) Urutan naik: $0,45 ; 78\% ; 0,85 ; \frac{7}{8}$</b><br>
+                        Ini sama persis dengan urutan yang kita temukan di Langkah 2. Ini <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, pernyataan yang benar adalah (A), (C), dan (D).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 18 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A) dan (C).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK) yang meminta kita membandingkan beberapa bilangan dengan sebuah bilangan acuan ($\frac{3}{4}$).</p>
+                    <p><b>Konsep Utama:</b> Ubah bilangan acuan dan semua pilihan ke bentuk desimal agar mudah dibandingkan.</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li><b>Bilangan Acuan:</b> $\frac{3}{4} = 3 \div 4 = 0,75$.</li>
+                        <li><b>Pilihan A:</b> $0,8$ (sudah desimal).</li>
+                        <li><b>Pilihan B:</b> $70\% = \frac{70}{100} = 0,70$.</li>
+                        <li><b>Pilihan C:</b> $\frac{5}{6} = 5 \div 6 = 0,8333...$</li>
+                        <li><b>Pilihan D:</b> $\frac{7}{10} = 0,7$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita mencari bilangan yang nilainya <b>lebih besar dari 0,75</b>.</p>
+                    <p><b>Langkah 1: Evaluasi setiap pilihan</b>
+                    <ul>
+                        <li><b>(A) $0,8$</b><br>
+                        Apakah $0,8 > 0,75$? Ya, $0,8$ sama dengan $0,80$. Tentu $0,80 > 0,75$. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) $70\%$</b><br>
+                        Nilainya $0,70$. Apakah $0,70 > 0,75$? Tidak. Ini <b>SALAH</b>.</li>
+                        
+                        <li><b>(C) $\frac{5}{6}$</b><br>
+                        Nilainya $0,833...$. Apakah $0,833... > 0,75$? Ya. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(D) $\frac{7}{10}$</b><br>
+                        Nilainya $0,7$. Apakah $0,7 > 0,75$? Tidak, $0,7$ sama dengan $0,70$. Tentu $0,70 < 0,75$. Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, bilangan yang lebih besar dari $\frac{3}{4}$ adalah $0,8$ dan $\frac{5}{6}$.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 19 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A) dan (C).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK). Kita harus menghitung hasil dari setiap operasi di pilihan jawaban dan mengecek apakah hasilnya sama dengan $\frac{1}{2}$ (atau $0,5$).</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Perkalian Pecahan:</b> $\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}$.</li>
+                        <li><b>Pembagian Pecahan:</b> $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$.</li>
+                        <li><b>Penjumlahan Desimal:</b> Sejajarkan tanda koma.</li>
+                        <li><b>Pengurangan Campuran:</b> Ubah semua ke bentuk yang sama (desimal atau pecahan).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita mencari operasi yang hasilnya $\frac{1}{2}$ atau $0,5$.</p>
+                    <p><b>Langkah 1: Evaluasi setiap pilihan</b>
+                    <ul>
+                        <li><b>(A) $\frac{3}{4} \times \frac{2}{3}$</b><br>
+                        $\frac{3 \times 2}{4 \times 3} = \frac{6}{12}$.<br>
+                        Sederhanakan $\frac{6}{12}$ (bagi pembilang dan penyebut dengan 6): $\frac{6 \div 6}{12 \div 6} = \frac{1}{2}$.<br>
+                        Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) $\frac{5}{8} : \frac{4}{5}$</b><br>
+                        Ubah ke perkalian: $\frac{5}{8} \times \frac{5}{4}$.<br>
+                        $\frac{5 \times 5}{8 \times 4} = \frac{25}{32}$. Ini bukan $\frac{1}{2}$.<br>
+                        Ini <b>SALAH</b>.</li>
+                        
+                        <li><b>(C) $0,25 + 0,25$</b><br>
+                        $0,25 + 0,25 = 0,50$ atau $0,5$.<br>
+                        $0,5$ sama dengan $\frac{5}{10}$, yang disederhanakan menjadi $\frac{1}{2}$.<br>
+                        Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(D) $1,5 - \frac{3}{4}$</b><br>
+                        Ubah $\frac{3}{4}$ ke desimal: $\frac{3}{4} = 0,75$.<br>
+                        Operasinya menjadi $1,5 - 0,75$.<br>
+                        $1,50 - 0,75 = 0,75$.<br>
+                        $0,75$ adalah $\frac{3}{4}$, bukan $\frac{1}{2}$.<br>
+                        Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, operasi yang hasilnya $\frac{1}{2}$ adalah (A) dan (C).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 20 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (B), dan (D).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK) berbasis soal cerita. Kita harus menghitung setiap tahap cerita dan mencocokkannya dengan pernyataan yang ada.</p>
+                    <p><b>Konsep Utama:</b> Cara termudah adalah mengubah semua bentuk pecahan (campuran, desimal) ke satu bentuk yang sama, yaitu desimal, karena $0,75$ sudah dalam bentuk desimal.</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li>$2\frac{1}{2} = 2 + \frac{1}{2} = 2 + 0,5 = 2,5$.</li>
+                        <li>$1\frac{1}{4} = 1 + \frac{1}{4} = 1 + 0,25 = 1,25$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Analisis cerita dan hitung jumlah minyak di setiap tahap</b>
+                    <ol>
+                        <li><b>Awal:</b> Ibu memiliki $2\frac{1}{2}$ liter minyak. Dalam desimal: $2,5$ liter.</li>
+                        <li><b>Dipakai:</b> Digunakan $0,75$ liter.
+                        <br>Sisa minyak = $2,5 - 0,75$.
+                        <br>$2,50 - 0,75 = 1,75$ liter.</li>
+                        <li><b>Beli Lagi:</b> Ibu membeli $1\frac{1}{4}$ liter. Dalam desimal: $1,25$ liter.</li>
+                        <li><b>Akhir:</b> Jumlah minyak sekarang = (Sisa setelah dipakai) + (Beli lagi)
+                        <br>Jumlah akhir = $1,75 + 1,25 = 3,00$ liter.</li>
+                    </ol>
+                    </p>
+                    <p><b>Langkah 2: Evaluasi setiap pernyataan berdasarkan hitungan di Langkah 1</b>
+                    <ul>
+                        <li><b>(A) Minyak awal ibu adalah $2,5$ liter.</b><br>
+                        Hitungan kita di tahap 1 menunjukkan $2\frac{1}{2} = 2,5$. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) Minyak sisa setelah memasak adalah $1,75$ liter.</b><br>
+                        Hitungan kita di tahap 2 menunjukkan sisanya $1,75$. Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(C) Minyak yang dibeli lagi adalah $1,5$ liter.</b><br>
+                        Ibu membeli $1\frac{1}{4}$ liter, yang nilainya $1,25$ liter. Pernyataan $1,5$ liter ini <b>SALAH</b>.</li>
+                        
+                        <li><b>(D) Jumlah minyak ibu sekarang adalah $3$ liter.</b><br>
+                        Hitungan kita di tahap 4 menunjukkan jumlah akhir adalah $3,00$ liter. Ini <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, pernyataan yang benar adalah (A), (B), dan (D).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 21 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">21.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (B), (C), dan (D).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK) tipe penalaran. Kita tidak diminta mencari satu jawaban pasti, tetapi mengecek kemungkinan-kemungkinan yang diberikan.</p>
+                    <p><b>Konsep Utama:</b> Soal ini adalah "pecahan satuan" (Egyptian Fraction). Kita perlu mengecek apakah kombinasi nilai $a, b, c$ yang diberikan di pernyataan jika dimasukkan ke $\frac{1}{a}+\frac{1}{b}+\frac{1}{c}$ akan menghasilkan $\frac{1}{8}$.</p>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi Pernyataan (A) dan (D) bersamaan</b>
+                    <ul>
+                        <li>Pernyataan (A) menyebutkan $a, b, c$ bisa jadi 10, 50, dan 200.</li>
+                        <li>Jika (A) benar, maka (D) $a+b+c = 10 + 50 + 200 = 260$ juga benar. Mari kita cek.</li>
+                        <li>Apakah $\frac{1}{10} + \frac{1}{50} + \frac{1}{200} = \frac{1}{8}$?</li>
+                        <li>Samakan penyebut. KPK dari 10, 50, dan 200 adalah 200.
+                            <ul>
+                                <li>$\frac{1}{10} = \frac{1 \times 20}{10 \times 20} = \frac{20}{200}$</li>
+                                <li>$\frac{1}{50} = \frac{1 \times 4}{50 \times 4} = \frac{4}{200}$</li>
+                                <li>$\frac{1}{200}$ (tetap)</li>
+                            </ul>
+                        </li>
+                        <li>Jumlahkan: $\frac{20}{200} + \frac{4}{200} + \frac{1}{200} = \frac{20+4+1}{200} = \frac{25}{200}$</li>
+                        <li>Sederhanakan $\frac{25}{200}$ (bagi 25): $\frac{25 \div 25}{200 \div 25} = \frac{1}{8}$.</li>
+                        <li>Hasilnya cocok. Maka, pernyataan (A) dan (D) <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Evaluasi Pernyataan (B) dan (C) bersamaan</b>
+                    <ul>
+                        <li>Pernyataan (B) menyebutkan $a, b, c$ bisa jadi 24, 24, dan 24.</li>
+                        <li>Jika (B) benar, maka (C) $a+b+c = 24 + 24 + 24 = 72$ juga benar. Mari kita cek.</li>
+                        <li>Apakah $\frac{1}{24} + \frac{1}{24} + \frac{1}{24} = \frac{1}{8}$?</li>
+                        <li>Penyebut sudah sama (24).</li>
+                        <li>Jumlahkan: $\frac{1+1+1}{24} = \frac{3}{24}$.</li>
+                        <li>Sederhanakan $\frac{3}{24}$ (bagi 3): $\frac{3 \div 3}{24 \div 3} = \frac{1}{8}$.</li>
+                        <li>Hasilnya cocok. Maka, pernyataan (B) dan (C) <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, semua pernyataan (A), (B), (C), dan (D) adalah benar/mungkin.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 22 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">22.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (B), dan (C).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK) yang menguji pemahaman tentang "pecahan senilai" atau ekuivalensi. Kita harus mengecek setiap pilihan apakah nilainya sama dengan $0,4$.</p>
+                    <p><b>Konsep Utama:</b> $0,4$ (empat per sepuluh) adalah bentuk desimal.
+                    <br>$0,4 = \frac{4}{10}$.
+                    <br>Kita perlu mencari bentuk lain yang nilainya sama dengan $\frac{4}{10}$.
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita mencari nilai yang sama dengan $0,4$ atau $\frac{4}{10}$.</p>
+                    <p><b>Langkah 1: Evaluasi setiap pilihan</b>
+                    <ul>
+                        <li><b>(A) $40\%$</b><br>
+                        Persen artinya "per seratus". $40\% = \frac{40}{100}$.<br>
+                        Jika kita sederhanakan (bagi 10), $\frac{40}{100} = \frac{4}{10}$.<br>
+                        Ini sama dengan $0,4$. Jadi, <b>BENAR</b>.</li>
+                        
+                        <li><b>(B) $\frac{4}{10}$</b><br>
+                        Ini adalah bentuk pecahan biasa dari $0,4$.<br>
+                        Ini <b>BENAR</b>.</li>
+                        
+                        <li><b>(C) $\frac{2}{5}$</b><br>
+                        Untuk mengecek apakah $\frac{2}{5}$ senilai dengan $\frac{4}{10}$, kita bisa menyederhanakan $\frac{4}{10}$.<br>
+                        $\frac{4 \div 2}{10 \div 2} = \frac{2}{5}$.<br>
+                        Keduanya sama. Jadi, <b>BENAR</b>.</li>
+                        
+                        <li><b>(D) $\frac{1}{4}$</b><br>
+                        $\frac{1}{4}$ adalah $1 \div 4 = 0,25$.<br>
+                        $0,25$ tidak sama dengan $0,4$.<br>
+                        Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, bentuk yang senilai dengan $0,4$ adalah (A), (B), dan (C).</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 23 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">23.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar adalah (A), (B), dan (C).</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Pilihan Ganda Kompleks (PGK) berbasis soal cerita. Kita harus menganalisis data dan mengecek kebenaran setiap pernyataan.</p>
+                    <p><b>Konsep Utama:</b>
+                    <ol>
+                        <li><b>Kata "dari":</b> Dalam matematika pecahan, kata "dari" hampir selalu berarti operasi perkalian ($\times$).</li>
+                        <li><b>Konversi Pecahan ke Persen:</b> $\frac{a}{b} \times 100\%$.</li>
+                        <li><b>Mencari Sisa:</b> Sisa Lahan = (Total Lahan Milik Petani) - (Lahan yang dipakai).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Data Awal:</b>
+                    <ul>
+                        <li>Lahan Petani = $\frac{3}{4}$ dari total lahan desa.</li>
+                        <li>Lahan Padi = $\frac{2}{3}$ *dari* Lahan Petani.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 1: Evaluasi Pernyataan (A)</b><br>
+                    "Lahan yang ditanami padi adalah $\frac{1}{2}$ dari total lahan desa."
+                    <ul>
+                        <li>Lahan Padi = $\frac{2}{3}$ *dari* Lahan Petani</li>
+                        <li>Lahan Padi = $\frac{2}{3} \times$ (Lahan Petani)</li>
+                        <li>Lahan Padi = $\frac{2}{3} \times \frac{3}{4}$ (dari total lahan desa)</li>
+                        <li>$\frac{2 \times 3}{3 \times 4} = \frac{6}{12}$</li>
+                        <li>Sederhanakan $\frac{6}{12}$ (bagi 6) = $\frac{1}{2}$.</li>
+                        <li>Jadi, Lahan Padi adalah $\frac{1}{2}$ dari total lahan desa. Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Evaluasi Pernyataan (B)</b><br>
+                    "Lahan milik petani adalah $75\%$ dari total lahan desa."
+                    <ul>
+                        <li>Lahan Petani = $\frac{3}{4}$.</li>
+                        <li>Ubah ke persen: $\frac{3}{4} \times 100\% = \frac{300}{4}\% = 75\%$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Evaluasi Pernyataan (C)</b><br>
+                    "Sisa lahan milik petani (yang tidak ditanami padi) adalah $\frac{1}{4}$ dari total lahan desa."
+                    <ul>
+                        <li>Sisa Lahan = (Lahan Petani) - (Lahan Padi)</li>
+                        <li>Sisa Lahan = $\frac{3}{4} - \frac{1}{2}$ (hasil dari Langkah 1)</li>
+                        <li>Samakan penyebut (KPK 4): $\frac{1}{2} = \frac{2}{4}$.</li>
+                        <li>Sisa Lahan = $\frac{3}{4} - \frac{2}{4} = \frac{1}{4}$.</li>
+                        <li>Jadi, sisa lahannya adalah $\frac{1}{4}$ dari total lahan desa. Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Evaluasi Pernyataan (D)</b><br>
+                    "Lahan yang ditanami padi adalah $\frac{2}{3}$ dari total lahan desa."
+                    <ul>
+                        <li>Dari Langkah 1, kita tahu lahan padi adalah $\frac{1}{2}$ dari total lahan desa.</li>
+                        <li>$\frac{2}{3}$ adalah bagian lahan padi *dari lahan petani*, bukan *dari total lahan desa*.</li>
+                        <li>Pernyataan <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 24 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">24.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Salah, Benar, Benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) yang menguji kemampuan dasar operasi pecahan (penjumlahan, pengurangan, perkalian, dan pembagian). Kita harus mengecek kebenaran setiap pernyataan.</p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Penjumlahan:</b> $\frac{1}{2} + \frac{1}{4}$. Samakan penyebut (KPK=4). $\frac{1}{2} = \frac{2}{4}$. Jadi, $\frac{2}{4} + \frac{1}{4} = \frac{3}{4}$.</li>
+                        <li><b>Pengurangan:</b> $\frac{3}{4} - \frac{1}{2}$. Samakan penyebut (KPK=4). $\frac{1}{2} = \frac{2}{4}$. Jadi, $\frac{3}{4} - \frac{2}{4} = \frac{1}{4}$.</li>
+                        <li><b>Perkalian:</b> $\frac{5}{6} \times \frac{3}{5}$. Kalikan atas dengan atas, bawah dengan bawah. $\frac{5 \times 3}{6 \times 5} = \frac{15}{30}$. Sederhanakan (bagi 15) = $\frac{1}{2}$.</li>
+                        <li><b>Pembagian:</b> $\frac{2}{3} : \frac{1}{3}$. Balik pecahan kedua lalu kalikan. $\frac{2}{3} \times \frac{3}{1} = \frac{2 \times 3}{3 \times 1} = \frac{6}{3} = 2$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>Pernyataan 1: $\frac{1}{2} + \frac{1}{4} = \frac{3}{4}$</b><br>
+                        Hasil perhitungan kita $\frac{3}{4}$. Pernyataan ini <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 2: $\frac{3}{4} - \frac{1}{2} = \frac{1}{8}$</b><br>
+                        Hasil perhitungan kita $\frac{1}{4}$. Pernyataan $\frac{1}{8}$ adalah <b>SALAH</b>.</li>
+                        
+                        <li><b>Pernyataan 3: $\frac{5}{6} \times \frac{3}{5} = \frac{1}{2}$</b><br>
+                        Hasil perhitungan kita $\frac{1}{2}$. Pernyataan ini <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 4: $\frac{2}{3} : \frac{1}{3} = 2$</b><br>
+                        Hasil perhitungan kita $2$. Pernyataan ini <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Salah, Benar, Benar.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 25 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">25.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Salah, Benar, Benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) yang menguji kemampuan membandingkan dan mengkonversi berbagai bentuk pecahan (desimal, persen, pecahan campuran).</p>
+                    <p>Aturan Konversi & Perbandingan:
+                    <ol>
+                        <li>$0,5$ vs $30\%$. $30\% = 0,30$. Jelas $0,5 > 0,3$.</li>
+                        <li>$\frac{1}{3}$ vs $0,33$. $\frac{1}{3} = 1 \div 3 = 0,3333...$ (angka 3-nya tidak berhenti). Sedangkan $0,33$ berhenti. Maka, $0,333...$ tidak sama dengan $0,33$.</li>
+                        <li>$\frac{3}{5}$ vs $\frac{2}{3}$. Gunakan kali silang.
+                            <ul>
+                                <li>Pembilang 1: $3 \times 3 = 9$.</li>
+                                <li>Pembilang 2: $2 \times 5 = 10$.</li>
+                                <li>Karena $9 < 10$, maka $\frac{3}{5} < \frac{2}{3}$.</li>
+                            </ul>
+                        </li>
+                        <li>$1\frac{1}{4}$ vs $1,25$. $1\frac{1}{4} = 1 + \frac{1}{4} = 1 + 0,25 = 1,25$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>Pernyataan 1: $0,5 > 30\%$</b><br>
+                        Perbandingan: $0,5$ vs $0,3$. Pernyataan $0,5 > 0,3$ adalah <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 2: $\frac{1}{3} = 0,33$</b><br>
+                        $\frac{1}{3} = 0,333...$. Ini tidak sama dengan $0,33$. Pernyataan <b>SALAH</b>.</li>
+                        
+                        <li><b>Pernyataan 3: $\frac{3}{5} < \frac{2}{3}$</b><br>
+                        Hasil kali silang: $9 < 10$. Pernyataan ini <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 4: $1\frac{1}{4} = 1,25$</b><br>
+                        Hasil konversi $1 + 0,25 = 1,25$. Pernyataan ini <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Salah, Benar, Benar.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 26 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">26.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Salah, Benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) yang membandingkan tiga nilai yang diberikan, yaitu $x$, $y$, dan $z$. Langkah pertama adalah mengubah semuanya ke bentuk yang sama (desimal) agar mudah dibandingkan.</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li>$x = \frac{2}{5}$. Untuk jadi desimal, kalikan atas dan bawah dengan 2 agar penyebutnya 10: $\frac{2 \times 2}{5 \times 2} = \frac{4}{10} = 0,4$.</li>
+                        <li>$y = 0,5$. (Sudah desimal).</li>
+                        <li>$z = 30\%$. Persen artinya per seratus: $\frac{30}{100} = 0,30$ atau $0,3$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p>Kita sudah memiliki nilai desimal:
+                    <ul>
+                        <li>$x = 0,4$</li>
+                        <li>$y = 0,5$</li>
+                        <li>$z = 0,3$</li>
+                    </ul>
+                    </p>
+                    <p>Urutan nilainya adalah: $z < x < y$ ($0,3 < 0,4 < 0,5$).</p>
+                    <p><b>Langkah 1: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>Pernyataan 1: $x > z$</b><br>
+                        Substitusi nilai: $0,4 > 0,3$. Ini adalah pernyataan yang <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 2: $y > x$</b><br>
+                        Substitusi nilai: $0,5 > 0,4$. Ini adalah pernyataan yang <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 3: $z > y$</b><br>
+                        Substitusi nilai: $0,3 > 0,5$. Ini adalah pernyataan yang <b>SALAH</b>.</li>
+                        
+                        <li><b>Pernyataan 4: $x+y = 0,9$</b><br>
+                        Substitusi nilai: $0,4 + 0,5 = 0,9$. Ini adalah pernyataan yang <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Benar, Salah, Benar.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 27 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">27.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Salah, Benar, Benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) berbasis soal cerita. Kita perlu menganalisis situasi pelari dan mengecek kebenaran setiap pernyataan.</p>
+                    <p><b>Data Awal:</b>
+                    <ul>
+                        <li>Total Lintasan = $1200$ m.</li>
+                        <li>Bagian Ditempuh = $\frac{3}{4}$ dari total.</li>
+                    </ul>
+                    </p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Menghitung Jarak Tempuh:</b> $\frac{3}{4}$ "dari" 1200 m $\implies \frac{3}{4} \times 1200$.</li>
+                        <li><b>Menghitung Sisa Jarak:</b> (Total Lintasan) - (Jarak Tempuh).</li>
+                        <li><b>Menghitung Sisa Pecahan:</b> $1 - \text{(Bagian Ditempuh)}$.</li>
+                        <li><b>Konversi ke Persen:</b> $\frac{3}{4} \times 100\%$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi Pernyataan 1: "Pelari tersebut telah menempuh jarak 900 m."</b>
+                    <ul>
+                        <li>Jarak Tempuh = $\frac{3}{4} \times 1200$</li>
+                        <li>Hitung $(1200 \div 4)$ dulu, hasilnya $300$.</li>
+                        <li>Jarak Tempuh = $3 \times 300 = 900$ m.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Evaluasi Pernyataan 2: "Sisa lintasan yang belum ditempuh adalah 400 m."</b>
+                    <ul>
+                        <li>Sisa Jarak = (Total Lintasan) - (Jarak Tempuh)</li>
+                        <li>Sisa Jarak = $1200 - 900 = 300$ m.</li>
+                        <li>Pernyataan mengatakan 400 m. Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Evaluasi Pernyataan 3: "Pecahan sisa lintasan adalah $\frac{1}{4}$."</b>
+                    <ul>
+                        <li>Bagian Total = $1$ (atau $\frac{4}{4}$).</li>
+                        <li>Bagian Sisa = $1 - \text{(Bagian Ditempuh)}$</li>
+                        <li>Bagian Sisa = $1 - \frac{3}{4} = \frac{4}{4} - \frac{3}{4} = \frac{1}{4}$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                        <li>*(Bisa juga dicek dari jarak: $\frac{\text{Sisa Jarak}}{\text{Total Jarak}} = \frac{300}{1200} = \frac{3}{12} = \frac{1}{4}$)*</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Evaluasi Pernyataan 4: "Pelari telah menempuh $75\%$ lintasan."</b>
+                    <ul>
+                        <li>Bagian Ditempuh = $\frac{3}{4}$.</li>
+                        <li>Ubah ke persen: $\frac{3}{4} \times 100\% = \frac{300}{4}\% = 75\%$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Salah, Benar, Benar.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 28 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">28.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Benar, Benar.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) berbasis soal cerita bertahap. Kita harus hati-hati dengan kata "dari sisa".</p>
+                    <p><b>Data Awal:</b>
+                    <ul>
+                        <li>Stok Awal = $50$ kg.</li>
+                    </ul>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Analisis Hari Senin dan Evaluasi Pernyataan 1 & 2</b>
+                    <ul>
+                        <li><b>Terjual Senin:</b> $\frac{1}{5}$ bagian *dari stok awal*.
+                        <br>Terjual Senin = $\frac{1}{5} \times 50$ kg $= 10$ kg.
+                        <br><b>(Pernyataan 1: "Beras yang terjual Hari Senin adalah 10 kg." $\to$ BENAR)</b></li>
+                        
+                        <li><b>Sisa Senin:</b> (Stok Awal) - (Terjual Senin)
+                        <br>Sisa Senin = $50 - 10 = 40$ kg.
+                        <br><b>(Pernyataan 2: "Sisa beras di akhir Hari Senin adalah 40 kg." $\to$ BENAR)</b></li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Analisis Hari Selasa dan Evaluasi Pernyataan 3 & 4</b>
+                    <ul>
+                        <li><b>Terjual Selasa:</b> $\frac{1}{4}$ bagian *dari sisa*. (Sisa = 40 kg)
+                        <br>Terjual Selasa = $\frac{1}{4} \times 40$ kg $= 10$ kg.
+                        <br><b>(Pernyataan 3: "Beras yang terjual Hari Selasa adalah 10 kg." $\to$ BENAR)</b></li>
+                        
+                        <li><b>Sisa Akhir:</b> (Sisa Senin) - (Terjual Selasa)
+                        <br>Sisa Akhir = $40 - 10 = 30$ kg.
+                        <br><b>(Pernyataan 4: "Sisa beras di toko sekarang adalah 30 kg." $\to$ BENAR)</b></li>
+                    </ul>
+                    </p>
+                    <p>Jadi, semua pernyataan (1, 2, 3, dan 4) adalah Benar.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- HALAMAN PEMBAHASAN 29 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">29.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Benar, Salah.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) yang menguji kemampuan konversi antar bentuk bilangan (desimal, persen, pecahan biasa, pecahan campuran).</p>
+                    <p>Aturan Konversi:
+                    <ol>
+                        <li><b>Desimal ke Pecahan Biasa:</b> Hitung angka di belakang koma. $0,65$ (2 angka) $\to \frac{65}{100}$.</li>
+                        <li><b>Pecahan Biasa ke Persen:</b> Kalikan dengan $100\%$. $\frac{3}{8} \times 100\% = \frac{300}{8}\%$.</li>
+                        <li><b>Pecahan Campuran ke Desimal:</b> $A\frac{b}{c} = A + \frac{b}{c}$. $2\frac{1}{5} = 2 + \frac{1}{5}$. $\frac{1}{5} = 0,2$. Jadi $2 + 0,2 = 2,2$.</li>
+                        <li><b>Persen ke Pecahan Biasa:</b> $X\% = \frac{X}{100}$. $12\% = \frac{12}{100}$.</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi setiap pernyataan</b>
+                    <ul>
+                        <li><b>Pernyataan 1: $0,65 = \frac{13}{20}$</b><br>
+                        $0,65 = \frac{65}{100}$. Kita sederhanakan dengan membagi pembilang dan penyebut dengan 5.<br>
+                        $\frac{65 \div 5}{100 \div 5} = \frac{13}{20}$.<br>
+                        Pernyataan <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 2: $\frac{3}{8} = 37,5\%$</b><br>
+                        $\frac{3}{8} \times 100\% = \frac{300}{8}\%$.<br>
+                        $300 \div 8 = 37,5$. ( $300 \div 8 \to 240 \div 8 = 30$, sisa $60 \to 60 \div 8 = 7,5$. Jadi $30+7,5=37,5$ )<br>
+                        Hasilnya $37,5\%$. Pernyataan <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 3: $2\frac{1}{5} = 2,2$</b><br>
+                        $2\frac{1}{5} = 2 + \frac{1}{5} = 2 + 0,2 = 2,2$.<br>
+                        Pernyataan <b>BENAR</b>.</li>
+                        
+                        <li><b>Pernyataan 4: $12\% = \frac{12}{10}$</b><br>
+                        $12\% = \frac{12}{100}$.<br>
+                        $\frac{12}{10}$ nilainya $1,2$, sedangkan $\frac{12}{100}$ nilainya $0,12$. Keduanya tidak sama.<br>
+                        Pernyataan <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Benar, Benar, Salah.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- HALAMAN PEMBAHASAN 30 -->
+    <section class="page">
+        <header class="page-header"><div class="header-top-box"><div class="header-title-main">KUNCI JAWABAN & PEMBAHASAN</div></div></header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">30.</div>
+                <div class="soal-konten pembahasan-wrapper">
+                    <div class="jawaban-box">Jawaban: Benar, Benar, Benar, Salah.</div>
+                    <div class="pembahasan-title">Dasar Teori</div>
+                    <p>Ini adalah soal Tipe 3 (Kategori) berbasis wacana. Kita harus menghitung nilai rupiah dari setiap bagian (pecahan) pengeluaran berdasarkan gaji total, lalu mengecek kebenaran setiap pernyataan.</p>
+                    <p><b>Data Awal:</b>
+                    <ul>
+                        <li>Gaji Total = Rp 4.000.000</li>
+                        <li>Transportasi = $\frac{1}{4}$ dari Gaji</li>
+                        <li>Makan = $\frac{2}{5}$ dari Gaji</li>
+                        <li>Tabung = $\frac{1}{10}$ dari Gaji</li>
+                    </ul>
+                    </p>
+                    <p>Aturan yang digunakan:
+                    <ol>
+                        <li><b>Pecahan "dari" Nilai:</b> $\frac{a}{b} \times (\text{Total})$.</li>
+                        <li><b>Menghitung Sisa:</b> (Gaji Total) - (Total Pengeluaran).</li>
+                    </ol>
+                    </p>
+                    <div class="pembahasan-title">Pembahasan Soal</div>
+                    <p><b>Langkah 1: Evaluasi Pernyataan 1: "Biaya transportasi adalah Rp 1.000.000."</b>
+                    <ul>
+                        <li>Transportasi = $\frac{1}{4} \times 4.000.000$</li>
+                        <li>$4.000.000 \div 4 = 1.000.000$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 2: Evaluasi Pernyataan 2: "Biaya makan adalah Rp 1.600.000."</b>
+                    <ul>
+                        <li>Makan = $\frac{2}{5} \times 4.000.000$</li>
+                        <li>Hitung $(4.000.000 \div 5)$ dulu, hasilnya $800.000$.</li>
+                        <li>Makan = $2 \times 800.000 = 1.600.000$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 3: Evaluasi Pernyataan 3: "Uang yang ditabung adalah Rp 400.000."</b>
+                    <ul>
+                        <li>Tabung = $\frac{1}{10} \times 4.000.000$</li>
+                        <li>$4.000.000 \div 10 = 400.000$.</li>
+                        <li>Pernyataan <b>BENAR</b>.</li>
+                    </ul>
+                    </p>
+                    <p><b>Langkah 4: Evaluasi Pernyataan 4: "Sisa gaji untuk kebutuhan lain adalah Rp 1.200.000."</b>
+                    <ul>
+                        <li>Total Pengeluaran = (Transport) + (Makan) + (Tabung)</li>
+                        <li>Total Pengeluaran = $1.000.000 + 1.600.000 + 400.000 = 3.000.000$.</li>
+                        <li>Sisa Gaji = (Gaji Total) - (Total Pengeluaran)</li>
+                        <li>Sisa Gaji = $4.000.000 - 3.000.000 = 1.000.000$.</li>
+                        <li>Pernyataan mengatakan sisanya Rp 1.200.000. Ini <b>SALAH</b>.</li>
+                    </ul>
+                    </p>
+                    <p>Jadi, urutan jawabannya adalah: Benar, Benar, Benar, Salah.</p>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+</body>
+</html>
+
